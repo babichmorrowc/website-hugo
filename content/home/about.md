@@ -10,31 +10,22 @@ weight = 5
 # List your academic interests.
 [interests]
   interests = [
-    "Artificial Intelligence",
-    "Computational Linguistics",
-    "Information Retrieval"
+    "Macroecology",
+    "Life History Traits",
+    "Species Distribution Modeling"
   ]
 
 # List your qualifications (such as academic degrees).
 [[education.courses]]
-  course = "PhD in Artificial Intelligence"
-  institution = "Stanford University"
-  year = 2012
+  course = "BA in Biology and Mathematics"
+  institution = "Kenyon College"
+  year = 2018
 
-[[education.courses]]
-  course = "MEng in Artificial Intelligence"
-  institution = "Massachusetts Institute of Technology"
-  year = 2009
-
-[[education.courses]]
-  course = "BSc in Artificial Intelligence"
-  institution = "Massachusetts Institute of Technology"
-  year = 2008
  
 +++
 
 # Biography
 
-Lena Smith is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+Cecina Babich Morrow is currently a [Helen Fellow](https://www.amnh.org/learn-teach/higher-education/helen-fellowship) at the American Museum of Natural History. She works with Mary Blair in the Center for Biodiversity and Conservation on the open-source species distribution modeling software [Wallace](https://wallaceecomod.github.io/). In addition to working on testing and expanding the Wallace software, she is modeling the distributions of three species of three-toed sloths to better understand the biogeography of these species.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate. 
+While at Kenyon College, Cecina worked with Drew Kerkhoff in the [Kenyon Macroecology Laboratory](https://kerkhofflab.org/). As a Kenyon Summer Science Scholar in 2016, Cecina collaborated with researchers at the University of Arizona and Oxford University to develop and test new hypervolume methods for quantifying plant functional diversity and environmental niches. Her senior honors thesis used these hypervolume methods to compare dimensionless life history stratgies across tetrapods to examine how these traits have evolved in response to different evolutionary pressures.
