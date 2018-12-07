@@ -41,8 +41,16 @@ filter_default = 0
   tag = "*"
 
 [[filter]]
-  name = "Deep Learning"
-  tag = "Deep Learning"
+  name = "Hypervolumes"
+  tag = "hypervolume"
+  
+[[filter]]
+  name = "Life History"
+  tag = "lifehistory"
+  
+[[filter]]
+  name = "Species Distribution Modelling"
+  tag = "sdm"
 
 [[filter]]
   name = "Other"
