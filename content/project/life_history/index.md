@@ -10,7 +10,7 @@ summary = "Analyzing the evolution of dimensionless life history metrics across 
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`
-tags = ["Life history", "hypervolume"]
+tags = ["life history", "hypervolume"]
 
 # Optional external URL for project (replaces project detail page).
 external_link = ""

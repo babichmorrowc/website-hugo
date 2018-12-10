@@ -46,11 +46,11 @@ filter_default = 0
   
 [[filter]]
   name = "Life History"
-  tag = "lifehistory"
+  tag = "life history"
   
 [[filter]]
   name = "Species Distribution Modelling"
-  tag = "sdm"
+  tag = "species distribution modelling"
 
 [[filter]]
   name = "Other"

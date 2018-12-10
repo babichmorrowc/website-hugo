@@ -10,7 +10,7 @@ summary = "Testing new algorithms for creating *n*-dimensional hypervolumes."
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`
-tags = ["hypervolumes"]
+tags = ["hypervolume"]
 
 # Optional external URL for project (replaces project detail page).
 # external_link = "http://example.org"
