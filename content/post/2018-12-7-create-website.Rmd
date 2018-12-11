@@ -10,7 +10,7 @@ tags: ["R", "GitHub", "website"]
 knitr::opts_chunk$set(collapse = TRUE)
 ```
 
-![website hex logos](/Users/hellenfellows/Desktop/website-hugo/static/img/website_fig.png)
+![](/img/website_fig.png){ height=50% }
 
 ## Getting started
 
