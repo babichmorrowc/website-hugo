@@ -10,6 +10,8 @@ tags: ["R", "GitHub", "website"]
 knitr::opts_chunk$set(collapse = TRUE)
 ```
 
+![website hex logos](/Users/hellenfellows/Desktop/website-hugo/static/img/website_fig.png)
+
 ## Getting started
 
 I've been contemplating the idea of creating a website for sometime, but my initial (mostly half-hearted) attempts ran into some serious technological glitches. I started out trying to create a GitHub site using Jekyll, since I knew I wanted my website to be hosted via GitHub to keep all of my code in the same place. After about an hour of unsuccessful commits that resulted in a lovely white page with my name on it, I scrapped the whole venture until I heard about the [`blogdown`](https://bookdown.org/yihui/blogdown/) R package. Since R is my programming language of choice, the idea of being able to write posts in RMarkdown and preview my site from the comfort of RStudio was tremendously appealing. I saw a research site created through Hugo's Academic theme using `blogdown` that referenced some helpful tutorials and decided to give the process another shot.
