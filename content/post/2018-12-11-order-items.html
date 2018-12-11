@@ -1,0 +1,34 @@
+---
+title: "Ordering website components"
+author: "Cecina Babich Morrow"
+date: 2018-12-11T21:13:14-05:00
+categories: ["R", "GitHub"]
+tags: ["R", "GitHub", "website"]
+---
+
+
+
+<div class="figure">
+<img src="/img/website_fig.png" style="height:50.0%" />
+
+</div>
+<p>As I continue setting up this site, one of the major things irking me was the order of content on the website. For example, I wasn’t loving that the first thing you saw when visiting the site was the giant picture of my face. I wanted to be able to put content at the top of the site and move information like my bio and work experience towards the bottom. Hugo allows you to weight certain types of content to change the order, so that’s what I tackled.</p>
+<div id="menu-links" class="section level2">
+<h2>Menu links</h2>
+<p>The first order of things I could change was the order of links in the menu on the top right of my page. In this case, I wanted my information to be the first link, followed by “Publications”, “Projects”, “Posts”, “Tutorials”, and “Contact”. The weighting for these links is found in the <code>config.toml</code> file of the website repo, where a standard entry for one of the links looks a bit like this:</p>
+<pre class="bash"><code>[[menu.main]]
+  name = &quot;Publications&quot;
+  url = &quot;#publications&quot;
+  weight = 2</code></pre>
+<p>Here you can change the “name”, which is what the menu option actually says (e.g. I changed the menu option for my bio from “Home” to “About”). The URL refers to where on the site the link will point to. If you are trying to link to a homepage widget, as in the example above, the url will be <code>#</code> followed by the file name of that widget in the <code>content/home/</code> folder. You want to be careful not to link to a widget that is inactive (which you can see in the first few lines of the Markdown document for that widget), otherwise the link will not go anywhere.</p>
+<p>If you are linking to something else, you can provide the file-path relative to the <code>content</code> folder – for example, my tutorials live in the folder <code>content/tutorial</code>:</p>
+<pre class="bash"><code>[[menu.main]]
+  name = &quot;Tutorials&quot;
+  url = &quot;/tutorial/&quot;
+  weight = 5</code></pre>
+<p>Finally, you can change the weights to reflect the order you want the links to appear in the menu: the links will appear from left to right in ascending order of weight (<code>weight = 1</code> is the first link, etc.)</p>
+</div>
+<div id="home-page-content" class="section level2">
+<h2>Home page content</h2>
+<p>Initially, I confused changing the weights in the <code>config.toml</code> file with actually changing the order of those sections on the home page, but doing that actually requires editing the Markdown files for those types of content in the <code>content/home/</code> folder. For example, I decided I wanted to put posts first, so I went to <code>content/home/posts.md</code> and modified the <code>weight</code> argument so that it was lowest and continued editing the weights until everything was in the order I wanted.</p>
+</div>

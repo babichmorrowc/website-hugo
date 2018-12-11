@@ -7,7 +7,7 @@ title = "Experience"
 subtitle = ""
 
 # Order that this section will appear in.
-weight = 8
+weight = 70
 
 # Date format for experience
 #   Refer to https://sourcethemes.com/academic/docs/customization/#date-format
@@ -34,7 +34,7 @@ date_format = "January 2006"
   company = "Kenyon College"
   company_url = "https://www.kenyon.edu/academics/departments-programs/biology/"
   location = "Gambier, OH"
-  date_start = "2014-12-04"
+  date_start = "2016-08-04"
   date_end = "2018-05-30"
   description = """
   Worked with Dr. Drew Kerkhoff on research combining ecology/evolution with mathematics/computation. As a 2016 Kenyon Summer Science Scholar, I collaborated with researchers at the University of Arizona and Oxford University to develop and test new “hypervolume” methods for quantifying plant functional diversity and environmental niches. From the summer of 2017 through the spring of 2018, I worked on my Senior Honors project to use hypervolume methods to explore the macroevolution of tetrapod life histories.
