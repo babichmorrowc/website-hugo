@@ -1,26 +1,26 @@
 +++
-title = "Example Talk"
+title = "Macroevolution of Dimensionless Life History Metrics in Tetrapods"
 date = 2017-01-01T00:00:00  # Schedule page publish date.
 draft = false
 
 # Talk start and end times.
 #   End time can optionally be hidden by prefixing the line with `#`.
-time_start = 2030-06-01T13:00:00
-time_end = 2030-06-01T15:00:00
+time_start = 2018-05-01T13:00:00
+# time_end = 2030-06-01T15:00:00
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
-authors = []
+authors = ["Cecina Babich Morrow", "Drew Kerkhoff", "Morgan Ernest"]
 
 # Abstract and optional shortened version.
-abstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellus ac convallis placerat. Proin tincidunt magna sed ex sollicitudin condimentum. Sed ac faucibus dolor, scelerisque sollicitudin nisi. Cras purus urna, suscipit quis sapien eu, pulvinar tempor diam."
-abstract_short = "An example talk using Academic's Markdown slides feature."
+abstract = "Organisms’ life history traits quantify their fitness strategies to navigate various energy allocation trade-offs between growth and reproduction. Eric Charnov presented three dimensionless metrics life history metrics that represent key life history trade-offs: lifetime reproductive effort (LRE), relative reproductive lifespan (RRL), and relative offspring size (ROS). These three metrics are theorized to be invariant with body mass, thus enabling comparisons of organisms across the body mass continuum. We use these metrics, in addition to body mass, to classify life history strategies across the four major classes of tetrapods: amphibians, reptiles, mammals, and birds. First, we assess body mass invariance of LRE, RRL, and ROS in 113 amphibians, 491 reptiles, 843 mammals, and 171 birds. We find that, although the metrics are not consistently invariant across classes, all three exhibit qualities of invariance in at least one class and LRE and RRL display invariant behavior in the majority of tetrapod classes. Second, we investigate how the traits have evolved in concert with body mass, either to maintain or disrupt the patterns of invariance we observe. Finally, we compare the values of these metrics and their combinations across the four classes of tetrapods. LRE, RRL, and ROS delineate a space in which the major tetrapod clades occupy mostly unique subspaces. These distinctions in combinations of life history strategies provide us with a framework to understand the impact of major evolutionary transitions in energetics, physiology, and ecology."
+# abstract_short = "An example talk using Academic's Markdown slides feature."
 
 # Name of event and optional event URL.
-event = "Academic Theme Conference"
-event_url = "https://example.org"
+event = "Kenyon College Senior Honors Presentations"
+# event_url = "https://example.org"
 
 # Location of event.
-location = "London, United Kingdom"
+location = "Gambier, OH"
 
 # Is this a selected talk? (true/false)
 selected = false
@@ -31,11 +31,11 @@ selected = false
 #   E.g. `projects = ["deep-learning"]` references 
 #   `content/project/deep-learning/index.md`.
 #   Otherwise, set `projects = []`.
-projects = ["internal-project"]
+projects = ["life_history"]
 
 # Tags (optional).
 #   Set `tags = []` for no tags, or use the form `tags = ["A Tag", "Another Tag"]` for one or more tags.
-tags = []
+tags = ["life history", "hypervolume"]
 
 # Slides (optional).
 #   Associate this talk with Markdown slides.
@@ -43,7 +43,7 @@ tags = []
 #   E.g. `slides = "example-slides"` references 
 #   `content/slides/example-slides.md`.
 #   Otherwise, set `slides = ""`.
-slides = "example-slides"
+# slides = "example-slides"
 
 # Links (optional).
 url_pdf = ""
@@ -58,21 +58,12 @@ math = true
 # To use, add an image named `featured.jpg/png` to your page's folder. 
 [image]
   # Caption (optional)
-  caption = "Image credit: [**Unsplash**](https://unsplash.com/photos/bzdhc5b3Bxs)"
+  # caption = "Image credit: [**Unsplash**](https://unsplash.com/photos/bzdhc5b3Bxs)"
 
   # Focal point (optional)
   # Options: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight
   focal_point = "Right"
+  
 +++
 
-{{% alert note %}}
-Click on the **Slides** button above to view the built-in slides feature.
-{{% /alert %}}
-
-Slides can be added in a few ways:
-
-- **Create** slides using Academic's *Slides* feature and link using `url_slides` parameter in the front matter of the talk file
-- **Upload** an existing slide deck to `static/` and link using `url_slides` parameter in the front matter of the talk file
-- **Embed** your slides (e.g. Google Slides) or presentation video on this page using [shortcodes](https://sourcethemes.com/academic/docs/writing-markdown-latex/).
-
-Further talk details can easily be added to this page using *Markdown* and $\rm \LaTeX$ math code.
+<p><iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTsSj-oftLksGEKTkzCoBSIpzooO61ZMGAUzoGBv7u20OzMQK8ctX3gCpWTMm4UowrrWumFrdQsY0Cd/embed?start=false&loop=false&delayms=5000" frameborder="0" width="800" height="600" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></p>
