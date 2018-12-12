@@ -1,6 +1,6 @@
 +++
-title = "Macroevolution of Dimensionless Life History Metrics in Tetrapods"
-date = 2017-01-01T00:00:00  # Schedule page publish date.
+title = "Talk: Macroevolution of dimensionless life history metrics in tetrapods"
+date = 2018-05-01T00:00:00  # Schedule page publish date.
 draft = false
 
 # Talk start and end times.
