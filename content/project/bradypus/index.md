@@ -1,6 +1,6 @@
 +++
 # Project title.
-title = "Distribution modelling of Bradypus"
+title = "Distribution modeling of Bradypus"
 
 # Date this page was created.
 date = 2018-09-27T00:00:00
@@ -10,7 +10,7 @@ summary = "Species distribution modelling of *Bradypus variegatus*, *B. tridacty
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`
-tags = ["species distribution modelling", "Bradypus", "biogeography"]
+tags = ["species distribution modeling", "Bradypus", "biogeography"]
 
 # Optional external URL for project (replaces project detail page).
 external_link = ""
@@ -37,7 +37,7 @@ url_code = ""
 # To use, add an image named `featured.jpg/png` to your project's folder. 
 [image]
   # Caption (optional)
-  caption = "Photo by rawpixel on Unsplash"
+  caption = "Photo by James Morrow"
   
   # Focal point (optional)
   # Options: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight

@@ -49,8 +49,8 @@ filter_default = 0
   tag = "life history"
   
 [[filter]]
-  name = "Species Distribution Modelling"
-  tag = "species distribution modelling"
+  name = "Species Distribution Modeling"
+  tag = "species distribution modeling"
 
 [[filter]]
   name = "Other"
