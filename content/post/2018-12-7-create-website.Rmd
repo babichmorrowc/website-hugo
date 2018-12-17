@@ -10,7 +10,7 @@ tags: ["R", "GitHub", "website"]
 knitr::opts_chunk$set(collapse = TRUE)
 ```
 
-![](/img/website_fig.png){ height=50% }
+<img class="special-img-class" style="width:75%" src="/img/website_fig.png" />
 
 ## Getting started
 

@@ -19,7 +19,7 @@ height = "600px"
 # Duplicate an `[[item]]` block to add more slides.
 [[item]]
 #  title = "Hello"
-  #content = "Rocky Mountain Biological Laboratory"
+  #content = "RMBL"
   #align = "right"  # Choose `center`, `left`, or `right`.
 
   # Overlay a color or image (optional).
@@ -47,7 +47,7 @@ height = "600px"
   
 [[item]]
 #  title = "Hello"
-  #content = "Rocky Mountain Biological Laboratory"
+  #content = "eco phys lab bird"
   #align = "right"  # Choose `center`, `left`, or `right`.
 
   # Overlay a color or image (optional).
@@ -58,18 +58,18 @@ height = "600px"
   
 [[item]]
 #  title = "Hello"
-  #content = "Rocky Mountain Biological Laboratory"
+  #content = "sloth in tree"
   #align = "right"  # Choose `center`, `left`, or `right`.
 
   # Overlay a color or image (optional).
   #   Deactivate an option by commenting out the line, prefixing it with `#`.
   overlay_color = "#666"  # An HTML color value.
-  overlay_img = "headers/sloth_tree.jpg"  # Image path relative to your `static/img/` folder.
+  overlay_img = "headers/sloth_tree.JPG"  # Image path relative to your `static/img/` folder.
   overlay_filter = 0  # Darken the image. Value in range 0-1.
   
 [[item]]
 #  title = "Hello"
-  #content = "Rocky Mountain Biological Laboratory"
+  #content = "frog"
   #align = "right"  # Choose `center`, `left`, or `right`.
 
   # Overlay a color or image (optional).
@@ -80,7 +80,7 @@ height = "600px"
 
 [[item]]
   #title = "Right"
-  #content = "New York City"
+  #content = "double rainbow"
   #align = "right"
 
   overlay_color = "#666"  # An HTML color value.
