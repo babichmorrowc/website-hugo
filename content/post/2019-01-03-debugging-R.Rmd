@@ -2,12 +2,8 @@
 title: Debugging in R
 author: "Cecina Babich Morrow"
 date: 2019-01-03T21:13:14-05:00
-slug: debug-R
 categories: ["R"]
 tags: ["R"]
-image:
-  caption: ''
-  focal_point: ''
 ---
 
 <figure>
