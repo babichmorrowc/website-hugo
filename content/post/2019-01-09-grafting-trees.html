@@ -1,5 +1,5 @@
 ---
-title: Grafting phylogenies
+title: "Grafting phylogenies"
 author: "Cecina Babich Morrow"
 date: 2019-01-18T21:13:14-05:00
 categories: ["R", "phylogenetics", "evolution"]
@@ -30,31 +30,31 @@ Figure 1 from Uyeda et al. 2017
 <h1>Into the code</h1>
 <p>Since my easy solution didn’t pan out and I couldn’t get enough information from the supplemental material for the paper to replicate their analyses, I looked on GitHub to try to find Uyeda’s code. Hooray for GitHub once again, because the repository for the paper can be found here: <a href="https://github.com/uyedaj/bmr" class="uri">https://github.com/uyedaj/bmr</a>. The <a href="https://github.com/uyedaj/bmr/blob/master/R/ManuscriptNotebook.Rmd">RMarkdown</a> details the analyses for the paper, including the process for making the full tree.</p>
 <p>Start with loading the necessary packages.</p>
-<pre class="r"><code>library(phytools)</code></pre>
-<pre><code>## Loading required package: ape</code></pre>
-<pre><code>## Loading required package: maps</code></pre>
-<pre class="r"><code>library(geiger)</code></pre>
+<pre class="r"><code>library(phytools)
+## Loading required package: ape
+## Loading required package: maps
+library(geiger)</code></pre>
 <div id="the-original-phylogenies" class="section level2">
 <h2>The original phylogenies</h2>
 <p>I was working with four separate phylogenies: amphibians, squamates, birds, and mammals. For amphibians, I used a congruified time-tree from the <code>PhyloOrchard</code> package (O’Meara et al. 2013) that was constructed using the Alfaro et al. timetree of gnathostomes (Alfaro et al. 2009) as the reference and the Pyron and Wiens amphibian phylogeny as the target (Pyron and Wiens 2011).</p>
-<pre class="r"><code>length(amphibiantree$tip.label)</code></pre>
-<pre><code>## [1] 2871</code></pre>
-<pre class="r"><code>plot(amphibiantree, type = &quot;fan&quot;, show.tip.label = FALSE)</code></pre>
+<pre class="r"><code>length(amphibiantree$tip.label)
+## [1] 2871
+plot(amphibiantree, type = &quot;fan&quot;, show.tip.label = FALSE)</code></pre>
 <p><img src="/post/2019-01-09-grafting-trees_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>For squamates, I used the Zheng and Wiens time-calibrated phylogeny (Zheng and Wiens 2016).</p>
-<pre class="r"><code>length(squamatetree$tip.label)</code></pre>
-<pre><code>## [1] 378</code></pre>
-<pre class="r"><code>plot(squamatetree, type = &quot;fan&quot;, show.tip.label = FALSE)</code></pre>
+<pre class="r"><code>length(squamatetree$tip.label)
+## [1] 378
+plot(squamatetree, type = &quot;fan&quot;, show.tip.label = FALSE)</code></pre>
 <p><img src="/post/2019-01-09-grafting-trees_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>For birds, I used the Jetz phylogeny (Jetz et al. 2012).</p>
-<pre class="r"><code>length(birdtree$tip.label)</code></pre>
-<pre><code>## [1] 9993</code></pre>
-<pre class="r"><code>plot(birdtree, type = &quot;fan&quot;, show.tip.label = FALSE)</code></pre>
+<pre class="r"><code>length(birdtree$tip.label)
+## [1] 9993
+plot(birdtree, type = &quot;fan&quot;, show.tip.label = FALSE)</code></pre>
 <p><img src="/post/2019-01-09-grafting-trees_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>For mammals, I used the supertree from Fritz et al. 2009.</p>
-<pre class="r"><code>length(mammaltree$tip.label)</code></pre>
-<pre><code>## [1] 5020</code></pre>
-<pre class="r"><code>plot(mammaltree, type = &quot;fan&quot;, show.tip.label = FALSE)</code></pre>
+<pre class="r"><code>length(mammaltree$tip.label)
+## [1] 5020
+plot(mammaltree, type = &quot;fan&quot;, show.tip.label = FALSE)</code></pre>
 <p><img src="/post/2019-01-09-grafting-trees_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="reading-in-trees" class="section level2">

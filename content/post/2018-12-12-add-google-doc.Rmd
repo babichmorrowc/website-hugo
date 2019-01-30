@@ -1,14 +1,14 @@
 ---
-title: Adding Google Docs to website
+title: "Adding Google Docs to website"
 author: "Cecina Babich Morrow"
 date: 2018-12-12T21:13:14-05:00
-slug: add-google-doc
 categories: ["R", "GitHub"]
 tags: ["R", "GitHub", "website"]
-image:
-  caption: ''
-  focal_point: ''
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
 
 <img class="special-img-class" style="width:75%" src="/img/google_docs_fig.png" />
 

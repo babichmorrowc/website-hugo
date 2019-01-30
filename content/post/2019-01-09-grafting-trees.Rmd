@@ -1,10 +1,15 @@
 ---
-title: Grafting phylogenies
+title: "Grafting phylogenies"
 author: "Cecina Babich Morrow"
 date: 2019-01-18T21:13:14-05:00
 categories: ["R", "phylogenetics", "evolution"]
 tags: ["R", "phylogenetics", "evolution"]
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
 
 <figure>
   <img class="special-img-class" style="width:100%" src="/img/bodymass_tetrapod_tree.png" />

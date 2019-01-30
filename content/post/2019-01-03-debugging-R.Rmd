@@ -1,10 +1,15 @@
 ---
-title: Debugging in R
+title: "Debugging in R"
 author: "Cecina Babich Morrow"
 date: 2019-01-03T21:13:14-05:00
 categories: ["R"]
 tags: ["R"]
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
 
 <figure>
   <img class="special-img-class" style="width:75%" src="/img/PhD_Debugging.png" />
