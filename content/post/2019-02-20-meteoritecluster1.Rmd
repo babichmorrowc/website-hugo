@@ -17,7 +17,7 @@ library(reticulate)
 
 
 <figure>
-  <img class="special-img-class" style="width:100%" src="/img/obj1_8bt_Fe.tif" />
+  <img class="special-img-class" style="width:100%" src="/img/obj1_8bt_Fe.png" />
   <figcaption>Intensity of iron in a meteorite.</figcaption>
 </figure>
 
