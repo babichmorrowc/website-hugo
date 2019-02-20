@@ -1,0 +1,75 @@
+---
+title: "Python in RMarkdown"
+author: "Cecina Babich Morrow"
+date: 2019-02-20T21:13:14-05:00
+categories: ["R", "Python"]
+tags: ["R", "Python", "website"]
+---
+
+
+
+<figure>
+<img class="special-img-class" style="width:100%" src="/img/reticulate.png" />
+<figcaption>
+The <code>reticulate</code> package logo. </figcatption>
+</figure>
+<div id="using-python-in-rmarkdown" class="section level2">
+<h2>Using Python in RMarkdown</h2>
+<p>In order to write blog posts using Python code, I wanted to figure out a way to include Python code chunks in RMarkdowns. When you insert a code chunk in RMarkdown, you have the option of specifying the language of that chunk: the default is R, but you can also insert a Bash, SQL, Python, etc. code chunk.</p>
+<p>When I attempted to insert a Python code chunk and import libraries, however, I kept getting the error:</p>
+<p><code>Error in py_run_string_impl(code, local, convert) :</code> <code>ImportError: No module named sklearn.cluster</code></p>
+<p>From running Python in Atom, I knew I had the <code>sklearn.cluster</code> module installed, so the problem must be in the connection between R and Python.</p>
+</div>
+<div id="reticulate" class="section level2">
+<h2><code>reticulate</code></h2>
+<p>The <code>reticulate</code> package in R (website <a href="https://rstudio.github.io/reticulate/index.html">here</a> allows R to interact with Python. I installed the package from RStudio.</p>
+<pre class="r"><code># install.packages(&quot;reticulate&quot;)
+library(reticulate)</code></pre>
+</div>
+<div id="changing-python-versions" class="section level2">
+<h2>Changing Python versions</h2>
+<p>Installing <code>reticulate</code> still didn’t allow me to knit the RMarkdown with a Python code chunk, however. I followed the instructions in <a href="https://rstudio-pubs-static.s3.amazonaws.com/397064_bd288708515c4b71a6e78dfe91b8bb99.html">this post</a> by Pablo Franco to check the Python version that <code>reticulate</code> was using:</p>
+<pre class="r"><code>py_discover_config()</code></pre>
+<p>I ended up with the following output:</p>
+<pre><code>python:         /usr/bin/python
+libpython:      /System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/config/libpython2.7.dylib
+pythonhome:     /System/Library/Frameworks/Python.framework/Versions/2.7:/System/Library/Frameworks/Python.framework/Versions/2.7
+version:        2.7.10 (default, Aug 17 2018, 19:45:58)  [GCC 4.2.1 Compatible Apple LLVM 10.0.0 (clang-1000.0.42)]
+numpy:          /System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/numpy
+numpy_version:  1.8.0</code></pre>
+<p>I wanted to be running Python version 3.6, which was the version I had installed using Anaconda, so I needed to change the path.</p>
+<div id="set-up-chunk" class="section level3">
+<h3>Set-up chunk</h3>
+<p>I discovered that you can set the path to a different installation of Python by modifying the setup chunk at the start of the RMarkdown. According to the <a href="https://bookdown.org/yihui/rmarkdown/language-engines.html"><code>bookdown</code> website</a>, the default used is Python 2.</p>
+<p>My default version of this set-up chunk looks like this:</p>
+<pre><code>{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)</code></pre>
+<p>You can set the chunk option <code>engine.path</code> to specify the path to the engine interpreter and change it from the default Python 2.</p>
+</div>
+<div id="finding-python-path" class="section level3">
+<h3>Finding Python path</h3>
+<p>I now needed to find the actual path to Python that I wanted to use. I did this by opening up Python separately from RStudio (I used Atom for this) and running the following (I got the code for this from <a href="https://www.dummies.com/programming/python/how-to-find-path-information-in-python/">here</a>):</p>
+<pre class="python"><code>import sys
+for p in sys.path:
+    print(p)
+## /anaconda3/bin
+## /anaconda3/lib/python36.zip
+## /anaconda3/lib/python3.6
+## /anaconda3/lib/python3.6/lib-dynload
+## /anaconda3/lib/python3.6/site-packages
+## /anaconda3/lib/python3.6/site-packages/aeosa
+## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/reticulate/python</code></pre>
+<p>From this information, I could tell I wanted to use the path <code>/anaconda3/lib/python3.6</code>, rather than <code>/usr/bin/python</code>, which is what RMarkdown had originally been using. I modified by set-up chunk to look like this:</p>
+<pre><code>{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, engine.path = list(python = &#39;/anaconda3/bin/python3.6&#39;))</code></pre>
+</div>
+</div>
+<div id="other-options" class="section level2">
+<h2>Other options</h2>
+<p>This solution enabled me to knit RMarkdowns with Python code chunks! It changes the engine interpreter globally, which you could do for multiple engines simultaneously, like Python and Ruby, for example:</p>
+<pre><code>knitr::opts_chunk$set(engine.path = list(
+  python = &#39;/anaconda3/bin/python3.6&#39;,
+  ruby = &#39;/usr/local/bin/ruby&#39;
+))</code></pre>
+<p>Alternatively, you can specify the engine interpreter locally in each code chunk by starting the chunk with <code>{python, engine.path = '/anaconda3/bin/python3.6</code>}, for example.</p>
+</div>

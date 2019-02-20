@@ -1,0 +1,54 @@
+---
+title: "Hacking Meteorites: Using DBSCAN for mineral analysis"
+author: "Cecina Babich Morrow"
+date: 2019-02-20T21:13:14-05:00
+categories: ["Hackathon", "Meteorites", "Python"]
+tags: ["hackathon", "meteorites", "earth science", "Python"]
+draft: true
+---
+
+
+
+<figure>
+<img class="special-img-class" style="width:100%" src="/img/obj2_cluster_pred.png" />
+</figure>
+<p>Earlier this month I participated in the American Museum of Natural History’s annual hackathon (see my last <a href="https://babichmorrowc.github.io/post/2019-02-14-hackathon/">post</a> for details about the event overall). During the hackathon, I worked with Katy Abbott, another Helen Fellow at the museum with me, to use a machine learning algorithm called DBSCAN to tackle our challenge.</p>
+<div id="challenge-accepted" class="section level2">
+<h2>Challenge accepted</h2>
+<p>Our team, consisting of Peter Kang, Jackson Lee, Jeremy Neiman, John Underwood, Katy Abbott, Meret Götschel, and myself, chose to work on the <a href="https://github.com/amnh/HackTheSolarSystem/wiki/Meteorite-Mineral-Mapping">Meteorite Mineral Mapping challenge</a>. For this challenge, our museum stakeholders, Marina Gemma and Sam Alpert, wanted a way to identify the mineral composition of meteorites.</p>
+</div>
+<div id="pixels-to-percents" class="section level2">
+<h2>Pixels to percents</h2>
+<p>The scientists scan meteorites with an electron microprobe, a device that provides the intensity of x-rays emitted from certain elements. The electron microprobe results in images with grayscale intensities corresponding to these x-ray intensities on a pixel-by-pixel basis.</p>
+<figure>
+<img class="special-img-class" style="width:100%" src="/img/meteorite_pixel_intensity.png" />
+<figcaption>
+Images of a meteorite produced by the electron microprobe showing pixel intensities for each of 10 elements - brighter grayscale values indicate greater amounts of that element in a pixel.
+</figcaption>
+</figure>
+<p>Our first step was to convert these pixel intensities to the percent weight of each element in the mineral at that pixel. To do that, we referred to a set of standard images taken of minerals with a known proportion of each element. For example, the image below shows the pixel intensities of iron in 8 minerals: you can see that the pixels are brightest in Fe, or pure iron, and lower in iron oxide (<span class="math inline">\(\text{Fe}_3\text{O}_4\)</span>) and troilite, or iron sulfide (FeS).</p>
+<figure>
+<img class="special-img-class" style="width:100%" src="/img/iron_standard.png" />
+<figcaption>
+Standard scan of the intensity of iron in each of 8 known minerals.
+</figcaption>
+</figure>
+<p>We can relate the intensity of the iron pixels in the Fe mineral, for example, to the percent weight in that mineral (100%, since iron is the only element in Fe). There is a linear relationship between pixel intensity and percent weight, so we used linear regression to find the slope of this relationship.</p>
+<pre class="python"><code># import libraries
+from sklearn.cluster import DBSCAN as dbscan
+import pandas as pd
+import numpy as np
+from sklearn import metrics
+import matplotlib.pyplot as plt
+import matplotlib.colors
+from sklearn.decomposition import PCA
+from pathlib import Path
+from skimage.io import imread, imshow
+import numpy.ma as ma
+from collections import Counter</code></pre>
+<p>(Note: I was able to add the above Python chunk in R by following <a href="">these instructions</a>)</p>
+</div>
+<div id="further-reading" class="section level2">
+<h2>Further Reading</h2>
+<p>Jeremy Neiman, one of my team members, wrote an excellent <a href="https://towardsdatascience.com/machine-learning-meteorites-fcd8f6859ed7">post</a> describing the challenge in further detail, so check that out for more information.</p>
+</div>
