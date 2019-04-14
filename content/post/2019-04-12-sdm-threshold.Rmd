@@ -12,7 +12,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 <figure>
-  <img class="special-img-class" style="width:60%" src="/img/thresholds.png" />
+  <img class="special-img-class" style="width:100%" src="/img/thresholds.png" />
   <figcaption>From left to right: unmodified species distribution model, minimum training presence threshold, and 10th percentile threshold.</figcaption>
 </figure>
 
