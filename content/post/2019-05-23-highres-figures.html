@@ -1,0 +1,51 @@
+---
+title: "Setting resolution and aspect ratios in R"
+author: "Cecina Babich Morrow"
+date: 2019-04-12T21:13:14-05:00
+categories: ["R"]
+tags: ["R"]
+draft: false
+---
+
+
+
+<figure>
+<img class="special-img-class" style="width:60%" src="/img/resolution_comic.jpg" />
+<figcaption>
+Bizarro.
+</figcaption>
+</figure>
+<div id="inspiration-for-this-post" class="section level2">
+<h2>Inspiration for this post</h2>
+<p>I recently needed to make some figures to present and noticed that the ones I was importing from saved R plots were showing up fuzzy on the presentation. Shortly afterwards, I had interns trying to generate figures with the same aspect ratio from different computers. I did a little digging and found this method for saving figures with specified resolutions and aspect ratios.</p>
+</div>
+<div id="solution" class="section level2">
+<h2>Solution</h2>
+<p>In order to save your figure with a certain size and resolution, you just need to include your code for plotting between the two lines below:</p>
+<pre class="r"><code># To save a .png file:
+png(&quot;your_image.png&quot;, units = &quot;in&quot;, width = 5, height = 4, res = 300)
+# your plotting code here
+dev.off()</code></pre>
+<p>You can also save .bmp, .jpeg, and .tiff files in the same way with the <code>bmp</code>, <code>jpeg</code> and <code>tiff</code> functions.</p>
+</div>
+<div id="example" class="section level2">
+<h2>Example</h2>
+<p>To see this in practice, we can plot some data from the iris dataset the “regular” way:</p>
+<pre class="r"><code>pairs(iris[,1:4], col = iris$Species)</code></pre>
+<p><img src="/post/2019-05-23-highres-figures_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Things look pretty nice in the plotting window, but when you save that figure from RStudio, this is the result:</p>
+<figure>
+<img class="special-img-class" style="width:80%" src="/img/lowres.png" />
+</figure>
+<p>To get rid of that graininess, we can instead save the figure in the following way:</p>
+<pre class="r"><code>png(&quot;highres.png&quot;, units = &quot;in&quot;, width = 5, height = 4, res = 300)
+pairs(iris[,1:4], col = iris$Species)
+dev.off()
+## quartz_off_screen 
+##                 2</code></pre>
+<p>The resulting figure is much clearer and ready to be inserted in presentations or publications!</p>
+<figure>
+<img class="special-img-class" style="width:80%" src="/img/highres.png" />
+</figure>
+<p>You can also change the aspect ratio by modifying the <code>height</code> and <code>width</code> arguments. You can leave the units in inches or set it to pixels (<code>&quot;px&quot;</code>), centimeters (<code>&quot;cm&quot;</code>), or millimeters (<code>&quot;mm&quot;</code>).</p>
+</div>
