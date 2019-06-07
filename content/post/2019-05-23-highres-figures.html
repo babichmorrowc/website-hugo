@@ -1,7 +1,7 @@
 ---
 title: "Setting resolution and aspect ratios in R"
 author: "Cecina Babich Morrow"
-date: 2019-04-12T21:13:14-05:00
+date: 2019-05-23T21:13:14-05:00
 categories: ["R"]
 tags: ["R"]
 draft: false
@@ -40,9 +40,7 @@ dev.off()</code></pre>
 <p>To get rid of that graininess, we can instead save the figure in the following way:</p>
 <pre class="r"><code>png(&quot;highres.png&quot;, units = &quot;in&quot;, width = 5, height = 4, res = 300)
 pairs(iris[,1:4], col = iris$Species)
-dev.off()
-## quartz_off_screen 
-##                 2</code></pre>
+dev.off()</code></pre>
 <p>The resulting figure is much clearer and ready to be inserted in presentations or publications!</p>
 <figure>
 <img class="special-img-class" style="width:80%" src="/img/highres.png" />

@@ -1,7 +1,7 @@
 ---
 title: "Setting resolution and aspect ratios in R"
 author: "Cecina Babich Morrow"
-date: 2019-04-12T21:13:14-05:00
+date: 2019-05-23T21:13:14-05:00
 categories: ["R"]
 tags: ["R"]
 draft: false
@@ -49,7 +49,7 @@ Things look pretty nice in the plotting window, but when you save that figure fr
 
 To get rid of that graininess, we can instead save the figure in the following way:
 
-```{r}
+```{r, eval = FALSE}
 png("highres.png", units = "in", width = 5, height = 4, res = 300)
 pairs(iris[,1:4], col = iris$Species)
 dev.off()
