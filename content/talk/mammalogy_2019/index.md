@@ -47,7 +47,7 @@ tags = ["Bradypus", "species distribution modeling", "biogeography", "machine le
 # slides = "example-slides"
 
 # Links (optional).
-url_pdf = ""
+url_pdf = "Mammalogy_poster.pdf"
 url_slides = ""
 url_video = ""
 url_code = ""
