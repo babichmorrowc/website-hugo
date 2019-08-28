@@ -15,4 +15,4 @@ weight = 50
 
 +++
 
-I teach high school women computer programming skills. You can find a description of their internship and lesson plans in the following GitHub repository: https://github.com/babichmorrowc/BridgeUP-STEM-BabichMorrow.
+I teach high school women computer programming skills. You can find a description of their internship and lesson plans in the following GitHub repository: https://github.com/babichmorrowc/SlothSquad2018-9. If you have any questions about these resources, please let me know!
