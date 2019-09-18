@@ -120,8 +120,8 @@ for element in elements:
     coefs[element] = float(reg.coef_)
 # print the coefficients for each element
 print(coefs)
-##              Mg        Ni   Al    ...            S        Ti        Si
-## coeff  0.118599  0.328796  NaN    ...     0.469225  0.077627  0.097906
+##              Mg        Ni   Al        Fe  ...    P         S        Ti        Si
+## coeff  0.118599  0.328796  NaN  0.320081  ...  NaN  0.469225  0.077627  0.097906
 ## 
 ## [1 rows x 10 columns]</code></pre>
 <p>Thus <code>coefs</code> contains the coeficient relating pixel intensity of an element to its percent weight in the mineral: for example, the percent weight of Mg in an mineral is equal to 0.118599 times its pixel intensity.</p>
@@ -141,24 +141,24 @@ df_obj1 = df_obj1.fillna(0)
 df_obj1.drop(&#39;Unnamed: 0&#39;, axis = 1, inplace = True)
 print(df_obj1.head())
 # read file of predicted percent weights for meteorite 2
-##          Ca        Ti   Al   Cr    ...       P         Fe        Ni        Mg
-## 0  8.595462  0.698642  0.0  0.0    ...     0.0  51.212925  0.986388  5.692734
-## 1  4.512618  0.543388  0.0  0.0    ...     0.0  53.453490  1.972775  2.846367
-## 2  2.578639  0.465761  0.0  0.0    ...     0.0  63.696075  3.287959  1.067388
-## 3  2.148866  0.310508  0.0  0.0    ...     0.0  57.934621  3.945550  0.237197
-## 4  1.719092  0.543388  0.0  0.0    ...     0.0  58.254702  3.616755  0.118599
+##          Ca        Ti   Al   Cr  ...    P         Fe        Ni        Mg
+## 0  8.595462  0.698642  0.0  0.0  ...  0.0  51.212925  0.986388  5.692734
+## 1  4.512618  0.543388  0.0  0.0  ...  0.0  53.453490  1.972775  2.846367
+## 2  2.578639  0.465761  0.0  0.0  ...  0.0  63.696075  3.287959  1.067388
+## 3  2.148866  0.310508  0.0  0.0  ...  0.0  57.934621  3.945550  0.237197
+## 4  1.719092  0.543388  0.0  0.0  ...  0.0  58.254702  3.616755  0.118599
 ## 
 ## [5 rows x 10 columns]
 df_obj2 = pd.read_csv(&#39;/Users/hellenfellows/Desktop/website-hugo/static/mineralmapping/predicted_percentweight_obj2.csv&#39;)
 df_obj2 = df_obj2.fillna(0)
 df_obj2.drop(&#39;Unnamed: 0&#39;, axis = 1, inplace = True)
 print(df_obj2.head())
-##           Si    P   Cr   Al    ...            Ca        Mg        Ni         Fe
-## 0  22.322556  0.0  0.0  0.0    ...      0.429773  1.304585  4.931938  14.403635
-## 1  11.650808  0.0  0.0  0.0    ...      0.000000  0.355796  2.630367  43.530986
-## 2   4.601580  0.0  0.0  0.0    ...      0.429773  0.000000  1.643979  54.093652
-## 3   2.349743  0.0  0.0  0.0    ...      0.000000  0.000000  0.986388  57.294460
-## 4   0.783248  0.0  0.0  0.0    ...      0.000000  0.000000  1.315183  48.972359
+##           Si    P   Cr   Al  ...        Ca        Mg        Ni         Fe
+## 0  22.322556  0.0  0.0  0.0  ...  0.429773  1.304585  4.931938  14.403635
+## 1  11.650808  0.0  0.0  0.0  ...  0.000000  0.355796  2.630367  43.530986
+## 2   4.601580  0.0  0.0  0.0  ...  0.429773  0.000000  1.643979  54.093652
+## 3   2.349743  0.0  0.0  0.0  ...  0.000000  0.000000  0.986388  57.294460
+## 4   0.783248  0.0  0.0  0.0  ...  0.000000  0.000000  1.315183  48.972359
 ## 
 ## [5 rows x 10 columns]</code></pre>
 <p>Each row in these .csv files corresponds to a pixel in the original image. Each value gives the predicted percent weight of a given element in that pixel.</p>

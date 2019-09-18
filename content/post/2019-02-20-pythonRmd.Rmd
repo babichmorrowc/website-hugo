@@ -7,7 +7,7 @@ tags: ["R", "Python", "website"]
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(collapse = TRUE, engine.path = list(python = '/anaconda3/bin/python3.6'))
+knitr::opts_chunk$set(collapse = TRUE, engine.path = list(python = '/Applications/anaconda3/bin/python3'))
 ```
 
 

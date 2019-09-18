@@ -52,12 +52,12 @@ knitr::opts_chunk$set(collapse = TRUE)</code></pre>
 <pre class="python"><code>import sys
 for p in sys.path:
     print(p)
-## /anaconda3/bin
-## /anaconda3/lib/python36.zip
-## /anaconda3/lib/python3.6
-## /anaconda3/lib/python3.6/lib-dynload
-## /anaconda3/lib/python3.6/site-packages
-## /anaconda3/lib/python3.6/site-packages/aeosa
+## /Applications/anaconda3/bin
+## /Applications/anaconda3/lib/python37.zip
+## /Applications/anaconda3/lib/python3.7
+## /Applications/anaconda3/lib/python3.7/lib-dynload
+## /Applications/anaconda3/lib/python3.7/site-packages
+## /Applications/anaconda3/lib/python3.7/site-packages/aeosa
 ## /Library/Frameworks/R.framework/Versions/3.5/Resources/library/reticulate/python</code></pre>
 <p>From this information, I could tell I wanted to use the path <code>/anaconda3/lib/python3.6</code>, rather than <code>/usr/bin/python</code>, which is what RMarkdown had originally been using. I modified by set-up chunk to look like this:</p>
 <pre><code>{r setup, include=FALSE}
