@@ -1,12 +1,12 @@
 +++
 title = "Poster: Improving species range estimates for an arboreal species group with a parapatric distribution"
-date = 2019-06-29T00:00:00  # Schedule page publish date.
+publishDate = 2019-06-29T00:00:00  # Schedule page publish date.
 draft = false
 
 # Talk start and end times.
 #   End time can optionally be hidden by prefixing the line with `#`.
-time_start = 2019-06-29
-# time_end = 2030-06-01T15:00:00
+date = 2019-06-29
+# date_end = 2030-06-01T15:00:00
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
 authors = ["Cecina Babich Morrow", "Peter J. Galante", "Jamie M. Kass", "Mary E. Blair"]
@@ -14,7 +14,7 @@ authors = ["Cecina Babich Morrow", "Peter J. Galante", "Jamie M. Kass", "Mary E.
 # Abstract and optional shortened version.
 abstract = "Three-toed sloths (genus Bradypus) include three species distributed parapatrically across mainland Central and South America: B. variegatus, B. tridactylus, and B. torquatus. The distributions of these arboreal species are constrained by forest cover, as well as by the presence of their parapatric congeners. Traditional species distribution modeling (SDM) techniques typically rely on abiotic variables without accounting for the effects of competition on range boundaries. We sought to improve range predictions for Bradypus by using the ranges of the parapatric congeners to mask abiotic SDM range predictions. To account for the presence of parapatric species, we used support vector machines (SVMs) to delineate borders between ranges using occurrence data and predicted SDM habitat suitabilities for each species. We found that the SVM range estimates were more closely aligned with ecological expectations than those generated from unmodified species distribution model predictions. The SVM estimates were also less likely to include occurrences of parapatric species in the predicted range and better accounted for known contact zones between species. Finally, we masked the range estimates with a forest cover threshold calculated by temporally matching occurrence points with remotely sensed forest cover data. This mask quantified the differential effects of deforestation and habitat fragmentation across the three species’ ranges."
 
-abstract_short = "Using support vector machines to mask out biotically unsuitable areas improves species range estimates for *Bradypus*."
+summary = "Using support vector machines to mask out biotically unsuitable areas improves species range estimates for *Bradypus*."
 
 # Name of event and optional event URL.
 event = "99th Annual Meeting of the American Society of Mammalogists"

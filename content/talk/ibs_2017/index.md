@@ -1,12 +1,12 @@
 +++
 title = "Poster: Quantifying species tolerances and functional diversity using n-dimensional hypervolumes: a comparison of methods"
-date = 2017-01-01T00:00:00  # Schedule page publish date.
+publishDate = 2017-01-01T00:00:00  # Schedule page publish date.
 draft = false
 
 # Talk start and end times.
 #   End time can optionally be hidden by prefixing the line with `#`.
-time_start = 2017-01-01T00:00:00
-# time_end = 2030-06-01T15:00:00
+date = 2017-01-01T00:00:00
+# date_end = 2030-06-01T15:00:00
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
 authors = ["Cecina Babich Morrow", "Benjamin Blonder", "Brian Maitner", "Brian Enquist", "Andrew Kerkhoff"]
