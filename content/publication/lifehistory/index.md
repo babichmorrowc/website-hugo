@@ -23,7 +23,7 @@ publication_short = "In *bioRxiv*."
 
 # Abstract and optional shortened version.
 abstract = "Life history traits represent organism's strategies to navigate the fitness trade-offs between survival and reproduction. Eric Charnov developed three dimensionless metrics to quantify fundamental life history trade-offs. Lifetime reproductive effort (LRE), relative reproductive lifespan (RRL), and relative offspring size (ROS), together with body mass, can be used classify life history strategies across the four major classes of tetrapods: amphibians, reptiles, mammals, and birds. First, we investigate how the metrics have evolved in concert with body mass. In most cases, we find evidence for correlated evolution between body mass and the three metrics. Finally, we compare life history strategies across the four classes of tetrapods and find that LRE, RRL, and ROS delineate a space in which the major tetrapod clades occupy mostly unique subspaces. These distinct combinations of life history strategies provide us with a framework to understand the impact of major evolutionary transitions in energetics, physiology, and ecology."
-abstract_short = ""
+summary = ""
 
 # Is this a selected publication? (true/false)
 selected = false
