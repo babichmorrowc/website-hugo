@@ -1,16 +1,14 @@
 +++
 # Portfolio widget.
 widget = "portfolio"  # Do not modify this line!
+headless = true
 active = true  # Activate this widget? true/false
 weight = 40  # Order that this section will appear.
 
 title = "Projects"
 subtitle = ""
 
-# Order that this section will appear in.
-weight = 40
-
-content]
+[content]
   # Page type to display. E.g. project.
   page_type = "project"
   

@@ -1,5 +1,5 @@
 +++
-title = "PREPRINT: Macroevolution of dimensionless life history metrics in tetrapods"
+title = "Macroevolution of dimensionless life history metrics in tetrapods"
 date = 2019-01-16T00:00:00
 draft = false
 
@@ -11,11 +11,13 @@ authors = ["Cecina Babich Morrow", "Andrew J. Kerkhoff", "S.K. Morgan Ernest"]
 # 0 = Uncategorized
 # 1 = Conference paper
 # 2 = Journal article
-# 3 = Manuscript
+# 3 = Preprint / Working Paper
 # 4 = Report
 # 5 = Book
 # 6 = Book section
-publication_types = ["2"]
+# 7 = Thesis
+# 8 = Patent
+publication_types = ["3"]
 
 # Publication name and optional abbreviated version.
 publication = "In *bioRxiv*."
