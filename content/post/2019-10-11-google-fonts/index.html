@@ -5,16 +5,15 @@ date: 2019-10-11T21:13:14-05:00
 categories: ["R"]
 tags: ["R"]
 draft: false
+image:
+  placement: 1
+  caption: "In keeping with my Lego theme, this statue from Nathan Sawaya's exhibition at the New York Hall of Science represents some of the frustrations of adding fonts to R."
+  focal_point: ''
+  preview_only: false
 ---
 
 
 
-<figure>
-<img class="special-img-class" style="width:60%" src="/img/lego_statue.jpg" />
-<figcaption>
-In keeping with my Lego theme, this statue from Nathan Sawaya’s exhibition at the New York Hall of Science represents some of the frustrations of adding fonts to R.
-</figcaption>
-</figure>
 <div id="inspiration-for-this-post" class="section level2">
 <h2>Inspiration for this post</h2>
 <p>I’ve been working on creating a visualization cookbook for R graphics (check out <a href="https://bbc.github.io/rcookbook/">this great example</a> from the BBC to see what I’m eventually going for). As part of this process, I wanted to be able to change the font of my plots to <a href="https://fonts.google.com/specimen/Source+Sans+Pro">Source Sans Pro</a>, which is a Google font.</p>
@@ -52,20 +51,19 @@ In keeping with my Lego theme, this statue from Nathan Sawaya’s exhibition at 
 <div id="example" class="section level2">
 <h2>Example</h2>
 <p>To continue with my Lego theme, I’ll demonstrate using this font on data from the <code>legocolors</code> package. We can make the following graph of approximate lego brick availability based on the year a brick was released (colored by the brick color!):</p>
-<pre class="r"><code>library(legocolors)</code></pre>
-<pre><code>## Warning: package &#39;legocolors&#39; was built under R version 3.5.2</code></pre>
-<pre class="r"><code>library(ggplot2)</code></pre>
-<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.5.2</code></pre>
-<pre class="r"><code>ggplot(legocolors, aes(x = year_released, y = bl_bp, colour = hex)) +
+<pre class="r"><code>library(legocolors)
+library(ggplot2)
+
+ggplot(legocolors, aes(x = year_released, y = bl_bp, colour = hex)) +
   geom_point() +
   scale_color_manual(values = legocolors$hex) +
   theme_minimal() +
   theme(legend.position = &quot;none&quot;, text = element_text(family = &quot;Source Sans Pro&quot;), plot.title = element_text(face = &quot;bold&quot;)) +
   labs(x = &quot;Year released&quot;, y = &quot;Brick availability&quot;, title = &quot;Lego availability&quot;, subtitle = &quot;All of the text is now in Source Sans Pro!&quot;)</code></pre>
 <pre><code>## Warning: Removed 3 rows containing missing values (geom_point).</code></pre>
-<p><img src="/post/2019-10-11-google_fonts_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="/post/2019-10-11-google-fonts/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 <div id="troubleshooting" class="section level2">
 <h2>Troubleshooting</h2>
-<p>This process is a little bit finicky, so there are certain errors that crop up frequently. For me, just restarting RStudio and/or my computer (or updating the computer, if necessary) has solved these. The most common errors are <code>No font could be found for family &quot;Source Sans Pro&quot;</code> and <code>&quot;Error in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : polygon edge not found&quot;</code>, both of which relate to R not being able to find the font. If the font is indeed installed on your computer (you can check this in Font Book, for a Mac), then restarting things should help R find the font.</p>
+<p>This process is a little bit finicky, so there are certain errors that crop up frequently. For me, just restarting RStudio and/or my computer (or updating the computer, if necessary) has solved these. The most common errors are <code>No font could be found for family "Source Sans Pro"</code> and <code>"Error in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : polygon edge not found"</code>, both of which relate to R not being able to find the font. If the font is indeed installed on your computer (you can check this in Font Book, for a Mac), then restarting things should help R find the font.</p>
 </div>

@@ -5,16 +5,16 @@ date: 2019-09-17T21:13:14-05:00
 categories: ["GitHub"]
 tags: ["GitHub"]
 draft: false
+image:
+  placement: 1
+  caption: 'From [xkcd](https://xkcd.com/1597/).'
+  focal_point: ''
+  preview_only: false
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 ```
-
-<figure>
-  <img class="special-img-class" style="width:60%" src="/img/xkcd_git.png" />
-  <figcaption>From [xkcd](https://xkcd.com/1597/).</figcaption>
-</figure>
 
 ## Inspiration for this post
 

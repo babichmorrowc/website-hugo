@@ -5,16 +5,16 @@ date: 2019-10-11T21:13:14-05:00
 categories: ["R"]
 tags: ["R"]
 draft: false
+image:
+  placement: 1
+  caption: "In keeping with my Lego theme, this statue from Nathan Sawaya's exhibition at the New York Hall of Science represents some of the frustrations of adding fonts to R."
+  focal_point: ''
+  preview_only: false
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-<figure>
-  <img class="special-img-class" style="width:60%" src="/img/lego_statue.jpg" />
-  <figcaption>In keeping with my Lego theme, this statue from Nathan Sawaya's exhibition at the New York Hall of Science represents some of the frustrations of adding fonts to R.</figcaption>
-</figure>
 
 ## Inspiration for this post
 

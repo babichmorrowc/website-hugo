@@ -5,16 +5,16 @@ date: 2019-09-26T21:13:14-05:00
 categories: ["R"]
 tags: ["R"]
 draft: false
+image:
+  placement: 1
+  caption: 'A lego fort that I constructed this summer with the help of a good friend (not particularly relevant to the post, except that I used a lego dataset for my example and legos are more photogenic than Mode databases).'
+  focal_point: ''
+  preview_only: false
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-<figure>
-  <img class="special-img-class" style="width:60%" src="/img/legos.jpg" />
-  <figcaption>A lego fort that I constructed this summer with the help of a good friend (not particularly relevant to the post, except that I used a lego dataset for my example and legos are more photogenic than Mode databases).</figcaption>
-</figure>
 
 ## Inspiration for this post
 
