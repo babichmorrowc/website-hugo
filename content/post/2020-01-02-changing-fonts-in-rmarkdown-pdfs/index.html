@@ -1,0 +1,60 @@
+---
+title: Changing fonts in RMarkdown PDFs
+author: ~
+date: '2020-01-02'
+slug: changing-fonts-in-rmarkdown-pdfs
+categories: ["R"]
+tags: ["R"]
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-01-02T10:22:14-05:00'
+featured: no
+image:
+  placement: 1
+  caption: 'Comic from [Pinterest](https://www.pinterest.com/pin/106819822383177324/?lp=true)'
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+
+
+<div id="inspiration-for-this-post" class="section level2">
+<h2>Inspiration for this post</h2>
+<p>After learning how to <a href="https://babichmorrowc.github.io/post/2019-10-11-google_fonts/">change the fonts within a graph</a> in R, I wanted to be able to change the fonts in the body of an RMarkdown to match. I specifically wanted to be able to knit an RMarkdown to PDF using the <a href="https://fonts.google.com/specimen/Source+Sans+Pro">Source Sans Pro</a> Google font, but these instructions should work for any Google font.</p>
+</div>
+<div id="cairo" class="section level2">
+<h2>Cairo</h2>
+<p>To embed custom fonts in PDFs, you can use the <a href="https://www.cairographics.org/">Cairo graphics library</a>. This library is installed with R, but if you are using a Mac, you do need to install <a href="https://www.xquartz.org/">XQuartz</a>. To check if you are able to run Cairo, you can run <code>capabilities()</code>:</p>
+<pre class="r"><code>capabilities()</code></pre>
+<pre><code>##        jpeg         png        tiff       tcltk         X11        aqua 
+##        TRUE        TRUE        TRUE        TRUE        TRUE        TRUE 
+##    http/ftp     sockets      libxml        fifo      cledit       iconv 
+##        TRUE        TRUE        TRUE        TRUE       FALSE        TRUE 
+##         NLS     profmem       cairo         ICU long.double     libcurl 
+##        TRUE        TRUE        TRUE        TRUE        TRUE        TRUE</code></pre>
+<p>If <code>cairo</code> shows up as <code>TRUE</code>, you are good to go.</p>
+</div>
+<div id="yaml-header" class="section level2">
+<h2>YAML header</h2>
+<p>To use Cairo to change the font of your RMarkdown pdf, you can modify the YAML heading:</p>
+<pre class="r"><code>---
+title: &quot;New fancy font!&quot;
+  header-includes:
+   - \usepackage[default]{sourcesanspro}
+   - \usepackage[T1]{fontenc}
+mainfont: SourceSansPro
+output:
+  pdf_document
+---</code></pre>
+<p>The <code>\usepackage</code> components of the header load Latex packages for your font (I am using Source Sans Pro in this example).</p>
+</div>
+<div id="chunk-options" class="section level2">
+<h2>Chunk options</h2>
+<p>The final step to use the font in your knitted pdf is to set the graphical device to Cairo in your code chunk option. At the beginning of your RMarkdown, the first chunk should include code that looks something like this:</p>
+<pre class="r"><code>knitr::opts_chunk$set(echo = TRUE)</code></pre>
+<p>Add <code>dev="cairo_pdf"</code> as one of the arguments:</p>
+<pre class="r"><code>knitr::opts_chunk$set(echo = TRUE, dev=&quot;cairo_pdf&quot;)</code></pre>
+<p>You can read more about other chunk options <a href="https://yihui.org/knitr/options/#chunk_options">here</a>.</p>
+</div>
