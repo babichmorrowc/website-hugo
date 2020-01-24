@@ -1,0 +1,120 @@
+---
+title: Scheduling R Scripts
+author: ~
+date: '2020-01-23'
+slug: launchd-jobs
+categories: ["R"]
+tags: ["R", "bash"]
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-01-23T16:43:56-05:00'
+featured: no
+image:
+  placement: 1
+  caption: 'Comic from [XKCD](https://xkcd.com/1728/)'
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+
+
+<div id="inspiration-for-this-post" class="section level2">
+<h2>Inspiration for this post</h2>
+<p>Since starting my job as a data scientist, I found myself setting dozens of reminders on my calendar to run certain scripts every day / week / month. I figured that there had to be a better way to deal with this, and after some research, I started off with creating cron jobs. After a few months of these running (with varying success), I learned about Launchd as well. This post will explain my process for using both of these scheduling tools to run R scripts at scheduled times.</p>
+</div>
+<div id="cron" class="section level2">
+<h2>Cron</h2>
+<p>Cron is a utility in Unix-like operating systems that can schedule a command to run automatically at a scheduled time. Cron is driven by a crontab file, so in order to schedule an R script, I needed to create a crontab file. Each line of a crontab file has the following syntax:</p>
+<pre class="bash"><code># ┌───────────── minute (0 - 59)
+# │ ┌───────────── hour (0 - 23)
+# │ │ ┌───────────── day of the month (1 - 31)
+# │ │ │ ┌───────────── month (1 - 12)
+# │ │ │ │ ┌───────────── day of the week (0 - 6) (Sunday to Saturday;
+# │ │ │ │ │                                   7 is also Sunday on some systems)
+# │ │ │ │ │
+# │ │ │ │ │
+# * * * * * command to execute</code></pre>
+<p>Any of the time arguments that are left as <code>*</code> are treated as a wildcard, so if you schedule <code>20 10 3 * * command to execute</code>, that command will run at 10:20 on the 3rd of every month.</p>
+<p>Beyond figuring out the timing of your job, you also need to figure out what command to execute. Since my work is primarily in R, I wanted to figure out how to execute an R script via cron. If the script in question can be found at <code>/Desktop/my_script.R</code>, for example, the command will be:</p>
+<pre class="bash"><code>/usr/local/bin/Rscript /Desktop/my_script.R</code></pre>
+<p>You can test this by running just this command in Terminal (without worrying about cron yet) and seeing if your script runs.</p>
+<p>So now, you can assemble the syntax for the cron job. If you want <code>myscript.R</code> to run at 10:20 on the 3rd of every month, the cron syntax will be:</p>
+<pre class="bash"><code>20 10 3 * * /usr/local/bin/Rscript /Desktop/my_script.R</code></pre>
+<p>You can check your syntax using <a href="https://crontab-generator.org/">this handy website</a>, which helps you generate the proper cron syntax given a desired schedule and script.</p>
+<p>Once you have your script running and the syntax ready for the schedule you want, you are ready to edit the crontab on your computer. To do so, open up Terminal and run:</p>
+<pre class="bash"><code>crontab -e</code></pre>
+<p>When you type <code>i</code>, you will enter insert mode, and you can paste your cron sytax into the file. When you are done editing, hit <code>ESC</code> and then type <code>:wq</code> to save and quit.</p>
+<div id="emailing" class="section level3">
+<h3>Emailing</h3>
+<p>When I created my first cron job, I was pretty skeptical about the likelihood of it actually running when scheduled, so I wanted to add the ability to get an email about the script’s progress. To do that, you can add to the <code>MAILTO</code> option, so your crontab would look like this:</p>
+<pre class="bash"><code>MAILTO=&quot;myemail@email.com;mybackupemail@gmail.com&quot;
+20 10 3 * * /usr/local/bin/Rscript /Desktop/my_script.R</code></pre>
+<p>This will email you on successful runs of the script as well as errors, so if your script is set up to run hourly, you might not want all those emails. <a href="https://stevenmortimer.com/automating-r-scripts-with-cron/">This blog post</a> includes lots of additional helpful information about automating R scripts with cron, including how to receive emails for errors only.</p>
+<p>As far as my experiences with cron go, I did not always receive the emails, even if the script did in fact run properly. I seemed to only receive the emails while I was at work, not at home (no idea why that happened or if there was any causal reason for it). Beyond this weirdness, the main issue with cron is that your jobs will not run if your computer is asleep at the scheduled time.</p>
+</div>
+</div>
+<div id="launchd" class="section level2">
+<h2>Launchd</h2>
+<p>After some of these various frustrations with cron, I learned that launchd is the preferred tool in macOS to execute scripts in a scheduled way. If your computer is asleep when the scheduled job is supposed to occur, There’s a lot I don’t understand about launchd (for a great overview, check <a href="https://medium.com/swlh/how-to-use-launchd-to-run-services-in-macos-b972ed1e352">this Medium article</a>), but I broke the process down into 3 steps:</p>
+<ol style="list-style-type: decimal">
+<li>Create a shell script to execute the R script</li>
+<li>Create a .plist file to schedule the running of the shell script</li>
+<li>Load the job</li>
+</ol>
+<div id="create-the-shell-script" class="section level3">
+<h3>Create the shell script</h3>
+<p>The shell script is basically going to look exactly the same as the command you would have used for the cron job. I saved these scripts in the <code>~/</code> directory, although you can probably save them anywhere as long as you keep track of the paths. The shell script should look something like this:</p>
+<pre class="bash"><code>/usr/local/bin/Rscript /Desktop/my_script.R</code></pre>
+<p>Then run the following in terminal to make the shell file runnable:</p>
+<pre class="bash"><code>chmod +x launchd_shell_script.sh</code></pre>
+</div>
+<div id="create-a-.plist-file" class="section level3">
+<h3>Create a .plist file</h3>
+<p>The .plist files that launchd uses are special XML files that allow you to specify the script to run and the schedule to run it on. I followed the following syntax for my .plist files:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+    &lt;key&gt;Label&lt;/key&gt;
+    &lt;!-- Should be the same as the filename without the extension --&gt;
+    &lt;string&gt;com.mylaunchjob&lt;/string&gt;
+    &lt;key&gt;ProgramArguments&lt;/key&gt;
+    &lt;array&gt;
+        &lt;string&gt;~/launchd_shell_script.sh&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;!-- Schedule regular runs --&gt;
+    &lt;key&gt;StartCalendarInterval&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;Hour&lt;/key&gt;
+        &lt;integer&gt;10&lt;/integer&gt;
+        &lt;key&gt;Minute&lt;/key&gt;
+        &lt;integer&gt;20&lt;/integer&gt;
+        &lt;key&gt;Day&lt;/key&gt;
+        &lt;integer&gt;23&lt;/integer&gt;
+    &lt;/dict&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;</code></pre>
+<p>Some components to note:
++ The first string contains the name of the launch job in question (so this job would be saved as <code>com.mylaunchjob.plist</code>)
++ Within the array, you need to put the name of the shell script you just created
++ You can put the arguments to schedule the job under <code>StartCalendarInterval</code></p>
+<p>Save your <code>.plist</code> file as <code>~/Library/LaunchAgents/com.mylaunchjob.plist</code>.</p>
+</div>
+<div id="load-the-job" class="section level3">
+<h3>Load the job</h3>
+<p>The final step is to run the following command in Terminal:</p>
+<pre class="bash"><code>launchctl load ~/Library/LaunchAgents/com.mylaunchjob.plist</code></pre>
+<p>Your job is now ready to go at the scheduled times.</p>
+</div>
+<div id="additional-launchd-resources" class="section level3">
+<h3>Additional launchd resources</h3>
+<ul>
+<li><a href="https://willchernoff.com/2013/04/23/periodically-run-an-r-script-as-a-background-process-using-launchd-under-osx/">Running RScripts using launchd</a></li>
+<li>General article about <a href="https://nathangrigg.com/2012/07/schedule-jobs-using-launchd">scheduling jobs using launchd</a></li>
+<li><a href="https://medium.com/swlh/how-to-use-launchd-to-run-services-in-macos-b972ed1e352">Introduction to launchd</a></li>
+<li><a href="https://killtheyak.com/schedule-jobs-launchd/">Friendly guide to .plist format</a></li>
+</ul>
+</div>
+</div>

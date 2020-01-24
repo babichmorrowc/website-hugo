@@ -5,21 +5,20 @@ date: 2019-02-20T21:13:14-05:00
 categories: ["Hackathon", "Meteorites", "Python"]
 tags: ["hackathon", "meteorites", "earth science", "Python"]
 draft: true
+image:
+  placement: 1
+  caption: 'Intensity of iron in a meteorite.'
+  focal_point: ''
+  preview_only: false
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(collapse = TRUE, engine.path = list(python = '/Applications/anaconda3/bin/python3'))
+knitr::opts_chunk$set(collapse = TRUE, engine.path = list(python = '/usr/local/bin/python3.7'))
 ```
 
 ```{r, include=FALSE}
 library(reticulate)
 ```
-
-
-<figure>
-  <img class="special-img-class" style="width:100%" src="/img/obj1_8bt_Fe.png" />
-  <figcaption>Intensity of iron in a meteorite.</figcaption>
-</figure>
 
 Earlier this month I participated in the American Museum of Natural History's annual hackathon (see my last [post](https://babichmorrowc.github.io/post/2019-02-14-hackathon/) for details about the event overall). During the hackathon, I worked with Katy Abbott, another Helen Fellow at the museum with me, to use a machine learning algorithm called DBSCAN to tackle our challenge. This post explains the process we used to complete the first step of the challenge: estimating the percent weights of elements in a meteorite.
 
@@ -32,14 +31,14 @@ Our team, consisting of Peter Kang, Jackson Lee, Jeremy Neiman, John Underwood, 
 The scientists scan meteorites with an electron microprobe, a device that provides the intensity of x-rays emitted from certain elements. The electron microprobe results in images with grayscale intensities corresponding to these x-ray intensities on a pixel-by-pixel basis.
 
 <figure>
-  <img class="special-img-class" style="width:100%" src="/img/meteorite_pixel_intensity.png" />
+  <img class="special-img-class" style="width:100%" src="../../../static/img/meteorite_pixel_intensity.png" />
   <figcaption>Images of a meteorite produced by the electron microprobe showing pixel intensities for each of 10 elements - brighter grayscale values indicate greater amounts of that element in a pixel.</figcaption>
 </figure>
 
 Our first step was to convert these pixel intensities to the percent weight of each element in the mineral at that pixel. To do that, we referred to a set of standard images taken of minerals with a known proportion of each element. For example, the image below shows the pixel intensities of iron in 8 minerals: you can see that the pixels are brightest in Fe, or pure iron, and lower in iron oxide ($\text{Fe}_3\text{O}_4$) and troilite, or iron sulfide (FeS).
 
 <figure>
-  <img class="special-img-class" style="width:100%" src="/img/iron_standard.png" />
+  <img class="special-img-class" style="width:100%" src="../../../static/img/iron_standard.png" />
   <figcaption>Standard scan of the intensity of iron in each of 8 known minerals.</figcaption>
 </figure>
 
@@ -65,7 +64,7 @@ import numpy.ma as ma
 from collections import Counter
 
 # read in percent weights by element of the minerals in the standard
-weights = pd.read_csv("/Users/hellenfellows/Desktop/website-hugo/static/mineralmapping/weights_to_minerals.csv")
+weights = pd.read_csv("../../../static/mineralmapping/weights_to_minerals.csv")
 print(weights.head())
 ```
 
@@ -75,7 +74,7 @@ There is a linear relationship between pixel intensity and percent weight, so we
 
 ```{python}
 # read in the pixel intensities by element in the standard
-mineral_standards = pd.read_csv('/Users/hellenfellows/Desktop/website-hugo/static/mineralmapping/mineral_standards.csv')
+mineral_standards = pd.read_csv('../../../static/mineralmapping/mineral_standards.csv')
 print(mineral_standards.head())
 ```
 
@@ -142,7 +141,7 @@ print(coefs)
 Thus `coefs` contains the coeficient relating pixel intensity of an element to its percent weight in the mineral: for example, the percent weight of Mg in an mineral is equal to 0.118599 times its pixel intensity.
 
 <figure>
-  <img class="special-img-class" style="width:100%" src="/img/mineral_regression.png" />
+  <img class="special-img-class" style="width:100%" src="../../../static/img/mineral_regression.png" />
   <figcaption>X-axes are pixel intensity and y-axes are percent weight of the element. Blue points indicate the pixel intensities of the element for a given percent weight based on a mineral in the standard. Orange points indicate the linear regression calculated above.</figcaption>
 </figure>
 
@@ -152,13 +151,13 @@ Finally, we used these coefficients to calculate the predicted percent weights o
 
 ```{python}
 # read file of predicted percent weights for meteorite 1
-df_obj1 = pd.read_csv('/Users/hellenfellows/Desktop/website-hugo/static/mineralmapping/predicted_percentweight_obj1.csv')
+df_obj1 = pd.read_csv('../../../static/mineralmapping/predicted_percentweight_obj1.csv')
 df_obj1 = df_obj1.fillna(0)
 df_obj1.drop('Unnamed: 0', axis = 1, inplace = True)
 print(df_obj1.head())
 
 # read file of predicted percent weights for meteorite 2
-df_obj2 = pd.read_csv('/Users/hellenfellows/Desktop/website-hugo/static/mineralmapping/predicted_percentweight_obj2.csv')
+df_obj2 = pd.read_csv('../../../static/mineralmapping/predicted_percentweight_obj2.csv')
 df_obj2 = df_obj2.fillna(0)
 df_obj2.drop('Unnamed: 0', axis = 1, inplace = True)
 print(df_obj2.head())

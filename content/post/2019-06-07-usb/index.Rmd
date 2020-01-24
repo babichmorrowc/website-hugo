@@ -5,16 +5,16 @@ date: 2019-06-07T21:13:14-05:00
 categories: ["R"]
 tags: ["R"]
 draft: false
+image:
+  placement: 1
+  caption: 'From [Wild Green Memes for Ecological Fiends](https://www.facebook.com/groups/WildGreenMemesForEcologicalFiends/).'
+  focal_point: ''
+  preview_only: false
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 ```
-
-<figure>
-  <img class="special-img-class" style="width:60%" src="/img/usb_meme.jpg" />
-  <figcaption>From [Wild Green Memes for Ecological Fiends](https://www.facebook.com/groups/WildGreenMemesForEcologicalFiends/).</figcaption>
-</figure>
 
 ## Inspiration for this post
 

@@ -5,16 +5,15 @@ date: 2019-04-12T21:13:14-05:00
 categories: ["R", "species distribution modeling"]
 tags: ["R", "species distribution modeling"]
 draft: false
+image:
+  placement: 1
+  caption: 'From left to right: unmodified species distribution model, minimum training presence threshold, and 10th percentile threshold.'
+  focal_point: ''
+  preview_only: false
 ---
 
 
 
-<figure>
-<img class="special-img-class" style="width:100%" src="/img/thresholds.png" />
-<figcaption>
-From left to right: unmodified species distribution model, minimum training presence threshold, and 10th percentile threshold.
-</figcaption>
-</figure>
 <div id="inspiration-for-this-post" class="section level2">
 <h2>Inspiration for this post</h2>
 <p>Conservation is often the main motivation behind studying where a species lives – having a model of a species’ range can help scientists assess whether it is at risk of extinction, designate protected regions to preserve its habitat, and study potential impacts of human activity. When we create species distribution models using common methods like Maxent, the result is a map of predicted habitat suitability or probability of species presence, such as the one below. In conservation management, however, it is often more useful to present range models in the form of species presence/absence. We can convert continuous predictions of habitat suitability into binary predictions of whether a species lives in a certain region or not using thresholds: i.e. designating all regions above a certain suitability level as within the species range and all areas below that suitability level as outside of it.</p>
@@ -41,7 +40,6 @@ Left: species distribution model with continuous habitat suitability values. Rig
 <h3>The function</h3>
 <p>The following is the function I wrote to apply these two thresholds to an SDM. The function’s arguments are the SDM, the occurrence points of the species in the form of longitude - latitude pairs, the threshold type, and whether the user would like the output to be a binary prediction (0s for predicted absence and 1s for predicted presence), or a thresholded continuous SDM (regions with suitability below the threshold set to 0).</p>
 <pre class="r"><code>library(raster)
-## Warning: package &#39;raster&#39; was built under R version 3.5.2
 ## Loading required package: sp
 
 sdm_threshold &lt;- function(sdm, occs, type = &quot;mtp&quot;, binary = FALSE){
@@ -77,24 +75,24 @@ if(binary){
 <h2>Example</h2>
 <p>Now we can apply the function to an actual SDM I generated for a species of three-toed sloth (<em>Bradypus variegatus</em>).</p>
 <pre class="r"><code># load in the SDM and occurrence points
-sloth_sdm &lt;- raster(&quot;/Users/hellenfellows/Desktop/website-hugo/static/SDMs/variegatus_sdm.tif&quot;)
-sloth_occs &lt;- read.csv(&quot;~/Desktop/website-hugo/static/SDMs/variegatus_occ.csv&quot;)
+sloth_sdm &lt;- raster(&quot;../../../static/SDMs/variegatus_sdm.tif&quot;)
+sloth_occs &lt;- read.csv(&quot;../../../static/SDMs/variegatus_occ.csv&quot;)
 
 plot(sloth_sdm)
 points(sloth_occs[,2:3], pch = 19, cex = 0.5)</code></pre>
-<p><img src="/post/2019-04-12-sdm-threshold_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>We can apply both MTP and P10 thresholds to the SDM based on the location of the occurrence points:</p>
 <pre class="r"><code>sloth_mtp &lt;- sdm_threshold(sloth_sdm, sloth_occs[,2:3], &quot;mtp&quot;)
 plot(sloth_mtp)</code></pre>
-<p><img src="/post/2019-04-12-sdm-threshold_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <pre class="r"><code>
 sloth_p10 &lt;- sdm_threshold(sloth_sdm, sloth_occs[,2:3], &quot;p10&quot;)
 plot(sloth_p10)</code></pre>
-<p><img src="/post/2019-04-12-sdm-threshold_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
 <p>We could also make either of these thresholded SDMs into a binary prediction in the following way:</p>
 <pre class="r"><code>sloth_mtp_bin &lt;- sdm_threshold(sloth_sdm, sloth_occs[,2:3], &quot;mtp&quot;, binary = TRUE)
 plot(sloth_mtp_bin)</code></pre>
-<p><img src="/post/2019-04-12-sdm-threshold_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="generalization" class="section level2">
 <h2>Generalization</h2>
@@ -133,17 +131,17 @@ xy &lt;- data.frame(x = runif(20, min = -150, max = 150), y = runif(20, min = -7
 
 plot(raster1)
 points(xy)</code></pre>
-<p><img src="/post/2019-04-12-sdm-threshold_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>Now we can apply the function to see the MTP and P10 thresholded rasters:</p>
 <pre class="r"><code>mtp_raster &lt;- raster_threshold(input_raster = raster1, points = xy, type = &quot;mtp&quot;, binary = TRUE)
 plot(mtp_raster)</code></pre>
-<p><img src="/post/2019-04-12-sdm-threshold_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <pre class="r"><code>
 p10_raster &lt;- raster_threshold(input_raster = raster1, points = xy, type = &quot;p10&quot;, binary = TRUE)
 plot(p10_raster)</code></pre>
-<p><img src="/post/2019-04-12-sdm-threshold_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+<p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
 <p>We can also use a user-inputted threshold to remove all parts of the raster with values lower than 20:</p>
 <pre class="r"><code>user_raster &lt;- raster_threshold(input_raster = raster1, threshold = 20)
 plot(user_raster)</code></pre>
-<p><img src="/post/2019-04-12-sdm-threshold_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>

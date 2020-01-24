@@ -5,16 +5,16 @@ date: 2019-04-12T21:13:14-05:00
 categories: ["R", "species distribution modeling"]
 tags: ["R", "species distribution modeling"]
 draft: false
+image:
+  placement: 1
+  caption: 'From left to right: unmodified species distribution model, minimum training presence threshold, and 10th percentile threshold.'
+  focal_point: ''
+  preview_only: false
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 ```
-
-<figure>
-  <img class="special-img-class" style="width:100%" src="/img/thresholds.png" />
-  <figcaption>From left to right: unmodified species distribution model, minimum training presence threshold, and 10th percentile threshold.</figcaption>
-</figure>
 
 ## Inspiration for this post
 
@@ -89,8 +89,8 @@ Now we can apply the function to an actual SDM I generated for a species of thre
 
 ```{r}
 # load in the SDM and occurrence points
-sloth_sdm <- raster("/Users/hellenfellows/Desktop/website-hugo/static/SDMs/variegatus_sdm.tif")
-sloth_occs <- read.csv("~/Desktop/website-hugo/static/SDMs/variegatus_occ.csv")
+sloth_sdm <- raster("../../../static/SDMs/variegatus_sdm.tif")
+sloth_occs <- read.csv("../../../static/SDMs/variegatus_occ.csv")
 
 plot(sloth_sdm)
 points(sloth_occs[,2:3], pch = 19, cex = 0.5)

@@ -4,17 +4,16 @@ author: "Cecina Babich Morrow"
 date: 2019-02-20T21:13:14-05:00
 categories: ["R", "Python"]
 tags: ["R", "Python", "website"]
+image:
+  placement: 1
+  caption: 'The `reticulate` package logo.'
+  focal_point: ''
+  preview_only: false
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(collapse = TRUE, engine.path = list(python = '/Applications/anaconda3/bin/python3'))
+knitr::opts_chunk$set(collapse = TRUE, engine.path = list(python = '/usr/local/bin/python3.7'))
 ```
-
-
-<figure>
-  <img class="special-img-class" style="width:100%" src="/img/reticulate.png" />
-  <figcaption> The `reticulate` package logo.  </figcatption>
-</figure>
 
 ## Using Python in RMarkdown
 
