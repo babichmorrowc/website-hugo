@@ -79,7 +79,7 @@ As far as my experiences with cron go, I did not always receive the emails, even
 
 ## Launchd
 
-After some of these various frustrations with cron, I learned that launchd is the preferred tool in macOS to execute scripts in a scheduled way. If your computer is asleep when the scheduled job is supposed to occur,  There's a lot I don't understand about launchd (for a great overview, check [this Medium article](https://medium.com/swlh/how-to-use-launchd-to-run-services-in-macos-b972ed1e352)), but I broke the process down into 3 steps:
+After some of these various frustrations with cron, I learned that launchd is the preferred tool in macOS to execute scripts in a scheduled way. If your computer is asleep when the scheduled job is supposed to occur, the job will still run when your computer wakes up. (If your machine is off at the scheduled time, however, the job will not run until the next scheduled time.) There's a lot I don't understand about launchd (for a great overview, check [this Medium article](https://medium.com/swlh/how-to-use-launchd-to-run-services-in-macos-b972ed1e352)), but I broke the process down into 3 steps:
 
 1. Create a shell script to execute the R script
 2. Create a .plist file to schedule the running of the shell script
@@ -90,8 +90,11 @@ After some of these various frustrations with cron, I learned that launchd is th
 The shell script is basically going to look exactly the same as the command you would have used for the cron job. I saved these scripts in the `~/` directory, although you can probably save them anywhere as long as you keep track of the paths. The shell script should look something like this:
 
 ```{bash eval = F}
+#!/bin/sh
 /usr/local/bin/Rscript /Desktop/my_script.R
 ```
+
+The first line `#!/bin/sh` tells Unix how the file is supposed to be executed.
 
 Then run the following in terminal to make the shell file runnable:
 
@@ -130,6 +133,7 @@ The .plist files that launchd uses are special XML files that allow you to speci
 </plist>
 ```
 Some components to note:
+
 + The first string contains the name of the launch job in question (so this job would be saved as `com.mylaunchjob.plist`)
 + Within the array, you need to put the name of the shell script you just created
 + You can put the arguments to schedule the job under `StartCalendarInterval`
