@@ -20,6 +20,7 @@ projects: []
 
 
 
+<p><em>Note: this post has been edited on 2 August 2020 - there was a typo in the indenting of the YAML. Thank you to Henry Hankins for catching this!</em></p>
 <div id="inspiration-for-this-post" class="section level2">
 <h2>Inspiration for this post</h2>
 <p>After learning how to <a href="https://babichmorrowc.github.io/post/2019-10-11-google_fonts/">change the fonts within a graph</a> in R, I wanted to be able to change the fonts in the body of an RMarkdown to match. I specifically wanted to be able to knit an RMarkdown to PDF using the <a href="https://fonts.google.com/specimen/Source+Sans+Pro">Source Sans Pro</a> Google font, but these instructions should work for any Google font.</p>
@@ -41,7 +42,7 @@ projects: []
 <p>To use Cairo to change the font of your RMarkdown pdf, you can modify the YAML heading:</p>
 <pre class="r"><code>---
 title: &quot;New fancy font!&quot;
-  header-includes:
+header-includes:
    - \usepackage[default]{sourcesanspro}
    - \usepackage[T1]{fontenc}
 mainfont: SourceSansPro
