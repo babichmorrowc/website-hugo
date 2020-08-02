@@ -11,10 +11,12 @@ authors = ["Benjamin Blonder", "Cecina Babich Morrow", "Brian Maitner", "David J
 # 0 = Uncategorized
 # 1 = Conference paper
 # 2 = Journal article
-# 3 = Manuscript
+# 3 = Preprint / Working Paper
 # 4 = Report
 # 5 = Book
 # 6 = Book section
+# 7 = Thesis
+# 8 = Patent
 publication_types = ["2"]
 
 # Publication name and optional abbreviated version.
@@ -23,7 +25,7 @@ publication_short = "In *Methods Ecol Evol*."
 
 # Abstract and optional shortened version.
 abstract = "Hutchinson's n‐dimensional hypervolume concept underlies many applications in contemporary ecology and evolutionary biology. Estimating hypervolumes from sampled data has been an ongoing challenge due to conceptual and computational issues. We present new algorithms for delineating the boundaries and probability density within n‐dimensional hypervolumes. The methods produce smooth boundaries that can fit data either more loosely (Gaussian kernel density estimation) or more tightly (one‐classification via support vector machine). Further, the algorithms can accept abundance‐weighted data, and the resulting hypervolumes can be given a probabilistic interpretation and projected into geographic space. We demonstrate the properties of these methods on a large dataset that characterises the functional traits and geographic distribution of thousands of plants. The methods are available in version ≥2.0.7 of the hypervolume r package. These new algorithms provide: (i) a more robust approach for delineating the shape and density of n‐dimensional hypervolumes; (ii) more efficient performance on large and high‐dimensional datasets; and (iii) improved measures of functional diversity and environmental niche breadth."
-abstract_short = ""
+summary = ""
 
 # Is this a selected publication? (true/false)
 selected = false
@@ -61,7 +63,7 @@ url_source = ""
 
 # Custom links (optional).
 #   Uncomment line below to enable. For multiple links, use the form `[{...}, {...}, {...}]`.
-# url_custom = [{name = "Custom Link", url = "http://example.org"}]
+# links = [{name = "Custom Link", url = "http://example.org"}]
 
 # Digital Object Identifier (DOI)
 doi = "10.1111/2041-210X.12865"

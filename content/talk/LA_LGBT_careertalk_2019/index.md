@@ -1,19 +1,19 @@
 +++
 title = "Talk: STEM careers in museums"
-date = 2019-02-22T00:00:00  # Schedule page publish date.
+publishDate = 2019-02-22T00:00:00  # Schedule page publish date.
 draft = false
 
 # Talk start and end times.
 #   End time can optionally be hidden by prefixing the line with `#`.
-time_start = 2019-02-22T17:00:00
-# time_end = 2030-06-01T15:00:00
+date = 2019-02-22T17:00:00
+# date_end = 2030-06-01T15:00:00
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
 authors = ["Cecina Babich Morrow"]
 
 # Abstract and optional shortened version.
 abstract = "I gave this talk to young people at the Los Angeles LGBT Center's Youth Center as part of a career talk from people working in museums. I talked about my own career path and shared some tips and suggestions for succeeding at STEM careers, particularly at museums."
-# abstract_short = "An example talk using Academic's Markdown slides feature."
+# summary = "An example talk using Academic's Markdown slides feature."
 
 # Name of event and optional event URL.
 event = "Los Angeles LGBT Center's Youth Center"

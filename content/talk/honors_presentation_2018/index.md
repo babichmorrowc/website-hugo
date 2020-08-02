@@ -1,19 +1,19 @@
 +++
 title = "Talk: Macroevolution of dimensionless life history metrics in tetrapods"
-date = 2018-05-01T00:00:00  # Schedule page publish date.
+publishDate = 2018-05-01T00:00:00  # Schedule page publish date.
 draft = false
 
 # Talk start and end times.
 #   End time can optionally be hidden by prefixing the line with `#`.
-time_start = 2018-05-01T13:00:00
-# time_end = 2030-06-01T15:00:00
+date = 2018-05-01T13:00:00
+# date_end = 2030-06-01T15:00:00
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
 authors = ["Cecina Babich Morrow", "Drew Kerkhoff", "Morgan Ernest"]
 
 # Abstract and optional shortened version.
 abstract = "Organisms’ life history traits quantify their fitness strategies to navigate various energy allocation trade-offs between growth and reproduction. Eric Charnov presented three dimensionless metrics life history metrics that represent key life history trade-offs: lifetime reproductive effort (LRE), relative reproductive lifespan (RRL), and relative offspring size (ROS). These three metrics are theorized to be invariant with body mass, thus enabling comparisons of organisms across the body mass continuum. We use these metrics, in addition to body mass, to classify life history strategies across the four major classes of tetrapods: amphibians, reptiles, mammals, and birds. First, we assess body mass invariance of LRE, RRL, and ROS in 113 amphibians, 491 reptiles, 843 mammals, and 171 birds. We find that, although the metrics are not consistently invariant across classes, all three exhibit qualities of invariance in at least one class and LRE and RRL display invariant behavior in the majority of tetrapod classes. Second, we investigate how the traits have evolved in concert with body mass, either to maintain or disrupt the patterns of invariance we observe. Finally, we compare the values of these metrics and their combinations across the four classes of tetrapods. LRE, RRL, and ROS delineate a space in which the major tetrapod clades occupy mostly unique subspaces. These distinctions in combinations of life history strategies provide us with a framework to understand the impact of major evolutionary transitions in energetics, physiology, and ecology."
-# abstract_short = "An example talk using Academic's Markdown slides feature."
+# summary = "An example talk using Academic's Markdown slides feature."
 
 # Name of event and optional event URL.
 event = "Kenyon College Senior Honors Presentations"

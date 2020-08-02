@@ -1,6 +1,7 @@
 +++
 # Hero Carousel widget.
-widget = "hero_carousel"
+widget = "slider"
+headless = true
 active = true
 date = 2017-10-15T00:00:00
 

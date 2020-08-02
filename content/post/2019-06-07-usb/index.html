@@ -1,0 +1,36 @@
+---
+title: "Copying R libraries to a USB"
+author: "Cecina Babich Morrow"
+date: 2019-06-07T21:13:14-05:00
+categories: ["R"]
+tags: ["R"]
+draft: false
+image:
+  placement: 1
+  caption: 'From [Wild Green Memes for Ecological Fiends](https://www.facebook.com/groups/WildGreenMemesForEcologicalFiends/).'
+  focal_point: ''
+  preview_only: false
+---
+
+
+
+<div id="inspiration-for-this-post" class="section level2">
+<h2>Inspiration for this post</h2>
+<p>A few people in my lab are headed to a workshop in Colombia next week, and due to the possibility of intermittent wi-fi, they need to load all of the workshop materials onto USB drives. They need R with certain packages on the USBs in versions compatible with both Macs and PCs, so I offered to help out by loading my Mac version of R and my packages.</p>
+</div>
+<div id="loading-r-onto-a-usb" class="section level2">
+<h2>Loading R onto a USB</h2>
+<p>The first step was to copy my installation of R onto the USB. To do this, I just copied R from my Applications folder onto the folder. We are not entirely sure if this will work yet to transfer R to someone else’s computer (if someone knows the answer, let me know!), but we are going to test it out shortly.</p>
+</div>
+<div id="loading-r-packages-onto-a-usb" class="section level2">
+<h2>Loading R packages onto a USB</h2>
+<p>The next step was to transfer all of my R packages onto the USB. To do this, I first needed to figure out where the packages were saved on my computer. You can run the following in R to find where your packages are saved:</p>
+<pre class="r"><code>.libPaths()
+## [1] &quot;/Library/Frameworks/R.framework/Versions/3.6/Resources/library&quot;</code></pre>
+<p>Next, I needed to figure out how to navigate to the USB in Terminal. According to this <a href="https://apple.stackexchange.com/questions/60231/using-terminal-how-can-i-find-which-directory-is-my-usb-drive-mounted-in">StackOverflow answer</a>, all drives are mounted in <code>/Volumes</code>, so I ran the following in Terminal:</p>
+<pre class="bash"><code>cd /Volumes
+ls</code></pre>
+<p>From there, I was able to see <code>USB DISK</code> as one of the folders in <code>/Volumes</code>. In order to copy all of the packages from my computer onto the USB, I used <code>cp</code> to move everything from the folder found in <code>.libPaths()</code> onto the USB:</p>
+<pre class="bash"><code># replace the first file path with what you get from .libPaths()
+cp -R /Library/Frameworks/R.framework/Versions/3.5/Resources/library/ /Volumes/USB\ DISK/R_packages/</code></pre>
+</div>

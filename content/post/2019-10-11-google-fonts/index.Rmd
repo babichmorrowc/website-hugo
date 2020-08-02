@@ -1,0 +1,81 @@
+---
+title: "Putting Google Fonts in R graphs"
+author: "Cecina Babich Morrow"
+date: 2019-10-11T21:13:14-05:00
+categories: ["R"]
+tags: ["R"]
+draft: false
+image:
+  placement: 1
+  caption: "In keeping with my Lego theme, this statue from Nathan Sawaya's exhibition at the New York Hall of Science represents some of the frustrations of adding fonts to R."
+  focal_point: ''
+  preview_only: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Inspiration for this post
+
+I've been working on creating a visualization cookbook for R graphics (check out [this great example](https://bbc.github.io/rcookbook/) from the BBC to see what I'm eventually going for). As part of this process, I wanted to be able to change the font of my plots to [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro), which is a Google font.
+
+## `sysfonts` package
+
+The first step here was to install and load the `sysfonts` package:
+
+```{r}
+library(sysfonts)
+```
+
+### XQuartz
+
+If you end up getting the following error when loading `sysfonts`: `Reason: image not found`, you might need to do some additional work. This happened to me initially, and after doing some Googling, I found [this GitHub issue](https://github.com/yixuan/showtext/issues/13). Installing XQuartz was recommended as a fix, particularly for Macs, so I downloaded it from [here](https://www.xquartz.org/). After downloading XQuartz, I uninstalled, reinstalled, and loaded `sysfonts` and things went smoothly.
+
+## Downloading font to your computer
+
+As I learned from this [super helpful GitHub repo](https://github.com/kjhealy/sourcesans/blob/150207b18f4fbcc4c954715f269f8b20ce834a54/R/sourcesans.r), you need to install the font on your system as well as within R.
+
+### Mac
+
+I went through this process on a Mac, so this is what I ended up doing to install the font. I went to the [Google Fonts page for the font](https://fonts.google.com/specimen/Source+Sans+Pro) and clicked on "Select this font". Then after clicking on "1 Family Selected" at the bottom, I downloaded the font by clicking on the download icon. This downloaded a zip drive into my Downloads folder. To install it as a font, I extracted the zip folder (by opening the zip drive). In a different Finder window, I opened my Applications folder and found Font Book. Then I dragged the zip folder over into Font Book.
+
+### PC
+
+I modified the above instructions from these instructions on [Flourish Online](https://flourishonline.com.au/download-google-fonts-mac-pc/), which also has PC instructions. If anyone gives these a try and they don't work, let me know and I'll try to do some troubleshooting!
+
+## `font_add_google`
+
+Next, I used the `font_add_google` function from `sysfonts` to download the Source Sans Pro fonts:
+
+```{r}
+font_add_google("Source Sans Pro")
+```
+
+If you want to install a different Google Font, you can run `font_families_google()` to see the list of family names of fonts currently available in Google Fonts:
+
+```{r}
+head(font_families_google())
+```
+
+## Example
+
+To continue with my Lego theme, I'll demonstrate using this font on data from the `legocolors` package. We can make the following graph of approximate lego brick availability based on the year a brick was released (colored by the brick color!):
+
+```{r message = FALSE}
+library(legocolors)
+library(ggplot2)
+
+ggplot(legocolors, aes(x = year_released, y = bl_bp, colour = hex)) +
+  geom_point() +
+  scale_color_manual(values = legocolors$hex) +
+  theme_minimal() +
+  theme(legend.position = "none", text = element_text(family = "Source Sans Pro"), plot.title = element_text(face = "bold")) +
+  labs(x = "Year released", y = "Brick availability", title = "Lego availability", subtitle = "All of the text is now in Source Sans Pro!")
+```
+
+## Troubleshooting
+
+This process is a little bit finicky, so there are certain errors that crop up frequently. For me, just restarting RStudio and/or my computer (or updating the computer, if necessary) has solved these. The most common errors are `No font could be found for family "Source Sans Pro"` and `"Error in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : polygon edge not found"`, both of which relate to R not being able to find the font. If the font is indeed installed on your computer (you can check this in Font Book, for a Mac), then restarting things should help R find the font.
+
+

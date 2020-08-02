@@ -1,19 +1,19 @@
 +++
 title = "Poster: Macroevolution of dimensionless life histories in amniotes"
-date = 2017-09-01T00:00:00  # Schedule page publish date.
+publishDate = 2017-09-01T00:00:00  # Schedule page publish date.
 draft = false
 
 # Talk start and end times.
 #   End time can optionally be hidden by prefixing the line with `#`.
-time_start = 2017-09-01
-# time_end = 2030-06-01T15:00:00
+date = 2017-09-01
+# date_end = 2030-06-01T15:00:00
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
 authors = ["Cecina Babich Morrow", "Drew Kerkhoff", "Morgan Ernest"]
 
 # Abstract and optional shortened version.
 abstract = "**Objectives:** 1. Use Charnov’s dimensionless life history traits to visualize and quantify the life history strategies of amniotes. 2. Compare life history strategies of birds, mammals, reptiles, and smaller clades by using hypervolumes. 3. Investigate if these so-called invariant traits are actually invariant with body mass. 4. Analyze the macroevolutionary patterns of the dimensionless traits and their components between clades."
-# abstract_short = "An example talk using Academic's Markdown slides feature."
+# summary = "An example talk using Academic's Markdown slides feature."
 
 # Name of event and optional event URL.
 event = "Three Rivers Evolution Event 2017"
