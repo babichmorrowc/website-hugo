@@ -12,7 +12,7 @@ lastmod: '2020-12-04T13:41:48-05:00'
 featured: no
 image:
   placement: 1
-  caption: ''
+  caption: 'My confusion with `googlesheets4` quota limits'
   focal_point: ''
   preview_only: false
 projects: []
@@ -28,7 +28,7 @@ I started getting 429 errors like the following for projects using `googlesheets
   <img class="special-img-class" style="width:80%" src="/img/google_quota_error.png" />
 </figure>
 
-In life overall, I would usual respond to such a quota error by sucking it up and trying to find a way to make fewer requests from an API, but I started getting this error in situations where my code was just writing a 4 row Google Sheet. I assumed that there was no way that this could actually be hitting a rate limit, so I did some more digging. 
+In life overall, I would usually respond to such a quota error by sucking it up and trying to find a way to make fewer requests from an API, but I started getting this error in situations where my code was just writing a 4 row Google Sheet. I assumed that there was no way that this could actually be hitting a rate limit, so I did some more digging.  
 
 ## The problem
 
