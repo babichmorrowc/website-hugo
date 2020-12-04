@@ -2,7 +2,7 @@
 title: Publishing to RStudio Connect with Google credentials
 author: ~
 date: '2020-11-30'
-slug: google-creds
+slug: google-account-creds
 categories: ["R"]
 tags: ["R", "Google Drive"]
 subtitle: ''
@@ -43,10 +43,9 @@ googlesheets4::gs4_auth(email = &quot;babichmorrowc@gmail.com&quot;, # Replace w
                         use_oob = TRUE)</code></pre>
 <p>When you run each of these, a browser window should open asking you to authorize. You’ll then have to copy the authorization code and paste it back into the console of RStudio.</p>
 <p>After doing so, you should have generated files in a folder called <code>.secrets</code>. To check, you can either run <code>list.files(".secrets/")</code> in your console, or display hidden files in your file browser as below to verify that the files have been generated:</p>
-<div class="figure">
-<img src="%22show_hidden_files.png%22" alt="" />
-<p class="caption">Screenshot to show hidden files in RStudio</p>
-</div>
+<figure>
+<img class="special-img-class" style="width:80%" src="/img/show_hidden_files.png" />
+</figure>
 </div>
 <div id="authorize-your-packages-in-the-code" class="section level2">
 <h2>Authorize your packages in the code</h2>

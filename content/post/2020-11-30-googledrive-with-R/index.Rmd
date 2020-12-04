@@ -2,7 +2,7 @@
 title: Publishing to RStudio Connect with Google credentials
 author: ~
 date: '2020-11-30'
-slug: google-creds
+slug: google-account-creds
 categories: ["R"]
 tags: ["R", "Google Drive"]
 subtitle: ''
@@ -52,7 +52,9 @@ When you run each of these, a browser window should open asking you to authorize
 
 After doing so, you should have generated files in a folder called `.secrets`. To check, you can either run `list.files(".secrets/")` in your console, or display hidden files in your file browser as below to verify that the files have been generated:
 
-![Screenshot to show hidden files in RStudio]("show_hidden_files.png")
+<figure>
+  <img class="special-img-class" style="width:80%" src="/img/show_hidden_files.png" />
+</figure>
 
 ## Authorize your packages in the code
 
