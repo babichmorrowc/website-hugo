@@ -106,7 +106,7 @@ gs4_auth_configure(app = google_app)
 If you download the JSON instead, your code will look like this:
 
 ```{r eval = FALSE}
-gs4_auth_configure(app = "/PATH/TO/THE/DOWNLOADED/OAUTH/JSON.json")
+gs4_auth_configure(path = "/PATH/TO/THE/DOWNLOADED/OAUTH/JSON.json")
 ```
 
 This is the solution that ended up working for my purposes for 2 reasons. First, it allowed me to access private resources on Google Drive (unlike an API key), and second, it allowed me to access those resources via my own Google account (unlike a service account).
@@ -118,7 +118,7 @@ This is the final way to get credentials. I initially tried this method, since t
 To generate a service account token, go to "APIs & Services" > "Credentials" > "+ CREATE CREDENTIALS" > "Service account". Give your new account a good name and description, provide account permissions if necessary, and potentially grant users access. After you click "Create key", you'll have the opportunity to download a JSON. Save this in a secure location, like your `.secrets` folder, for example. To use it in your document, add the following:
 
 ```{r eval = FALSE}
-gs4_auth_configure(app = "/PATH/TO/THE/DOWNLOADED/SERVICE/ACCOUNT/JSON.json")
+gs4_auth_configure(path = "/PATH/TO/THE/DOWNLOADED/SERVICE/ACCOUNT/JSON.json")
 ```
 
 Note, there is a way to make your new service account token function as your account, although I have not tried this. If you want to carry out processes on behalf of yourself or some specific user, instead of as `my-service-account-name@my-google-project-name.iam.gserviceaccount.com`, there is a process known as "impersonation" that is discussed more [here](https://gargle.r-lib.org/articles/non-interactive-auth.html#provide-a-service-account-token-directly-1). If you don't have the access level to do this (which was my situation), than an OAuth user token is the way to go.
