@@ -24,9 +24,8 @@ image:
 <p>The <code>alphahull</code> R package (Pateiro-Lopez et al. 2016) draws shapes (like the ones above) around sets of points based on a given parameter, α. The package creates two kinds of shapes I was interested in: α-shapes and α-convex hulls. The functions in this post convert these shapes into objects compatible with the <code>sp</code> package, which can then be used for spatial analyses, including creating background regions for species distribution modeling.</p>
 <pre class="r"><code># load packages
 library(alphahull)
-## Registered S3 method overwritten by &#39;R.oo&#39;:
-##   method        from       
-##   throw.default R.methodsS3
+## Warning: replacing previous import &#39;vctrs::data_frame&#39; by &#39;tibble::data_frame&#39;
+## when loading &#39;dplyr&#39;
 library(sp)</code></pre>
 <div id="alpha-shapes" class="section level3">
 <h3>Alpha shapes</h3>
@@ -142,7 +141,7 @@ arc2line &lt;- function(center, r, vector, theta, npoints = 100) {
 </div>
 <div id="hulls-to-lines" class="section level4">
 <h4>Hulls to lines</h4>
-<p>Using the previous function, I wrote another function to take an α-hull and convert it into a set of SpatialLines objects. The function uses the <code>arc2line</code> function from above to convert each arc in the α-hull into a series of lines, before adding each of these sets of lines together.</p>
+<p>Using the previous function, I wrote another function to take an α-hull and convert it into a set of SpatialLines objects. The function uses the <code>arc2line</code> function from above to convert each arc in the α-hull into a series of lines, before adding each of these sets of lines together. (<em>This function was updated on 6 January 2021 based on my response to kostas_k84 – thank you to everyone who brought this up to me!</em>)</p>
 <pre class="r"><code>ahull2lines &lt;- function(hull){
   arclist &lt;- hull$arcs
   lines &lt;- list()
@@ -163,7 +162,7 @@ arc2line &lt;- function(center, r, vector, theta, npoints = 100) {
     if(i == 1){
       # Add the first line to the list of lines
       lines[[i]] &lt;- line_i
-    } else if(all.equal(line_i@coords[1,], last_line_coords[nrow(last_line_coords),])){
+    } else if(isTRUE(all.equal(line_i@coords[1,], last_line_coords[nrow(last_line_coords),]))){
       # If the first coordinate in the ith line is equal to the last coordinate in the previous line
       # then those lines should be connected
       # Row bind the coordinates for the ith line to the coordinates of the previous line in the list

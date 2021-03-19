@@ -158,7 +158,7 @@ arc2line <- function(center, r, vector, theta, npoints = 100) {
 
 #### Hulls to lines
 
-Using the previous function, I wrote another function to take an α-hull and convert it into a set of SpatialLines objects. The function uses the `arc2line` function from above to convert each arc in the α-hull into a series of lines, before adding each of these sets of lines together.
+Using the previous function, I wrote another function to take an α-hull and convert it into a set of SpatialLines objects. The function uses the `arc2line` function from above to convert each arc in the α-hull into a series of lines, before adding each of these sets of lines together. (*This function was updated on 6 January 2021 based on my response to kostas_k84 -- thank you to everyone who brought this up to me!*)
 
 ```{r}
 ahull2lines <- function(hull){
@@ -181,7 +181,7 @@ ahull2lines <- function(hull){
     if(i == 1){
       # Add the first line to the list of lines
       lines[[i]] <- line_i
-    } else if(all.equal(line_i@coords[1,], last_line_coords[nrow(last_line_coords),])){
+    } else if(isTRUE(all.equal(line_i@coords[1,], last_line_coords[nrow(last_line_coords),]))){
       # If the first coordinate in the ith line is equal to the last coordinate in the previous line
       # then those lines should be connected
       # Row bind the coordinates for the ith line to the coordinates of the previous line in the list
