@@ -1,0 +1,137 @@
+---
+title: Getting your own Google API credentials for R
+author: ~
+date: '2020-12-04'
+slug: google-api-creds
+categories: ["R"]
+tags: ["R", "Google Drive"]
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-12-04T13:41:48-05:00'
+featured: no
+image:
+  placement: 1
+  caption: 'My confusion with `googlesheets4` quota limits'
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+## Inspiration for this post
+
+My quest to make Google Drive play nice with R continues! If you've read [my last post](https://babichmorrowc.github.io/post/google-creds/), you'll know the process for using `googledrive` and/or `googlesheets4` to access data from Google Drive in a non-interactive context, e.g. deploying a data product to RStudio Connect. This process works wonderfully...most of the time. When deploying processes accessing Google Drive that are automated and run regularly, or simply make large requests of Drive, you can start to run into problems with Google Drive's API quota.
+
+I started getting 429 errors like the following for projects using `googlesheets4` to read and write data:
+
+<figure>
+  <img class="special-img-class" style="width:80%" src="/img/google_quota_error.png" />
+</figure>
+
+In life overall, I would usually respond to such a quota error by sucking it up and trying to find a way to make fewer requests from an API, but I started getting this error in situations where my code was just writing a 4 row Google Sheet. I assumed that there was no way that this could actually be hitting a rate limit, so I did some more digging.  
+
+## The problem
+
+After a seemingly endless slog through the GitHub issues for the `googlesheets4` package, I found the following goldmine of a quote from the amazing Jenny Bryan in [this GitHub issue](https://github.com/tidyverse/googlesheets4/issues/189):
+
+<figure>
+  <img class="special-img-class" style="width:80%" src="/img/jbryan_comment.png" />
+</figure>
+
+So here was my problem: "Everyone who uses googlesheets4, by default, is sharing the same quota." In the words of Jenny Bryan once more, "This sounds wild, but it's true." So my problem was not that writing a 4 line Google Sheet exceeds Google's quota, but rather that all users of the package fill the same quota, meaning my 4 lines may or may not get bumped over the shared limit.
+
+## The solution
+
+If everyone is sharing the same quota, the fix to my problem was to get my own quota. Based on my research, I found that the `gargle` instructions on API credentials [here](https://gargle.r-lib.org/articles/get-api-credentials.html) were the definitive source of truth for getting one's own API credentials. I would definitely recommend this as a starting point for anyone trying to acquire your own credentials to get a separate quota. However, I had some difficulty actually figuring out these instructions and implementing them, so for anyone in the same boat, I've outlined my process below.
+
+### Set up a Google Cloud project
+
+First, you need to create a new Google Cloud project by visiting https://console.cloud.google.com. Create a new project by clicking on "Select a project" (or a project name) to the right of "Google Cloud Platform" in the top left corner. From here, you can create "NEW PROJECT". Enter your desired project name (and Organization if applicable). If you already have a project set up that you want to use, you can select that project instead.
+
+### Enable APIs
+
+In order to read and write from a Google Sheet in R, I needed the Google Drive API and the Google Sheets API. You may need more than this if your project is getting fancier, but you can start here and add more. To add any API, click on the hamburger menu in the top left, click "APIs & Services" > "Library", and search for the desired APIs by name. When you find the one(s) you want, click "Enable." You can modify which APIs are enabled at any time.
+
+The `gargle` tutorial notes that some APIs require a linked billing account. If you are only working with Drive and Sheets, you do not need a billing account. If you do require billing, you have some options, like [GCP free tier](https://cloud.google.com/free/). If you are going with a paid plan, though, you will want to lock down access to the API even more carefully to avoid unwanted charges.
+
+### API Keys, OAuth IDs, and service accounts, oh my!
+
+Up to this point the [`gargle` tutorial](https://gargle.r-lib.org/articles/get-api-credentials.html) worked quite well for me. Here is where my struggles began, however. When you go to the hamburger menu, "APIs & Services" > "Credentials", you'll see that there are 3 options for types of credentials for your project:
+
+1. API Keys
+2. OAuth 2.0 Client IDs
+3. Service Accounts
+
+I found it difficult to grasp the distinction between these three types of credentials, so here is what I've discovered ([this Stackoverflow](https://stackoverflow.com/questions/39181501/whats-the-difference-between-api-key-client-id-and-service-account) was particularly helpful):
+
+1. API Keys: Use an API key if you are accessing something that is available to the public.
+2. OAuth 2.0 Client IDs: Use an OAuth 2.0 Client ID if you need to access something that is privately available to you / your organization, e.g. something in your Google Drive, something in your company's Google Drive, etc.
+3. Service Accounts: Use a service account if you want to delegate your request to an account separate from your own. You will need give this service account any Google permissions that are required in your code.
+
+In my use case, I needed to access information from a private Google Drive in a non-interactive context. In order to do this successfully, I ended up using OAuth (option #2), but I will show code for all 3 options below. For further reference on using each of these options, I recommend [this tutorial](https://gargle.r-lib.org/articles/non-interactive-auth.html) about non-interactive auth with `gargle`.
+
+#### API keys
+
+This is the easiest way to get your own quota for a project that requires accessing a publicly available resource through R. To create an API key for your Google Cloud Project, go to "APIs & Services" > "Credentials" > "+ CREATE CREDENTIALS" > "API key". You can copy the key when you create it, but you'll always be able to go back to your Credentials page and re-copy the key later. I suggest storing the key in a password manager and/or your `.Rprofile` so it is easy to find later.
+
+Once you have your key, you can use `googlesheets4` in the following way:
+
+```{r eval = FALSE}
+google_cloud_api_key <- "YOUR API KEY"
+gs4_auth_configure(api_key = google_cloud_api_key)
+
+gs4_example("gapminder") %>% 
+    read_sheet()
+```
+
+You may need to run the first two lines in your console (i.e. in an interactive setting) first to grant permissions, but then your document should be set either for knitting or for deploying.
+
+#### OAuth 2.0 client IDs
+
+These types of tokens allow you to make requests on behalf of yourself, the user. To create an OAuth 2.0 client ID, go to "APIs & Services" > "Credentials" > "+ CREATE CREDENTIALS" > "OAuth client ID". Select "Desktop client". As with the API key, you can copy the client ID and secret now, or find them later in the "Credentials" page.
+
+There are two options for accessing the ID you create: (1) via the client ID and secret, and (2) via downloading a JSON file. In either case, you'll want to protect this information, either by storing the ID and secret in a password manager or saving the JSON file in a protected folder, like `.secrets`.
+
+If you use the ID and secret, your code will look something like this:
+
+```{r eval = FALSE}
+# Create an OAuth app with httr
+google_app <- httr::oauth_app("google-api",
+                              key = "YOUR GOOGLE CLOUD OAUTH KEY",
+                              secret = "YOUR GOOGLE CLOUD SECRET")
+
+gs4_auth_configure(app = google_app)
+```
+
+If you download the JSON instead, your code will look like this:
+
+```{r eval = FALSE}
+gs4_auth_configure(path = "/PATH/TO/THE/DOWNLOADED/OAUTH/JSON.json")
+```
+
+This is the solution that ended up working for my purposes for 2 reasons. First, it allowed me to access private resources on Google Drive (unlike an API key), and second, it allowed me to access those resources via my own Google account (unlike a service account).
+
+#### Service account tokens
+
+This is the final way to get credentials. I initially tried this method, since the [`gargle` tutorial](https://gargle.r-lib.org/articles/get-api-credentials.html) says that is "the most proper way to make authorized requests to an API in a non-interactive context." For this to work, however, I would have then needed the ability to make my service account a member of my team's Google Drive. Because of security, this wasn't a possibility for me, but if that is something you can do, option #3 is the way to go! You would just need to give your service account (which will have a name something like `my-service-account-name@my-google-project-name.iam.gserviceaccount.com`) access to whatever Drive files or services you'd like to access.
+
+To generate a service account token, go to "APIs & Services" > "Credentials" > "+ CREATE CREDENTIALS" > "Service account". Give your new account a good name and description, provide account permissions if necessary, and potentially grant users access. After you click "Create key", you'll have the opportunity to download a JSON. Save this in a secure location, like your `.secrets` folder, for example. To use it in your document, add the following:
+
+```{r eval = FALSE}
+gs4_auth_configure(path = "/PATH/TO/THE/DOWNLOADED/SERVICE/ACCOUNT/JSON.json")
+```
+
+Note, there is a way to make your new service account token function as your account, although I have not tried this. If you want to carry out processes on behalf of yourself or some specific user, instead of as `my-service-account-name@my-google-project-name.iam.gserviceaccount.com`, there is a process known as "impersonation" that is discussed more [here](https://gargle.r-lib.org/articles/non-interactive-auth.html#provide-a-service-account-token-directly-1). If you don't have the access level to do this (which was my situation), than an OAuth user token is the way to go.
+
+## Additional resources
+
+I found the additional resources helpful when writing this post:
+
++ [Hitting quota limits GitHub issue](https://github.com/tidyverse/googlesheets4/issues/139)
++ [Quota limit GitHub issue](https://github.com/tidyverse/googlesheets4/issues/189)
++ [`gargle` instructions on API credentials](https://gargle.r-lib.org/articles/get-api-credentials.html)
++ [`gargle` instructions on non-interactive authorization](https://gargle.r-lib.org/articles/non-interactive-auth.html)
++ [`googlesheets4` instructions on auth configuration](https://googlesheets4.tidyverse.org/reference/sheets_auth_configure.html)
++ [Stack Overflow discussion of the 3 types of credentials](https://stackoverflow.com/questions/39181501/whats-the-difference-between-api-key-client-id-and-service-account)
+
+
