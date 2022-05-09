@@ -32,8 +32,7 @@ library(jsonlite)</code></pre>
 <pre class="r"><code># Replace with your username and password
 username &lt;- &quot;YOUR_USERNAME&quot;
 password &lt;- &quot;YOUR_PASSWORD&quot;</code></pre>
-<p>You also need to find the token of the report you’re interested in. When you go to your report in Mode, the token is everything after “reports/”. So, for example, if you’re interested in Legos (which you should be), you can get the most recent run of the <a href="https://app.mode.com/modeanalytics/reports/eb4fdefe37d8">Lego set summary</a> report.
-The URL is <a href="https://app.mode.com/modeanalytics/reports/eb4fdefe37d8" class="uri">https://app.mode.com/modeanalytics/reports/eb4fdefe37d8</a>, so the report token is “eb4fdefe37d8”.</p>
+<p>You also need to find the token of the report you’re interested in. When you go to your report in Mode, the token is everything after “reports/”. So, for example, if you’re interested in Legos (which you should be), you can get the most recent run of the <a href="https://app.mode.com/modeanalytics/reports/eb4fdefe37d8">Lego set summary</a> report. The URL is <a href="https://app.mode.com/modeanalytics/reports/eb4fdefe37d8" class="uri">https://app.mode.com/modeanalytics/reports/eb4fdefe37d8</a>, so the report token is “eb4fdefe37d8”.</p>
 <pre class="r"><code># Replace with the report token of interest
 report_token &lt;- &quot;eb4fdefe37d8&quot;</code></pre>
 <p>Finally, you need the name of your organization on Mode. For this example, we’ll be looking at a community available Mode report, so the organization is “modeanalytics”. You can get this from the URL as well, it will be the part directly before “/reports”:</p>
@@ -60,7 +59,7 @@ organization &lt;- &quot;modeanalytics&quot;</code></pre>
 <p>So, for our example report, the most recent run token was:</p>
 <pre class="r"><code>get_report_latest_run(report_token, organization, username, password)</code></pre>
 <pre><code>## No encoding supplied: defaulting to UTF-8.</code></pre>
-<pre><code>## [1] &quot;2c17666a589b&quot;</code></pre>
+<pre><code>## [1] &quot;f2b9f754ad5c&quot;</code></pre>
 </div>
 <div id="extract-the-data-from-the-most-recent-run" class="section level3">
 <h3>Extract the data from the most recent run</h3>
@@ -93,7 +92,7 @@ report_token &lt;- &quot;eb4fdefe37d8&quot;</code></pre>
 ## No encoding supplied: defaulting to UTF-8.</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
-##   year = col_double(),
+##   year = col_integer(),
 ##   white = col_double(),
 ##   red = col_double(),
 ##   blue = col_double(),

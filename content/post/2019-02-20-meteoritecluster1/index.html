@@ -52,7 +52,6 @@ from pathlib import Path
 from skimage.io import imread, imshow
 import numpy.ma as ma
 from collections import Counter
-
 # read in percent weights by element of the minerals in the standard
 weights = pd.read_csv(&quot;../../../static/mineralmapping/weights_to_minerals.csv&quot;)
 print(weights.head())
@@ -73,7 +72,7 @@ print(mineral_standards.head())
 ## 2   0   2   0   0  141   6  3  0  455   2  CaTiO3std15
 ## 3   1   2   2   0  122   6  3  0  502   0  CaTiO3std15
 ## 4   0   0   0   0  138   5  5  0  457   1  CaTiO3std15</code></pre>
-<p>We modified the chemical formulas of each mineral using a dictionary by separating each element in the mineral with an "_" to make looping easier.</p>
+<p>We modified the chemical formulas of each mineral using a dictionary by separating each element in the mineral with an “_&quot; to make looping easier.</p>
 <pre class="python"><code># create dictionary to standardize file names to chemical formulas
 # needed to separate each element in the formula with an _ to make looping easier
 mineral_dict = dict(zip(np.unique(mineral_standards[&#39;mineral&#39;]),
@@ -109,7 +108,6 @@ for element in elements:
         intensities = element_df[element_df[&#39;mineral&#39;] == mine][element]
         xis = np.append(xis, np.array(intensities))
         yis = np.append(yis, np.repeat(weight, len(intensities)))
-
     xis, yis = xis.reshape(-1,1), yis.reshape(-1,1)
     # fit linear regression on percent weight vs intensity
     reg = lr.fit(xis,yis)
@@ -119,15 +117,7 @@ for element in elements:
     reg.coef_
     # get the linear regression coefficient for each element
     coefs[element] = float(reg.coef_)
-
 # print the coefficients for each element
-## array([[0.11859862]])
-## array([[0.32879587]])
-## array([[0.32008078]])
-## array([[0.21488656]])
-## array([[0.46922488]])
-## array([[0.07762688]])
-## array([[0.09790595]])
 print(coefs)
 ##              Mg        Ni   Al        Fe  ...    P         S        Ti        Si
 ## coeff  0.118599  0.328796  NaN  0.320081  ...  NaN  0.469225  0.077627  0.097906
@@ -149,7 +139,6 @@ df_obj1 = pd.read_csv(&#39;../../../static/mineralmapping/predicted_percentweigh
 df_obj1 = df_obj1.fillna(0)
 df_obj1.drop(&#39;Unnamed: 0&#39;, axis = 1, inplace = True)
 print(df_obj1.head())
-
 # read file of predicted percent weights for meteorite 2
 ##          Ca        Ti   Al   Cr  ...    P         Fe        Ni        Mg
 ## 0  8.595462  0.698642  0.0  0.0  ...  0.0  51.212925  0.986388  5.692734

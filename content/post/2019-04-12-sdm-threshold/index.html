@@ -40,7 +40,9 @@ Left: species distribution model with continuous habitat suitability values. Rig
 <h3>The function</h3>
 <p>The following is the function I wrote to apply these two thresholds to an SDM. The function’s arguments are the SDM, the occurrence points of the species in the form of longitude - latitude pairs, the threshold type, and whether the user would like the output to be a binary prediction (0s for predicted absence and 1s for predicted presence), or a thresholded continuous SDM (regions with suitability below the threshold set to 0).</p>
 <pre class="r"><code>library(raster)
+## Warning: package &#39;raster&#39; was built under R version 3.5.2
 ## Loading required package: sp
+## Warning: package &#39;sp&#39; was built under R version 3.5.2
 
 sdm_threshold &lt;- function(sdm, occs, type = &quot;mtp&quot;, binary = FALSE){
   occPredVals &lt;- raster::extract(sdm, occs)
@@ -121,6 +123,14 @@ plot(sloth_mtp_bin)</code></pre>
 <p>I expanded the function to allow the user to input points within the raster to calculate MTP and P10 thresholds if desired, but also to enable a user-specified threshold.</p>
 <pre class="r"><code># create arbitrary raster
 raster1 &lt;- raster(nrow=10, ncol=10)
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
 raster1[1:25]&lt;- 1:25
 raster1[26:50] &lt;- rev(1:25)
 raster1[51:75] &lt;- 1:25
@@ -130,18 +140,209 @@ raster1[76:100] &lt;- rev(1:25)
 xy &lt;- data.frame(x = runif(20, min = -150, max = 150), y = runif(20, min = -70, max = 70))
 
 plot(raster1)
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
 points(xy)</code></pre>
 <p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>Now we can apply the function to see the MTP and P10 thresholded rasters:</p>
 <pre class="r"><code>mtp_raster &lt;- raster_threshold(input_raster = raster1, points = xy, type = &quot;mtp&quot;, binary = TRUE)
-plot(mtp_raster)</code></pre>
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+plot(mtp_raster)
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3</code></pre>
 <p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <pre class="r"><code>
 p10_raster &lt;- raster_threshold(input_raster = raster1, points = xy, type = &quot;p10&quot;, binary = TRUE)
-plot(p10_raster)</code></pre>
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+plot(p10_raster)
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3</code></pre>
 <p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
 <p>We can also use a user-inputted threshold to remove all parts of the raster with values lower than 20:</p>
 <pre class="r"><code>user_raster &lt;- raster_threshold(input_raster = raster1, threshold = 20)
-plot(user_raster)</code></pre>
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+plot(user_raster)
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3
+
+## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
+## normalization available before PROJ 6.3</code></pre>
 <p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>

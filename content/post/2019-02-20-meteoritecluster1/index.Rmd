@@ -13,7 +13,8 @@ image:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(collapse = TRUE, engine.path = list(python = '/usr/local/bin/python3.7'))
+knitr::opts_chunk$set(collapse = TRUE, engine.path = list(python = '/Applications/anaconda3/bin/python'))
+# knitr::opts_chunk$set(collapse = TRUE, engine.path = list(python = '/usr/local/bin/python3'))
 ```
 
 ```{r, include=FALSE}
