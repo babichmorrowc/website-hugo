@@ -44,7 +44,7 @@ svmHYB_weight &lt;- rangeSVM(variegatus[,2:3], tridactylus[,2:3], sdm = raster::
 <p>My initial suspicion was that the function was failing during one of the runs of a for loop, however the debugger showed me that the function was making it through all the runs of the for loop. Instead, the error occurred during the final step of <code>rangeSVM()</code> when the function attempted to integrate the results of all runs of the for loop to create a final support vector machine model.</p>
 <div id="get" class="section level2">
 <h2><code>get</code></h2>
-<p>To figure out why this problem was occurring, I wanted to be able to see the values of the different variables passeed to that final step of the function. Handily enough, while in the debugger, you can use the function <code>get(&quot;variable&quot;)</code> to check the status of the different variables (the name of the variable needs to be in quotation marks).</p>
+<p>To figure out why this problem was occurring, I wanted to be able to see the values of the different variables passeed to that final step of the function. Handily enough, while in the debugger, you can use the function <code>get("variable")</code> to check the status of the different variables (the name of the variable needs to be in quotation marks).</p>
 <p>For example:</p>
 <pre class="r"><code>debug(rangeSVM)
 svmHYB &lt;- rangeSVM(variegatus[,2:3], tridactylus[,2:3], sdm = raster::stack(var_sdm, tri_sdm), nrep = 3)

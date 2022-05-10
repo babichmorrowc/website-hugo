@@ -15,12 +15,12 @@ tags: ["R", "phylogenetics", "evolution"]
 <h1>Inspiration for this post</h1>
 <p>This post comes from the finishing touches I needed to put on a paper about <a href="https://babichmorrowc.github.io/project/life_history/">life history evolution</a>. The paper compares life history traits across the four groups of tetrapods (amphibians, reptiles, mammals, and birds), so when I carried out the nitty gritty phylogenetic analyses, I used four separate phylogenies. When it came time to make a figure to visualize those analyses, however, I ended up with an unwieldy (and unpublishable) 16-panel figure (four phylogenies by four traits). One of my coauthors suggested using a tetrapod supertree to visualize the evolution of the traits across all four classes simultaneously.</p>
 <div id="uyeda-et-al.-2017" class="section level2">
-<h2>Uyeda et al. 2017</h2>
-<p>Uyeda et al. did something similar in their 2017 paper <a href="https://www.journals.uchicago.edu/doi/10.1086/692326">The evolution of energetic scaling across the vertebrate tree of life</a>. They stitched together fish, amphibian, squamate, bird, and mammal phylogenies together to visualize metabolic rate across all vertebrates:</p>
+<h2>Uyeda et al. 2017</h2>
+<p>Uyeda et al. did something similar in their 2017 paper <a href="https://www.journals.uchicago.edu/doi/10.1086/692326">The evolution of energetic scaling across the vertebrate tree of life</a>. They stitched together fish, amphibian, squamate, bird, and mammal phylogenies together to visualize metabolic rate across all vertebrates:</p>
 <figure>
 <img class="special-img-class" style="width:75%" src="/img/uyeda_figure.png" />
 <figcaption>
-Figure 1 from Uyeda et al. 2017
+Figure 1 from Uyeda et al. 2017
 </figcaption>
 </figure>
 <p>At first, I was very hopeful that I would be able to download this supertree and prune it to the taxa in my analysis since the authors were using the same clade specific phylogenies that I was. The phylogeny is available on Data Dryad (<a href="https://datadryad.org/resource/doi:10.5061/dryad.3c6d2" class="uri">https://datadryad.org/resource/doi:10.5061/dryad.3c6d2</a>). Unfortunately, after downloading that phylogeny and pruning it to include species I used in my analysis, I ended up with approximately 15% of the species I analyzed in the resulting tree.</p>
@@ -37,7 +37,7 @@ Figure 1 from Uyeda et al. 2017
 library(geiger)</code></pre>
 <div id="the-original-phylogenies" class="section level2">
 <h2>The original phylogenies</h2>
-<p>I was working with four separate phylogenies: amphibians, squamates, birds, and mammals. For amphibians, I used a congruified time-tree from the <code>PhyloOrchard</code> package (O’Meara et al. 2013) that was constructed using the Alfaro et al. timetree of gnathostomes (Alfaro et al. 2009) as the reference and the Pyron and Wiens amphibian phylogeny as the target (Pyron and Wiens 2011).</p>
+<p>I was working with four separate phylogenies: amphibians, squamates, birds, and mammals. For amphibians, I used a congruified time-tree from the <code>PhyloOrchard</code> package (O’Meara et al. 2013) that was constructed using the Alfaro et al. timetree of gnathostomes (Alfaro et al. 2009) as the reference and the Pyron and Wiens amphibian phylogeny as the target (Pyron and Wiens 2011).</p>
 <pre class="r"><code>length(amphibiantree$tip.label)
 ## [1] 2871
 plot(amphibiantree, type = &quot;fan&quot;, show.tip.label = FALSE)</code></pre>
@@ -47,12 +47,12 @@ plot(amphibiantree, type = &quot;fan&quot;, show.tip.label = FALSE)</code></pre>
 ## [1] 378
 plot(squamatetree, type = &quot;fan&quot;, show.tip.label = FALSE)</code></pre>
 <p><img src="/post/2019-01-09-grafting-trees_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>For birds, I used the Jetz phylogeny (Jetz et al. 2012).</p>
+<p>For birds, I used the Jetz phylogeny (Jetz et al. 2012).</p>
 <pre class="r"><code>length(birdtree$tip.label)
 ## [1] 9993
 plot(birdtree, type = &quot;fan&quot;, show.tip.label = FALSE)</code></pre>
 <p><img src="/post/2019-01-09-grafting-trees_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>For mammals, I used the supertree from Fritz et al. 2009.</p>
+<p>For mammals, I used the supertree from Fritz et al. 2009.</p>
 <pre class="r"><code>length(mammaltree$tip.label)
 ## [1] 5020
 plot(mammaltree, type = &quot;fan&quot;, show.tip.label = FALSE)</code></pre>
@@ -68,7 +68,7 @@ class(tree_list) &lt;- &quot;multiPhylo&quot;</code></pre>
 </div>
 <div id="make-a-tree-with-orders" class="section level2">
 <h2>Make a tree with orders</h2>
-<p>In Uyeda et al. (2017), the authors were creating a phylogeny for all vertebrates, but for my analyses I was only examining tetrapods, so I didn’t have a fish phylogeny to include. The original code from Uyeda et al. to create a tree with the 5 vertebrate orders looks like this:</p>
+<p>In Uyeda et al. (2017), the authors were creating a phylogeny for all vertebrates, but for my analyses I was only examining tetrapods, so I didn’t have a fish phylogeny to include. The original code from Uyeda et al. to create a tree with the 5 vertebrate orders looks like this:</p>
 <pre class="r"><code>tip.labels &lt;- c(&quot;fish&quot;, &quot;amphib&quot;, &quot;squam&quot;, &quot;birds&quot;, &quot;mamm&quot;)
 
 ## Make a tree with just orders:
@@ -174,9 +174,7 @@ plot(res, type = &quot;fan&quot;, show.tip.label = FALSE)</code></pre>
 <div id="code" class="section level1">
 <h1>Code</h1>
 <p>The entire script I used for this process can be found at <a href="https://github.com/KerkhoffLab/bodymasspatterns/blob/master/tetrapod_phylogeny_code.R" class="uri">https://github.com/KerkhoffLab/bodymasspatterns/blob/master/tetrapod_phylogeny_code.R</a>.</p>
-</div>
-<div id="literature-cited" class="section level1">
-<h1>Literature Cited</h1>
+<p>#Literature Cited</p>
 <p>Alfaro, M. E., F. Santini, C. Brock, H. Alamillo, A. Dornburg, D. L. Rabosky, G. Carnevale, and L. J. Harmon. 2009. Nine exceptional radiations plus high turnover explain species diversity in jawed vertebrates. PNAS 106:13410-13414.</p>
 <p>Fritz, S. A., O. R. P. Bininda-Emonds, and A. Purvis. 2009. Geographical variation in predictors of mammalian extinction risk: big is bad, but only in the tropics. Ecology Letters 12:538–549.</p>
 <p>Jetz, W., G. H. Thomas, J. B. Joy, K. Hartmann, and A. O. Mooers. 2012. The global diversity of birds in space and time. Nature 491:444.</p>

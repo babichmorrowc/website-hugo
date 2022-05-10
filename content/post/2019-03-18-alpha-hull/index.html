@@ -24,9 +24,9 @@ image:
 <p>The <code>alphahull</code> R package (Pateiro-Lopez et al. 2016) draws shapes (like the ones above) around sets of points based on a given parameter, α. The package creates two kinds of shapes I was interested in: α-shapes and α-convex hulls. The functions in this post convert these shapes into objects compatible with the <code>sp</code> package, which can then be used for spatial analyses, including creating background regions for species distribution modeling.</p>
 <pre class="r"><code># load packages
 library(alphahull)
-## Warning: replacing previous import &#39;vctrs::data_frame&#39; by &#39;tibble::data_frame&#39;
-## when loading &#39;dplyr&#39;
-library(sp)</code></pre>
+## Warning: package &#39;alphahull&#39; was built under R version 3.5.2
+library(sp)
+## Warning: package &#39;sp&#39; was built under R version 3.5.2</code></pre>
 <div id="alpha-shapes" class="section level3">
 <h3>Alpha shapes</h3>
 <p>Alpha shapes consist of a collection of lines drawn around a group of points. Probably the most familiar example of an α-shape is a convex hull, the smallest convex shape that can be drawn around a group of objects. For example, the following code draws a convex hull around some data from the iris dataset:</p>
@@ -69,6 +69,7 @@ par(mfrow = c(1,1))</code></pre>
 <h4>Alpha shapes to polygons</h4>
 <p>In order to use α-shapes with spatial data in R, I wanted to convert these shapes to polygons. To accomplish this, I modified some of the code from an <a href="https://rpubs.com/geospacedman/alphasimple">RPubs by Barry Rowlingson</a> to create the following function:</p>
 <pre class="r"><code>library(igraph)
+## Warning: package &#39;igraph&#39; was built under R version 3.5.2
 ## 
 ## Attaching package: &#39;igraph&#39;
 ## The following objects are masked from &#39;package:stats&#39;:
