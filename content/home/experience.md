@@ -20,12 +20,23 @@ date_format = "January 2006"
 #   Leave `date_end` empty if it's your current employer.
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
 [[experience]]
+  title = "Compass PhD Program"
+  company = "University of Bristol"
+  company_url = "https://www.bristol.ac.uk/cdt/compass/"
+  location = "Bristol, UK"
+  date_start = "2023-09-25"
+  date_end = ""
+  description = """
+  I am working towards my PhD in Computational Statistics and Data Science. In my PhD project, I will be using Bayesian decision analysis to support climate adaptation decision-making. This project is supervised by Dr Laura Dawkins, Dr Dan Bernie, and Dr Dennis Prangle.
+  """
+  
+[[experience]]
   title = "Data Scientist"
   company = "Spring Health"
   company_url = "https://www.springhealth.com/"
   location = "New York, NY"
   date_start = "2019-09-01"
-  date_end = ""
+  date_end = "2023-08-04"
   description = """
   I use data to remove barriers to mental healthcare. On the Spring Health research & development team, I work to improve the mental healthcare experience for employees using Spring Health.
   """

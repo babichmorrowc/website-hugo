@@ -91,17 +91,12 @@ report_token &lt;- &quot;eb4fdefe37d8&quot;</code></pre>
 <pre class="r"><code>lego_data &lt;- export_report_to_csv(report_token, organization, username, password)</code></pre>
 <pre><code>## No encoding supplied: defaulting to UTF-8.
 ## No encoding supplied: defaulting to UTF-8.</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   year = col_integer(),
-##   white = col_double(),
-##   red = col_double(),
-##   blue = col_double(),
-##   black = col_double(),
-##   light_gray = col_double(),
-##   total = col_double(),
-##   main = col_character()
-## )</code></pre>
+<pre><code>## Rows: 65 Columns: 8── Column specification ───────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): main
+## dbl (7): year, white, red, blue, black, light_gray, total
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>knitr::kable(head(lego_data))</code></pre>
 <table>
 <thead>
