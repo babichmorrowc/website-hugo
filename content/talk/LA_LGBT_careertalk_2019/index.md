@@ -66,4 +66,5 @@ math = true
   
 +++
 
-<p><iframe src="https://docs.google.com/presentation/d/e/2PACX-1vT-sB5lS2bKsitOCUenYo1xA3pMzCxfo37TAnB408noR6SJPJpePBfei6p6FMylQFdmJ-FI4z-himQc/embed?start=false&loop=false&delayms=5000" frameborder="0" width="800" height="600" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></p>
+{{< gslides src="https://docs.google.com/presentation/d/e/2PACX-1vT-sB5lS2bKsitOCUenYo1xA3pMzCxfo37TAnB408noR6SJPJpePBfei6p6FMylQFdmJ-FI4z-himQc/embed?start=false&loop=false&delayms=5000" >}}
+
