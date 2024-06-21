@@ -5,7 +5,7 @@
 {{ $st := .page }}
 {{ $taxonomy := $st.Params.content.taxonomy | default "tags" }}
 {{ $fontSmall := $st.Params.design.font_size_min | default 0.8 }}
-{{ $fontBig := $st.Params.design.font_size_max | default 2.5 }}
+{{ $fontBig := $st.Params.design.font_size_max | default 1.5 }}  <!-- Adjusted from 2.5 to 1.5 -->
 
 {{ $items_count := $st.Params.content.count }}
 {{ if eq $items_count 0 }}
@@ -34,12 +34,12 @@
       {{ $delta := sub $max $min }}
       {{ $fontStep := div $fontDelta $delta }}
 
-      <div class="tag-cloud">
+      <div class="tag-cloud" style="line-height: 1.2;"> <!-- Added line-height to reduce spacing -->
         {{ range $name, $term := (sort $tags ".Page.Title" "asc") }}
           {{ $tagCount := len $term.Pages }}
           {{ $weight := div (sub (math.Log $tagCount) (math.Log $min)) (sub (math.Log $max) (math.Log $min)) }}
           {{ $fontSize := add $fontSmall (mul (sub $fontBig $fontSmall) $weight) }}
-          <a href="{{ .Page.RelPermalink }}" style="font-size:{{ $fontSize }}rem">{{ .Page.Title }}</a>
+          <a href="{{ .Page.RelPermalink }}" style="font-size:{{ $fontSize }}rem; margin: 0 5px;">{{ .Page.Title }}</a> <!-- Added margin to control spacing -->
         {{ end }}
       </div>
     {{ end }}

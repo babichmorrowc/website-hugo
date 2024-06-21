@@ -13,7 +13,7 @@ all_day = true
 authors = ["Cecina Babich Morrow"]
 
 # Abstract and optional shortened version.
-abstract = "In general, organisms try to be as fit as possible by living a long time (surviving) and making as many babies as possible (reproducing). Some animals, however, don't seem to have gotten this message. The animal kingdom is full of these 'sad animals`, who have life strategies that seem like very bad ideas. I talked about three of these animals, and how their eccentric strategies, while possibly sad by human standards, still allow them to be fit."
+abstract = "In the Bootcamp unit of Compass, we were tasked with learning independently about a mathematical topic relevant to our thesis and presenting at the end of the term. In this talk, I provide an overview of the St. Petersburg Paradox and present utility functions as a way to address the paradox. The talk provides a proof of the Von-Neumann Morgenstern Utility Theorem."
 summary = "My presentation for the Bootcamp unit of the Compass PhD program."
 
 # Name of event and optional event URL.
@@ -58,7 +58,7 @@ math = true
 # To use, add an image named `featured.jpg/png` to your page's folder. 
 [image]
   # Caption (optional)
-  # caption = "Utility functions and their stopping points for the St. Petersburg paradox."
+  caption = "Utility functions and their stopping points for the St. Petersburg paradox."
 
   # Focal point (optional)
   # Options: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight
