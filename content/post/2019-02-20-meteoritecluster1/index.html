@@ -1,13 +1,20 @@
 ---
-title: "Hacking Meteorites Part 1: Calculating percent weights"
+title: 'Hacking Meteorites Part 1: Calculating percent weights'
 author: "Cecina Babich Morrow"
-date: 2019-02-20T21:13:14-05:00
-categories: ["Hackathon", "Meteorites", "Python"]
-tags: ["hackathon", "meteorites", "earth science", "Python"]
+date: '2019-02-20T21:13:14-05:00'
+categories:
+- Hackathon
+- Meteorites
+- Python
+tags:
+- hackathon
+- meteorites
+- earth science
+- Python
 draft: true
 image:
   placement: 1
-  caption: 'Intensity of iron in a meteorite.'
+  caption: Intensity of iron in a meteorite.
   focal_point: ''
   preview_only: false
 ---
@@ -50,8 +57,6 @@ import matplotlib.colors
 from sklearn.decomposition import PCA
 from pathlib import Path
 from skimage.io import imread, imshow
-## /Applications/anaconda3/lib/python3.7/site-packages/dask/config.py:168: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
-##   data = yaml.load(f.read()) or {}
 import numpy.ma as ma
 from collections import Counter
 # read in percent weights by element of the minerals in the standard
@@ -120,6 +125,13 @@ for element in elements:
     # get the linear regression coefficient for each element
     coefs[element] = float(reg.coef_)
 # print the coefficients for each element
+## &lt;string&gt;:23: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+## &lt;string&gt;:23: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+## &lt;string&gt;:23: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+## &lt;string&gt;:23: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+## &lt;string&gt;:23: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+## &lt;string&gt;:23: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+## &lt;string&gt;:23: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
 print(coefs)
 ##              Mg        Ni   Al        Fe  ...    P         S        Ti        Si
 ## coeff  0.118599  0.328796  NaN  0.320081  ...  NaN  0.469225  0.077627  0.097906

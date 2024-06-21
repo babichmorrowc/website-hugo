@@ -1,19 +1,26 @@
 ---
-title: "Hacking Meteorites Part 1: Calculating percent weights"
+title: 'Hacking Meteorites Part 1: Calculating percent weights'
 author: "Cecina Babich Morrow"
-date: 2019-02-20T21:13:14-05:00
-categories: ["Hackathon", "Meteorites", "Python"]
-tags: ["hackathon", "meteorites", "earth science", "Python"]
+date: '2019-02-20T21:13:14-05:00'
+categories:
+- Hackathon
+- Meteorites
+- Python
+tags:
+- hackathon
+- meteorites
+- earth science
+- Python
 draft: true
 image:
   placement: 1
-  caption: 'Intensity of iron in a meteorite.'
+  caption: Intensity of iron in a meteorite.
   focal_point: ''
   preview_only: false
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(collapse = TRUE, engine.path = list(python = '/Applications/anaconda3/bin/python'))
+knitr::opts_chunk$set(collapse = TRUE, engine.path = list(python = '/opt/anaconda3/bin/python'))
 # knitr::opts_chunk$set(collapse = TRUE, engine.path = list(python = '/usr/local/bin/python3'))
 ```
 
