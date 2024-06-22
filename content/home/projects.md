@@ -28,18 +28,7 @@ subtitle = ""
   [[content.filter_button]]
     name = "Hypervolumes"
     tag = "hypervolume"
-    
-  [[content.filter_button]]
-    name = "Life History"
-    tag = "life history"
-    
-  [[content.filter_button]]
-    name = "Species Distribution Modeling"
-    tag = "species distribution modeling"
-  
-  [[content.filter_button]]
-    name = "Other"
-    tag = "Demo"
+
 
 [design]
   # Choose how many columns the section has. Valid values: 1 or 2.

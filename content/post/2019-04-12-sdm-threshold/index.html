@@ -231,8 +231,9 @@ plot(mtp_raster)
 ## normalization available before PROJ 6.3
 
 ## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
-## normalization available before PROJ 6.3
-
+## normalization available before PROJ 6.3</code></pre>
+<p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>
 p10_raster &lt;- raster_threshold(input_raster = raster1, points = xy, type = &quot;p10&quot;, binary = TRUE)
 ## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
 ## normalization available before PROJ 6.3
@@ -296,7 +297,7 @@ plot(p10_raster)
 
 ## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
 ## normalization available before PROJ 6.3</code></pre>
-<p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="/post/2019-04-12-sdm-threshold/index_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
 <p>We can also use a user-inputted threshold to remove all parts of the raster with values lower than 20:</p>
 <pre class="r"><code>user_raster &lt;- raster_threshold(input_raster = raster1, threshold = 20)
 ## Warning in doTryCatch(return(expr), name, parentenv, handler): no CRS
