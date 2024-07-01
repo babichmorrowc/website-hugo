@@ -82,3 +82,17 @@ math = false
   focal_point = ""
 +++
 
+## Abstract
+
+IMPORTANCE: Investment in workplace wellness programs is increasing despite concerns about lack of clinical benefit and return on investment (ROI). In contrast, outcomes from workplace mental health programs, which treat mental health difficulties more directly, remain mostly unknown.
+
+OBJECTIVE: To determine whether participation in an employer-sponsored mental health benefit was associated with improvements in depression and anxiety, workplace productivity, and ROI as well as to examine factors associated with clinical improvement.
+
+DESIGN, SETTING, AND PARTICIPANTS: This cohort study included participants in a US workplace mental health program implemented by 66 employers across 40 states from January 1, 2018, to January 1, 2021. Participants were employees who enrolled in the mental health benefit program and had at least moderate anxiety or depression, at least 1 appointment, and at least 2 outcome assessments.
+
+INTERVENTION: A digital platform that screened individuals for common mental health conditions and provided access to self-guided digital content, care navigation, and video and in-person psychotherapy and/or medication management.
+
+MAIN OUTCOMES AND MEASURES: Primary outcomes were the Patient Health Questionnaire-9 for depression (range, 0-27) score and the Generalized Anxiety Disorder 7-item scale (range, 0-21) score. The ROI was calculated by comparing the cost of treatment to salary costs for time out of the workplace due to mental health symptoms, measured with the Sheehan Disability Scale. Data were collected through 6 months of follow-up and analyzed using mixed-effects regression.
+
+RESULTS: A total of 1132 participants (520 of 724 who reported gender [71.8%] were female; mean [SD] age, 32.9 [8.8] years) were included. Participants reported improvements from pretreatment to posttreatment in depression (b = −6.34; 95% CI, −6.76 to −5.91; Cohen d = −1.11; 95% CI, −1.18 to −1.03) and anxiety (b = −6.28; 95% CI, −6.77 to −5.91; Cohen d = −1.21; 95% CI, −1.30 to −1.13). Symptom change per log-day of treatment was similar post–COVID-19 vs pre–COVID-19 for depression (b = 0.14; 95% CI, −0.10 to 0.38) and anxiety (b = 0.08; 95% CI, −0.22 to 0.38). Workplace salary savings at 6 months at the federal median wage was US \u0024 3440 (95% CI, \u0024 2730- \u0024 4151) with positive ROI across all wage groups. CONCLUSIONS AND RELEVANCE: Results of this cohort study suggest that an employer-sponsored workplace mental health program was associated with large clinical effect sizes for employees and positive financial ROI for employers.
+
