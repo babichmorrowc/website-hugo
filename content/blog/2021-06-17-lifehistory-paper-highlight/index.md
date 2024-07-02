@@ -3,8 +3,8 @@ title: Exciting publication news!
 author: "Cecina Babich Morrow"
 date: '2021-06-17'
 slug: lifehistory-paper-highlight
-categories: ["hypervolume", "life history", "R"]
-tags: ["hypervolume", "life history", "R"]
+categories: ["hypervolume", "life history"]
+tags: ["hypervolume", "life history"]
 image:
   caption: 'Celebrating my publication with the other tetrapods.'
   focal_point: ''
