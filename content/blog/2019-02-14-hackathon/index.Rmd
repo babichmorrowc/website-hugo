@@ -1,0 +1,47 @@
+---
+title: "#HackTheSolarSystem"
+author: "Cecina Babich Morrow"
+date: 2019-02-14T21:13:14-05:00
+categories: ["hackathon"]
+tags: ["hackathon", "meteorites", "earth science"]
+subtitle: My first hackathon.
+summary: Overview of my first hackathon.
+image:
+  caption: '[Image credit: HackTheSolarSystem logo](featured.png)'
+  placement: 2
+  focal_point: 'Center'
+  preview_only: no
+projects: ["bradypus"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+
+Last weekend I had the opportunity to participate in my first ever hackathon: the #HackTheSolarSystem hackathon hosted by the American Museum of Natural History. 
+
+## What is a hackathon, anyways?
+
+This is a question I got asked countless times this last week as I informed my friends and family that I would be at work **all** weekend (yes, including Friday night, yes, including Saturday night, no, I will not be able to socialize at all). And, in fairness, this is a question I wouldn't have had an answer to prior to this job. A hackathon is an event where participants come together to use technology to address a challenge. Usually, the event takes place over a few days, where hackers form teams and collaborate on their projects, before presenting their solutions.
+
+When I learned about this concept, I was baffled by the idea that it would be possible to come up with any kind of viable solution to a problem in only 24 hours. Coming from an academic background, I'm used to months of reading papers to get oriented to a problem before I can produce any kind of meaningful code. This event forced us to dive right in, looking at the problem from a computer science standpoint, rather than striving to get the full scientific background on the problem. I was amazed by the ability of all the teams at the event to create meaningful solutions to scientific problems they had not necessarily studied before.
+
+## The AMNH Hackathon
+
+For the past five years, the American Museum of Natural History has hosted a hackathon. #HackTheSolarSystem is the first and only hackathon I have participated in thus far, so I can't compare it to other events, but my understanding is that the museum seeks to put on a slightly different type of event than other hackathons: AMNH wants to give technologists and scientists the opportunity to work together to create solutions to real research problems. For #HackTheSolarSystem, museum scientists from the Department of Earth and Planetary Science put forth a series of challenges they face in their research that they thought could be solved through technology. These challenges ranged from tracking dust particles through aerogel to visualizing the Sun (a full list of challenges is available [here](https://github.com/amnh/HackTheSolarSystem/wiki/Challenges)). In addition to the scientific challenges, there were also educational challenges for both high school students and educators.
+
+On Friday night, the museum "stakeholders", i.e. the scientists posing the challenges, presented their challenges and led participants on tours of various areas of the museum, like the Hall of Meteorites and the Earth and Planetary Sciences department. Then, from Saturday at 2:00 pm to Sunday at 1:00 pm, us hackers stayed at the museum to develop solutions to our chosen challenges. Most hackers worked on teams formed at the event, although some corporate teams came into the hackathon with a team already formed.
+
+## The Challenge
+
+I chose to work on the meteorite mineral mapping challenge: our "stakeholders", museum scientists Marina Gemma and Sam Alpert, wanted a way to identify mineral composition in images of meteorites. Each meteorite slice had been imaged, resulting in data consisting of pixel intensity for a handful of elements. We also had access to a series of standards with known mineral content so we could compare the pixel intensities in these known minerals with the pixel intensities in the unknown minerals.
+
+Our team (pictured below) used four different approaches to address this problem: linear classification via SVM, random forest classification, nearest neighbor classification, and cluster inference. You can check out more details on these solutions in the Readme of our GitHub repository: https://github.com/HackTheSolarSystem/MineralMapping. (And I will post a more detailed explanation of the clustering solution in a later post, which is the part of the code I focused on!) 
+
+<figure>
+  <img class="special-img-class" style="width:100%" src="/img/hackathon_team.jpg" />
+  <figcaption>From left to right: Peter Kang, Jackson Lee, Jeremy Neiman, John Underwood, Katy Abbott, Cecina Babich Morrow, Meret Götschel</figcaption>
+</figure>
+
+Our solution ended up making us one of the four primary winning teams at the hackathon! We won the "LabCoat Knockout" award for creating a solution with the potential to change the nature of research. We plan to continue working with our museum stakeholders to fine-tune our code so that it can be used in their research in the future. To me, that is the most exciting part of this event - that a group of technologists from diverse backgrounds (none of which knew much about meteorites before this event!) could write code in 24 hours with the potential to solve a scientific problem with a concrete impact on research at the museum.

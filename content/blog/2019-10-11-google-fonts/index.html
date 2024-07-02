@@ -1,0 +1,75 @@
+---
+title: "Putting Google Fonts in R graphs"
+author: "Cecina Babich Morrow"
+date: 2019-10-11T21:13:14-05:00
+categories: ["R", "Google"]
+tags: ["R", "Google"]
+draft: false
+subtitle: How to use a Google Font in R.
+summary: How to use a Google Font in R.
+image:
+  placement: 1
+  caption: "In keeping with my Lego theme, this statue from Nathan Sawaya's exhibition at the New York Hall of Science represents some of the frustrations of adding fonts to R."
+  focal_point: ''
+  preview_only: false
+---
+
+
+
+<div id="inspiration-for-this-post" class="section level2">
+<h2>Inspiration for this post</h2>
+<p>I’ve been working on creating a visualization cookbook for R graphics (check out <a href="https://bbc.github.io/rcookbook/">this great example</a> from the BBC to see what I’m eventually going for). As part of this process, I wanted to be able to change the font of my plots to <a href="https://fonts.google.com/specimen/Source+Sans+Pro">Source Sans Pro</a>, which is a Google font.</p>
+</div>
+<div id="sysfonts-package" class="section level2">
+<h2><code>sysfonts</code> package</h2>
+<p>The first step here was to install and load the <code>sysfonts</code> package:</p>
+<pre class="r"><code>library(sysfonts)</code></pre>
+<div id="xquartz" class="section level3">
+<h3>XQuartz</h3>
+<p>If you end up getting the following error when loading <code>sysfonts</code>: <code>Reason: image not found</code>, you might need to do some additional work. This happened to me initially, and after doing some Googling, I found <a href="https://github.com/yixuan/showtext/issues/13">this GitHub issue</a>. Installing XQuartz was recommended as a fix, particularly for Macs, so I downloaded it from <a href="https://www.xquartz.org/">here</a>. After downloading XQuartz, I uninstalled, reinstalled, and loaded <code>sysfonts</code> and things went smoothly.</p>
+</div>
+</div>
+<div id="downloading-font-to-your-computer" class="section level2">
+<h2>Downloading font to your computer</h2>
+<p>As I learned from this <a href="https://github.com/kjhealy/sourcesans/blob/150207b18f4fbcc4c954715f269f8b20ce834a54/R/sourcesans.r">super helpful GitHub repo</a>, you need to install the font on your system as well as within R.</p>
+<div id="mac" class="section level3">
+<h3>Mac</h3>
+<p>I went through this process on a Mac, so this is what I ended up doing to install the font. I went to the <a href="https://fonts.google.com/specimen/Source+Sans+Pro">Google Fonts page for the font</a> and clicked on “Select this font”. Then after clicking on “1 Family Selected” at the bottom, I downloaded the font by clicking on the download icon. This downloaded a zip drive into my Downloads folder. To install it as a font, I extracted the zip folder (by opening the zip drive). In a different Finder window, I opened my Applications folder and found Font Book. Then I dragged the zip folder over into Font Book.</p>
+</div>
+<div id="pc" class="section level3">
+<h3>PC</h3>
+<p>I modified the above instructions from these instructions on <a href="https://flourishonline.com.au/download-google-fonts-mac-pc/">Flourish Online</a>, which also has PC instructions. If anyone gives these a try and they don’t work, let me know and I’ll try to do some troubleshooting!</p>
+</div>
+</div>
+<div id="font_add_google" class="section level2">
+<h2><code>font_add_google</code></h2>
+<p>Next, I used the <code>font_add_google</code> function from <code>sysfonts</code> to download the Source Sans Pro fonts:</p>
+<pre class="r"><code>font_add_google(&quot;Source Sans Pro&quot;)</code></pre>
+<p>If you want to install a different Google Font, you can run <code>font_families_google()</code> to see the list of family names of fonts currently available in Google Fonts:</p>
+<pre class="r"><code>head(font_families_google())</code></pre>
+<pre><code>## [1] &quot;ABeeZee&quot;       &quot;Abel&quot;          &quot;Abhaya Libre&quot;  &quot;Abril Fatface&quot;
+## [5] &quot;Aclonica&quot;      &quot;Acme&quot;</code></pre>
+</div>
+<div id="example" class="section level2">
+<h2>Example</h2>
+<p>To continue with my Lego theme, I’ll demonstrate using this font on data from the <code>legocolors</code> package. We can make the following graph of approximate lego brick availability based on the year a brick was released (colored by the brick color!):</p>
+<blockquote>
+<p>❗ <strong>Versions &gt;= 0.3.0 of <code>legocolors</code> no longer include <code>bl_bp</code></strong>: This code requires an installation of an earlier version of <code>legocolors</code>, which can be accomplished using <code>devtools::install_version("legocolors", version = "&lt; 0.3")</code></p>
+</blockquote>
+<pre class="r"><code>library(legocolors)
+library(ggplot2)
+
+ggplot(legocolors, aes(x = year_released, y = bl_bp, colour = hex)) +
+  geom_point() +
+  scale_color_manual(values = legocolors$hex) +
+  theme_minimal() +
+  theme(legend.position = &quot;none&quot;, text = element_text(family = &quot;Source Sans Pro&quot;), plot.title = element_text(face = &quot;bold&quot;)) +
+  labs(x = &quot;Year released&quot;, y = &quot;Brick availability&quot;, title = &quot;Lego availability&quot;, subtitle = &quot;All of the text is now in Source Sans Pro!&quot;)</code></pre>
+<pre><code>## Warning: Removed 3 rows containing missing values or values outside the scale range
+## (`geom_point()`).</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="troubleshooting" class="section level2">
+<h2>Troubleshooting</h2>
+<p>This process is a little bit finicky, so there are certain errors that crop up frequently. For me, just restarting RStudio and/or my computer (or updating the computer, if necessary) has solved these. The most common errors are <code>No font could be found for family "Source Sans Pro"</code> and <code>"Error in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : polygon edge not found"</code>, both of which relate to R not being able to find the font. If the font is indeed installed on your computer (you can check this in Font Book, for a Mac), then restarting things should help R find the font.</p>
+</div>

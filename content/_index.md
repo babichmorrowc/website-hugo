@@ -1,7 +1,7 @@
 ---
 title: "Cecina Babich Morrow"
 subtitle: "PhD Student at University of Bristol"
-description: "I am a professional nerd who loves data, graphs, and all creatures great and small. I currently study how to make climate-related decisions under deep uncertainty."
+description: "I am a professional nerd who loves data, graphs, and all creatures great and small. I currently study at the University of Bristol, researching how to make climate-related decisions under deep uncertainty."
 images:
   - img/headers/rainbow.jpg
 image_left: true

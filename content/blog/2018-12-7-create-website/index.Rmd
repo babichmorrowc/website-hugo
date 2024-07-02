@@ -2,15 +2,21 @@
 title: "Creating this website"
 author: "Cecina Babich Morrow"
 date: 2018-12-07T21:13:14-05:00
-categories: ["R", "GitHub"]
+categories: ["R", "GitHub", "website"]
 tags: ["R", "GitHub", "website"]
+subtitle: My saga of creating this website.
+summary: My saga of creating this website.
+image:
+  caption: '[Image credit: Cecina Babich Morrow](featured.png)'
+  placement: 2
+  focal_point: 'Center'
+  preview_only: no
+projects: []
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 ```
-
-<img class="special-img-class" style="width:75%" src="/img/website_fig.png" />
 
 ## Getting started
 

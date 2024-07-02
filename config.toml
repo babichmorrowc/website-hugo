@@ -1,14 +1,14 @@
 baseURL = "/"
 theme = "hugo-apero"
 languageCode = "en"
-title = "Hugo Apéro"
-author = "Alison Hill"
+title = "Cecina Babich Morrow"
+author = "Cecina Babich Morrow"
 copyright = "" # set to override the auto generated copyright using org info and now year
 googleAnalytics = ""
-#disqusShortname = "" # see params.comments to use utterances or giscus instead of Disqus
+disqusShortname = "babichmorrowc-github-io" # see params.comments to use utterances or giscus instead of Disqus
 metaDataFormat = "yaml"
 footnoteReturnLinkContents = "&#8617;" # ↩
-# set deliberately low for testing choose your preffered number based on the blog layout you've chosen
+# set deliberately low for testing choose your preferred number based on the blog layout you've chosen
 paginate = 5
 preserveTaxonomyNames = true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
@@ -28,11 +28,11 @@ enableEmoji = true
     style = "github"
     
 [params]
-  orgName = "RStudio"
+  orgName = "Cecina Babich Morrow"
   orgLocal = "Anywhere"
   description = "A modern, beautiful, and easily configurable blog theme for Hugo."
-  favicon = "/img/favicon.ico"
-  logo = "/img/blogophonic-mark-dark.png"
+  favicon = "/img/favicon.io/favicon.ico"
+  logo = "/img/favicon.io/favicon.ico"
   mainSections = ["blog", "project", "talk"]
   navallcaps = true
   # show/hide social icons in site header & footer
@@ -43,7 +43,7 @@ enableEmoji = true
   # Place image file in `static` folder and specify image name here.
   sharing_image = "/img/papillons.jpg"
   # Twitter username (without @). Used when a visitor shares your site on Twitter.
-  twitter = "apreshill"
+  twitter = "babichmorrowc"
   
   # use a built-in color theme
   # one of: earth / forest / grayscale / magma / paper / peach / plum /
@@ -69,29 +69,29 @@ enableEmoji = true
   headingFontFamily = "sans-serif"
 
   # Specify use of utterances, giscus or disqus
-  comments = "utterances"
+  comments = "disqus"
     
   # Configuration of https://utteranc.es/ for comments
-  [params.utterances]
-    repo_name = "apreshill/apero"
-    issue_term = "pathname" # url, pathname, or title
-    theme = "boxy-light"
-    label = "comments :crystal_ball:"
+  # [params.utterances]
+  #   repo_name = "apreshill/apero"
+  #   issue_term = "pathname" # url, pathname, or title
+  #   theme = "boxy-light"
+  #   label = "comments :crystal_ball:"
 
   # To enable giscus, the github discussions based comment section,
   # Follow the steps described to enable giscus and get the values
   # needed to populate the below information.
   # https://www.joelnitta.com/posts/2021-11-24_using-giscus/
-  [params.giscus]
-    repo = "apreshill/apero"
-    repo_id = "[REPO ID]="
-    category = "Comments"
-    category_id = "[category ID]"
-    mapping = "pathname"
-    reactions_enabled = "1"
-    emit_metadata = "0"
-    theme = "light"
-    lang = "en"
+  # [params.giscus]
+  #   repo = "apreshill/apero"
+  #   repo_id = "[REPO ID]="
+  #   category = "Comments"
+  #   category_id = "[category ID]"
+  #   mapping = "pathname"
+  #   reactions_enabled = "1"
+  #   emit_metadata = "0"
+  #   theme = "light"
+  #   lang = "en"
 
   # Configuration of math rendering
   [params.math]
@@ -103,33 +103,41 @@ enableEmoji = true
   # Icon pack "fas" includes solid icons, see: https://fontawesome.com/icons?d=gallery&s=solid&m=free
   # Icon pack "far" includes regular icons, see: https://fontawesome.com/icons?d=gallery&s=regular&m=free
   [[params.social]]
+      icon      = "envelope" # icon name without the 'fa-'
+      icon_pack = "fas"
+      url       = "/contact/"
+  [[params.social]]
       icon      = "github" # icon name without the 'fa-'
       icon_pack = "fab"
-      url       = "https://github.com/apreshill/apero"
+      url       = "https://github.com/babichmorrowc"
   [[params.social]]
-      icon      = "bluesky" # icon name without the 'fa-'
+      icon      = "google-scholar" # icon name without the 'fa-'
       icon_pack = "fab"
-      url       = "https://bsky.app/"
+      url       = "https://scholar.google.com/citations?user=20mEEooAAAAJ&hl=en"
   [[params.social]]
-      icon      = "instagram" # icon name without the 'fa-'
+      icon      = "orcid" # icon name without the 'fa-'
       icon_pack = "fab"
-      url       = "https://www.instagram.com/explore/tags/apero/"
+      url       = "https://orcid.org/my-orcid?orcid=0000-0003-2188-1495"
   [[params.social]]
       icon      = "x-twitter" # icon name without the 'fa-'
       icon_pack = "fab"
-      url       = "https://twitter.com/hashtag/apéro"
-  [[params.social]]
-      icon      = "impactstory" # icon name without the 'fa-'
-      icon_pack = "ai"
-      url       = "https://impactstory.org/u/0000-0002-8082-1890"
-  [[params.social]]
-      icon      = "orcid" # icon name without the 'fa-'
-      icon_pack = "ai"
-      url       = "http://orcid.org/0000-0002-8082-1890"
-  [[params.social]]
-      icon      = "rss" # icon name without the 'fa-'
-      icon_pack = "fas"
-      url       = "/blog/index.xml"
+      url       = "https://x.com/babichmorrowc"
+  # [[params.social]]
+  #     icon      = "bluesky" # icon name without the 'fa-'
+  #     icon_pack = "fab"
+  #     url       = "https://bsky.app/"
+  # [[params.social]]
+  #     icon      = "instagram" # icon name without the 'fa-'
+  #     icon_pack = "fab"
+  #     url       = "https://www.instagram.com/explore/tags/apero/"
+  # [[params.social]]
+  #     icon      = "impactstory" # icon name without the 'fa-'
+  #     icon_pack = "ai"
+  #     url       = "https://impactstory.org/u/0000-0002-8082-1890"
+  # [[params.social]]
+  #     icon      = "rss" # icon name without the 'fa-'
+  #     icon_pack = "fas"
+  #     url       = "/blog/index.xml"
 
 [taxonomies]
   category = "categories"
@@ -140,7 +148,7 @@ enableEmoji = true
   # Configure header 
   [[menu.header]]
     name = "About"
-    title = "About Blogophonic"
+    title = "About Cecina"
     url = "/about/"
     weight = 1
   [[menu.header]]
@@ -163,6 +171,11 @@ enableEmoji = true
     title = "Publications"
     url = "/publication/"
     weight = 5
+  [[menu.header]]
+    name = "Contact"
+    title = "Contact"
+    url = "/contact/"
+    weight = 6
     
   # Configure footer  
   [[menu.footer]]
