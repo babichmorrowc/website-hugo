@@ -1,0 +1,61 @@
+---
+title: "Git Workflow #1: Existing project, GitHub last"
+author: "Cecina Babich Morrow"
+date: 2019-09-17T21:13:14-05:00
+categories: ["GitHub"]
+tags: ["GitHub"]
+draft: false
+subtitle: Using command line to connect an existing project to Github.
+summary: Using command line to connect an existing project to Github.
+image:
+  placement: 1
+  caption: 'From [xkcd](https://xkcd.com/1597/).'
+  focal_point: ''
+  preview_only: false
+---
+
+
+
+<div id="inspiration-for-this-post" class="section level2">
+<h2>Inspiration for this post</h2>
+<p>Over the coming months, I plan on sharing a series of Git workflow tutorials. Getting a Git project set up can be a pretty simple process, but depending on the order in which you do things, set-up can get complicated. This first tutorial addresses one of those fairly complicated situations.</p>
+<p>The schema for these tutorials is loosely based on the incredible Git + R bible by Jenny Bryan, <a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a>. The only difference is that I will be showing the workflow for setting up the project using the command line, rather than RStudio.</p>
+</div>
+<div id="existing-project-github-last" class="section level2">
+<h2>Existing project, GitHub last</h2>
+<p>This first tutorial addresses the following situation: you have a folder for your project on your computer already. You would like this folder to be associated with a GitHub repository, but you haven’t created this repository yet, or you’ve created the GitHub repository and haven’t connected it with your local folder [^1].</p>
+<p>[^1] Throughout this tutorial, “local” refers to the copy of the repository on your computer. “Remote” refers to the copy on GitHub.</p>
+<div id="make-a-git-repo" class="section level3">
+<h3>Make a Git repo</h3>
+<p>The first step in this process is to make your local project into a Git repository. Start by using the command-line to navigate to the folder for your project (using <code>cd</code>). Once you are in the proper folder, run:</p>
+<pre class="bash"><code>git init</code></pre>
+<p>This command either creates a new Git repository, or, in our case, converts an existing project into a Git repository. If you want to read more about <code>git init</code>, particularly the difference between <code>git init</code> and <code>git clone</code>, Atlassian has a useful <a href="https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-init">article</a>.</p>
+<p>Now, since you’ve made edits / added files into your project, you want to add and commit those changes using the following commands:</p>
+<pre class="bash"><code>git add -A
+git commit -m &quot;test commit&quot;</code></pre>
+<p>You can make the commit message whatever you want. Note, <code>git add -A</code> adds all files in your repository. If you only want to add certain files, you can add them by name. For example, if you only want to add the file <code>test.txt</code>:</p>
+<pre class="bash"><code>git add test.txt
+git commit -m &quot;test commit&quot;</code></pre>
+</div>
+<div id="make-a-github-repo" class="section level3">
+<h3>Make a GitHub repo</h3>
+<p>Next, we need to create a GitHub repository for our project. Depending on your workflow, you may have already created this repository. If not, log in to <a href="https://github.com">GitHub</a>. Click the green “New repository” button. Ideally, you want the name of your new repository to match the name of the folder on your computer (but if not, it’s not a big deal). You don’t really want to initialize the repository with a README, but if you do, you can work around this later.</p>
+<p>Once the repository has been set up, you can copy the HTTPS URL to your clipboard using the green “Clone or Download” button.</p>
+</div>
+<div id="connect-the-github-repo-to-your-project" class="section level3">
+<h3>Connect the GitHub repo to your project</h3>
+<p>Now that you have a GitHub repository and you have a Git repository on your computer, you want to connect the two. To do this, run the following in the shell, using the URL that you just copied from GitHub:</p>
+<pre class="bash"><code>git remote add origin &lt;YOUR URL HERE&gt;</code></pre>
+<p>Note, you don’t need the <code>&lt;</code> and <code>&gt;</code> on either side of the URL, just paste the URL as is.</p>
+<p>You now need to tell your computer what the upstream branch should be, i.e. what branch on GitHub to pull updates from.</p>
+<pre class="bash"><code>git branch --set-upstream-to=origin/master master</code></pre>
+</div>
+<div id="reconcile-the-remote-and-local-repositories" class="section level3">
+<h3>Reconcile the remote and local repositories</h3>
+<p>Now, assuming that you have edits both on your computer and on the GitHub repository, you need to be able to reconcile these changes so that the two are the same. This is assuming that you have files added in the folder on your computer and also something like a README or .gitignore on GitHub. To fix this problem, you first need to pull the changes from the GitHub repository onto your computer:</p>
+<pre class="bash"><code>git pull --allow-unrelated-histories</code></pre>
+<p>The <code>--allow-unrelated-histories</code> portion of the command allows you to merge these two repositories (the local and the remote) even though they don’t have a common ancestor (you created them independently and made changes to both independently).</p>
+<p>Now, you can push the changes from your local repository up to GitHub:</p>
+<pre class="bash"><code>git push</code></pre>
+</div>
+</div>

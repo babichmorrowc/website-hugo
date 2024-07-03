@@ -1,0 +1,132 @@
+---
+title: "Accessing Mode data in R"
+author: "Cecina Babich Morrow"
+date: 2019-09-26T21:13:14-05:00
+categories: ["R"]
+tags: ["R"]
+draft: false
+subtitle: Tips and tricks for pulling data from Mode Analytics into R.
+summary: Tips and tricks for pulling data from Mode Analytics into R.
+image:
+  placement: 1
+  caption: 'A Lego fort that I constructed this summer with the help of a good friend (not particularly relevant to the post, except that I used a Lego dataset for my example and Legos are more photogenic than Mode databases).'
+  focal_point: ''
+  preview_only: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Inspiration for this post
+
+In the past, I've been used to a pretty straightforward R workflow: download my data as a csv from somewhere, save it on my computer, and go to work. Now that I work in healthcare, downloading data and saving it on my computer is no longer such a good idea (since that would be illegal) so I've needed other ways to get the data I need into R. My company uses the data analysis platform [Mode Analytics](https://mode.com/) to pull data from our database using SQL. I wanted a way to get data directly from Mode into R without needing to download the results of a report as a CSV, move them onto Google Drive, and then access them in R.
+
+## Get API access token
+
+The first step to accessing Mode via API is to [generate a token](https://mode.com/help/articles/user-accounts/#api-tokens). First, log in to Mode, click on your name in the top left corner, and select "My Account". Then click on "API Tokens" on the left side. You can generate a token by specifying a name for the token and clicking "Create token". The resulting credentials consist of your token (a.k.a. username or access key) and your password (a.k.a. access secret). This token is associated with your Mode user account, not an organization, so you'll be able to access reports from any organization you have access to.
+
+## Export report CSV to dataframe
+
+The following instructions essentially follow the Python code instructions on the Mode website to [export a report to a csv](https://mode.com/developer/api-cookbook/distribution/export-csv/). This code doesn't actually download the csv file, however, just imports it into R as a dataframe (so no datafiles on your computer!).
+
+The following functions rely on the `httr` and `jsonlite` packages:
+```{r}
+library(httr)
+library(jsonlite)
+```
+
+You also need your username and password, preferably assigned to variables in R. For this example, my username is assigned to `username` and my password is assigned to `password`.
+
+```{r eval=FALSE}
+# Replace with your username and password
+username <- "YOUR_USERNAME"
+password <- "YOUR_PASSWORD"
+```
+
+```{r include=FALSE}
+username <- "3234c002322b"
+password <- "60e7aebf1d4e7bf5931caf98"
+```
+
+You also need to find the token of the report you're interested in. When you go to your report in Mode, the token is everything after "reports/". So, for example, if you're interested in Legos (which you should be), you can get the most recent run of the [Lego set summary](https://app.mode.com/modeanalytics/reports/eb4fdefe37d8) report. 
+The URL is https://app.mode.com/modeanalytics/reports/eb4fdefe37d8, so the report token is "eb4fdefe37d8".
+
+```{r}
+# Replace with the report token of interest
+report_token <- "eb4fdefe37d8"
+```
+
+Finally, you need the name of your organization on Mode. For this example, we'll be looking at a community available Mode report, so the organization is "modeanalytics". You can get this from the URL as well, it will be the part directly before "/reports":
+
+```{r}
+# Replace with the organization of interest
+organization <- "modeanalytics"
+```
+
+
+### Get the latest run token
+
+The first step is to find the run token of the most recent time the Mode report was run. The following function gets that token, or throws an error if the latest run of the report was not successful:
+
+```{r}
+get_report_latest_run <- function(report_token, organization, username, password){
+  # Generate the URL for runs of the report you're interested in
+  url = paste0("https://modeanalytics.com/api/", organization, "/reports/", report_token, "/runs")
+  r = GET(url, authenticate(username, password, type = "basic"))
+  result = fromJSON(content(r, "text"))
+  # Find the most recent run token
+  most_recent_report_run_token <- result$`_embedded`$report_runs[1,]$token
+  # Find the status of the most recent run
+  status = result$`_embedded`$report_runs[1,]$state
+  if(status == "succeeded"){ # if the most recent report ran,
+    return(most_recent_report_run_token) # return that run token
+  } else{
+    stop("Report latest run did not succeed.") # if the most recent run failed, error
+  }
+}
+```
+
+So, for our example report, the most recent run token was:
+
+```{r}
+get_report_latest_run(report_token, organization, username, password)
+```
+
+### Extract the data from the most recent run
+
+Now, we can use a second function (which calls `get_report_latest_run`) to get the data from the most recent run:
+
+```{r}
+export_report_to_csv <- function(report_token, organization, username, password) {
+  # Get the latest run token
+  latest_report_run_token <- get_report_latest_run(report_token, organization, username, password)
+  # Generate the URL for the latest run of the report as a csv
+  url <- paste0("https://modeanalytics.com/api/", organization, "/reports/", report_token, "/runs/", latest_report_run_token, "/results/content.csv")
+  r <- GET(url, authenticate(username, password, type = "basic"))
+  # Read the data as a csv
+  r_csv <- content(r, type = "text/csv")
+  return(r_csv)
+}
+```
+
+## Example
+
+To get the data from the most recent run of the [Lego set summary](https://app.mode.com/modeanalytics/reports/eb4fdefe37d8) report, you want to save a script file containing the above two functions (I call this script `mode_api_script.R`. Then, run the following:
+
+```{r eval=FALSE}
+library(httr)
+library(jsonlite)
+source("mode_api_script.R")
+
+# Set username, password, and report token
+username <- "YOUR_USERNAME"
+password <- "YOUR_PASSWORD"
+report_token <- "eb4fdefe37d8"
+```
+
+```{r}
+lego_data <- export_report_to_csv(report_token, organization, username, password)
+knitr::kable(head(lego_data))
+```
+

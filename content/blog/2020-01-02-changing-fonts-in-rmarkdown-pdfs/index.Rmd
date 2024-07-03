@@ -1,0 +1,66 @@
+---
+title: Changing fonts in RMarkdown PDFs
+author: "Cecina Babich Morrow"
+date: 2020-01-02T11:13:14-05:00
+categories: ["R"]
+tags: ["R"]
+subtitle: 'Changing the font of RMarkdown PDF body text.'
+summary: 'Changing the font of RMarkdown PDF body text.'
+featured: no
+image:
+  placement: 1
+  caption: 'Comic from [Pinterest](https://www.pinterest.com/pin/106819822383177324/?lp=true)'
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+`r emo::ji("exclamation_mark")` *Note: this post has been edited on 2 August 2020 - there was a typo in the indenting of the YAML. Thank you to Henry Hankins for catching this!*
+
+## Inspiration for this post
+
+After learning how to [change the fonts within a graph](https://babichmorrowc.github.io/post/2019-10-11-google_fonts/) in R, I wanted to be able to change the fonts in the body of an RMarkdown to match. I specifically wanted to be able to knit an RMarkdown to PDF using the [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro) Google font, but these instructions should work for any Google font.
+
+## Cairo
+
+To embed custom fonts in PDFs, you can use the [Cairo graphics library](https://www.cairographics.org/). This library is installed with R, but if you are using a Mac, you do need to install [XQuartz](https://www.xquartz.org/). To check if you are able to run Cairo, you can run `capabilities()`:
+
+```{r}
+capabilities()
+```
+
+If `cairo` shows up as `TRUE`, you are good to go.
+
+## YAML header
+
+To use Cairo to change the font of your RMarkdown pdf, you can modify the YAML heading:
+
+```{r eval=FALSE}
+---
+title: "New fancy font!"
+header-includes:
+   - \usepackage[default]{sourcesanspro}
+   - \usepackage[T1]{fontenc}
+mainfont: SourceSansPro
+output:
+  pdf_document
+---
+```
+
+The `\usepackage` components of the header load Latex packages for your font (I am using Source Sans Pro in this example).
+
+## Chunk options
+
+The final step to use the font in your knitted pdf is to set the graphical device to Cairo in your code chunk option. At the beginning of your RMarkdown, the first chunk should include code that looks something like this:
+
+```{r eval=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Add `dev="cairo_pdf"` as one of the arguments:
+
+```{r eval=FALSE}
+knitr::opts_chunk$set(echo = TRUE, dev="cairo_pdf")
+```
+
+You can read more about other chunk options [here](https://yihui.org/knitr/options/#chunk_options).

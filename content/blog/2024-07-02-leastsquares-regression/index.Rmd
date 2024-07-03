@@ -1,0 +1,179 @@
+---
+title: "Least squares regression: Part 1"
+author: "Cecina Babich Morrow"
+date: "2024-07-02"
+categories: ["statistics", "R"]
+tags: ["statistics", "R"]
+subtitle: 'Introduction to least squares regression.'
+summary: 'Introduction to least squares regression.'
+featured: no
+image:
+  placement: 1
+  caption: 'Meme from [elipticalcurves](https://www.youtube.com/watch?v=arG2kZuUYaM&ab_channel=elipticalcurves)'
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+## Inspiration for this post
+
+As evidenced by the depressing three year lag-time since my last blog post on this website, it is well past time to get back into gear and get posting once more. I am coming to the end of the first year of my PhD in Computational Statistics and Data Science, and i thought I would share some of what I learned in my courses here.
+
+I'm starting out with that beloved classic, least squares regression.
+
+## Making good choices
+
+We'll start out by thinking a little bit about what we need in order to make "good" decisions.
+
+<figure>
+  <img class="special-img-class" style="width:100%" src="/img/make_good_choices.jpeg" />
+  <figcaption>How can we make Jamie Lee Curtis proud, statistically speaking?</figcaption>
+</figure>
+
+In order to make decisions rationally, a decision-making framework must fulfill the following criteria: predictions should be **precise** and **data-driven**, while accounting for both the **cost** of making an error in the specific situation and the **randomness** of the underlying data. Statistical decision-making (theoretically should) fulfill these criteria and thus provides a useful and rational framework for guiding predictions about the world.
+
+Today, we'll focus on how we might make good choices in a regression setting, i.e. predicting a continuous result based on a set of inputs. We have the following setting, in mathy terms: For an output variable $y \in \mathbb{R}$ and a set of $d$ input variables $\textbf{x}\in \mathbb{R}^d$, we have a dataset $D$ consisting of $n$ pairs of observed inputs and outputs $\{(\textbf{x}_i, y_i\}^n_{i=1}$.
+
+## Least squares regression
+
+Least squares regression tackles this regression problem by finding a prediction function $f(\textbf{x})$ that minimizes the sum of squared differences (hence the name) between the observed outputs $y_i$ and our predictions: $\sum^n_{i=1}(y_i-f(\textbf{x}_i;\textbf{w}))^2$.
+
+> *Why squares?* By trying to minimize the sum of squared differences between prediction and reality, rather than doing something like minimizing the raw distance between prediction and reality (see [least absolute deviations](https://en.wikipedia.org/wiki/Least_absolute_deviations)), we are penalizing the times are predictions are very far from reality even more heavily. 
+
+Our prediction function is defined by $f(\textbf{x};\textbf{w}) = \langle\textbf{w}_1,\textbf{x}\rangle+w_0$, where $\textbf{w}:= [\textbf{w}_1, w_0]^\top$, and we choose parameters $\textbf{w}$ such that $\textbf{w}_{LS} := \text{argmin}_\textbf{w} \sum_{i=1}^{n}[y_i-f(\textbf{x}_i;\textbf{w})]^2$. Solving this equation yields $\textbf{w}_{LS}=(\textbf{X}\textbf{X}^\top)^{-1}\textbf{X}\textbf{y}^\top$, where $\textbf{X}:=\begin{bmatrix} \textbf{x}_1,&...,&\textbf{x}_n\\1,&...,&1\end{bmatrix}$. Why? Well, let's prove it.
+
+::: {.theorem name="Least squares"}
+$\textbf{w}_{LS}=(\textbf{X}\textbf{X}^\top)^{-1}\textbf{X}\textbf{y}^\top$
+:::
+
+::: {proof}
+Let $\textbf{X}:=\begin{bmatrix} \textbf{x}_1,&...,&\textbf{x}_n\\1,&...,&1\end{bmatrix}$, $\textbf{y}:=[y_1,...,y_n]$. We have defined $\textbf{w}_{LS}$ as follows: $\textbf{w}_{LS} := \text{argmin}_\textbf{w} \sum_{i=1}^{n}[y_i-f(\textbf{x}_i;\textbf{w})]^2$.
+
+\begin{align*}
+    \textbf{w}_{LS} &:= \text{argmin}_\textbf{w} \sum_{i=1}^{n}[y_i-f(\textbf{x}_i;\textbf{w})]^2 \\
+    &= \text{argmin}_\textbf{w} ||\textbf{y}-\textbf{w}^\top\textbf{X}||^2 \\
+    &= \text{argmin}_\textbf{w} (\textbf{y}-\textbf{w}^\top\textbf{X})(\textbf{y}-\textbf{w}^\top\textbf{X})^\top \\
+    &= \text{argmin}_\textbf{w} (\textbf{y}-\textbf{w}^\top\textbf{X})(\textbf{y}^\top-(\textbf{w}^\top\textbf{X})^\top) \\
+    &= \text{argmin}_\textbf{w} (\textbf{y}-\textbf{w}^\top\textbf{X})(\textbf{y}^\top-\textbf{X}^\top\textbf{w}) \\
+    &= \text{argmin}_\textbf{w} (\textbf{y}\textbf{y}^\top - 2\textbf{w}^\top\textbf{X}\textbf{y}^\top+\textbf{w}^\top\textbf{X}\textbf{X}^\top\textbf{w})
+\end{align*}
+
+We differentiate with respect to $\textbf{w}$ and set the result equal to zero:
+
+\begin{align*}
+    0 &= \frac{\partial}{\partial \textbf{w}}(\textbf{y}\textbf{y}^\top - 2\textbf{w}^\top\textbf{X}\textbf{y}^\top+\textbf{w}^\top\textbf{X}\textbf{X}^\top\textbf{w}) \\
+    &= -2\textbf{X}\textbf{y}^\top+2\textbf{X}\textbf{X}^\top\textbf{w}_{LS}
+\end{align*}
+
+So $\textbf{w}_{LS}=(\textbf{X}\textbf{X}^\top)^{-1}\textbf{X}\textbf{y}^\top$.
+
+■
+:::
+
+In this result, we can see that we can only solve $\textbf{w}_{LS}$ if $\textbf{X}\textbf{X}^\top$ is invertible: in situations when the sample size $n$ is less than the number of inputs $d$, $\textbf{X}\textbf{X}^\top$ is rank deficient and thus non-invertible and the least squares solution cannot be calculated:
+
+If $n < d$:
+
+\begin{align*}
+    \text{rank}(\textbf{XX}^\top) &= \text{rank}(\textbf{X}) \\
+    &\leq \text{min}(d+1, n) \\
+    &= n
+\end{align*}
+
+The matrix $\textbf{X}\textbf{X}^\top \in \mathbb{R}^{d+1 \times d+1}$ and $n < d+1$, so $\textbf{X}\textbf{X}^\top$ is rank deficient and thus non-invertible.
+
+### R implementation
+
+While R obviously has built-in ways to perform least-squares regression, let's write our own anyways:
+
+```{r}
+# Function to calculate the coefficients w_LS
+least_squares_solver <- function(input_variables, output_variable, lambda = 0, b = 1) {
+  # Set up variables
+  y <- output_variable
+  X <- t(as.matrix(input_variables)) # convert each x_i into column vector
+  # Add intercept
+  X <- rbind(X, rep(1, ncol(X)))
+  
+  # Compute w_LS
+  # Using what we just proved above
+  w_LS <- solve(X %*% t(X)) %*% X %*% as.matrix(y)
+  return(w_LS)
+}
+```
+
+We'll also want a function to use the $\textbf{w}_{LS}$ we find to make predictions on a new dataset:
+
+```{r}
+# Function to apply coefficients to a new set of data
+least_squares_predict <- function(input_variables, coefficients) {
+  # Set up variables
+  X <- t(as.matrix(input_variables)) # convert each x_i into column vector
+  # Add intercept
+  X <- rbind(X, rep(1, ncol(X)))
+  
+  preds <- t(as.matrix(coefficients)) %*% X
+  return(preds)
+}
+```
+
+Finally, we'll write a function to calculate the sum of squared errors to check how well our predictions are doing:
+
+```{r}
+# Function to calculate sum of squared errors
+sum_squared_errors <- function(prediction, actual) {
+  squared_error <- (actual - prediction)^2
+  return(sum(squared_error))
+}
+```
+
+Let's test it out on some data. We will use a prostate cancer dataset:
+
+```{r}
+library(readr)
+
+# Import data
+prostate_data <- read_csv("prostate_data.csv")
+
+# Split data into training and test data
+train_data <- prostate_data[prostate_data$train == TRUE,]
+test_data <- prostate_data[!prostate_data$train,]
+```
+
+Now, let's use our function to make a model predicting `lpsa` using all features:
+
+```{r}
+# Model using all features -----------------------------------------------------
+# Fit linear least squares on the training data
+train_least_squares <- least_squares_solver(train_data[,1:8], train_data$lpsa)
+
+# Apply the model to the testing data
+preds <- least_squares_predict(test_data[,1:8], train_least_squares)
+# Calculate cross-validation error
+cross_val_error <- sum_squared_errors(preds, test_data$lpsa)
+cross_val_error
+```
+
+Let's compare to the results of the built-in `lm` function from R to check that we're on the right track:
+
+```{r}
+# Compare to lm results --------------------------------------------------------
+lm_model <- lm(lpsa ~ ., data = train_data[,1:9])
+summary(lm_model)
+lm_preds <- predict(lm_model, test_data)
+# Check if our predictions are the same
+all.equal(unname(lm_preds),
+          as.vector(preds))
+```
+
+We have the same predictions on the test set!
+
+## Accounting for randomness
+
+So, are we making good choices yet? Considering our criteria for rational decision-making, least squares regression is clearly precise (motivated by mathematical principles), is computed based on observed data, and accounts for the cost of error by measuring that cost in terms of squared difference between prediction and reality. So all that is missing now is to make sure we are accounting for the randomness of the underlying data.
+
+To do this, we can motivate least squares regression in a probabilistic way by assuming that our output variables $y_i$ are normally distributed with mean $f(\textbf{x}_i;w)$ and variance $\sigma^2$ and the observations $(\textbf{x}_i, y_i)$ are independent and identically distributed. Then $p(y_1, ..., y_n | \textbf{x}_1, ..., \textbf{x}_n, \textbf{w}, \sigma) = \prod_{i=1}^n N_{y_i}(f(\textbf{x}_i; w), \sigma^2)$.
+
+To tune the parameters $\textbf{w}$ and $\sigma$, we can use a technique known as maximum likelihood estimation (MLE). MLE maximizes the probability density function evaluated at the dataset $D$ with respect to our unknown parameters. Intuitively, the goal of MLE is to find parameters that make it most likely that we would observe our actual data.
+
+By performing MLE to determine the parameter $\textbf{w}_{ML}$, we find that $\textbf{w}_{ML} = \text{argmin}_\textbf{w} \sum_{i=1}^{n}[y_i-f(\textbf{x}_i;\textbf{w})]^2 = \textbf{w}_{LS}$, so our least squares parameter is also the maximum likelihood estimator. We can also perform MLE to find the uncertainty of our prediction function $\sigma^2_{ML} = \frac{1}{n}[y - f(\textbf{x}; \textbf{w}_{ML})]^2$, accounting for randomness in our underlying data.
