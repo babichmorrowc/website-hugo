@@ -66,4 +66,3 @@ math = true
   
 +++
 
-<p><iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSveyLXkk95ygnjAU88LiGlN0bdX0uq2IKJr6IiEEK0gzJW3QGeccFSi9B4640orw/embed?" frameborder="0" width="800" height="600" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></p>

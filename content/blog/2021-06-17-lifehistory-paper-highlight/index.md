@@ -5,6 +5,8 @@ date: '2021-06-17'
 slug: lifehistory-paper-highlight
 categories: ["hypervolume", "life history"]
 tags: ["hypervolume", "life history"]
+subtitle: "An update on my latest publication 🎉"
+summary: "An update on my latest publication 🎉"
 image:
   caption: 'Celebrating my publication with the other tetrapods.'
   focal_point: ''
