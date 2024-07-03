@@ -19,6 +19,10 @@ intro: |
   
   <i class="fas fa-graduation-cap pr2"></i>BA in Biology and Mathematics  &#8729;
     Kenyon College  &#8729;  2014 - 2018
+    
+  ## Teaching
+  
+  From 2018-2019, I taught programming skills to high school women. You can find a description of the internship and lesson plans I created in the following GitHub repository: https://github.com/babichmorrowc/SlothSquad2018-9. If you have any questions about these resources, please let me know!
   
 ---
 
