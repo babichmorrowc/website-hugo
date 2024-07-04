@@ -2,7 +2,7 @@
 title: "Bayesian Decision Analysis"
 subtitle: "Using BDA for climate adaptation decision-making."
 excerpt: "Bayesian Decision Analysis for climate decision-making."
-date: 2024-07-21
+date: 2024-06-21
 author: "Cecina Babich Morrow"
 draft: false
 tags:
