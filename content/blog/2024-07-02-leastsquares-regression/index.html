@@ -19,7 +19,7 @@ projects: []
 
 <div id="inspiration-for-this-post" class="section level2">
 <h2>Inspiration for this post</h2>
-<p>As evidenced by the depressing three year lag-time since my last blog post on this website, it is well past time to get back into gear and get posting once more. I am coming to the end of the first year of my PhD in Computational Statistics and Data Science, and i thought I would share some of what I learned in my courses here.</p>
+<p>As evidenced by the depressing three year lag-time since my last blog post on this website, it is well past time to get back into gear and get posting once more. I am coming to the end of the first year of my PhD in Computational Statistics and Data Science, and I thought I would share some of what I learned in my courses here. Huge thanks to Dr. Song Liu for pretty much all of the material presented here (mistakes are my own).</p>
 <p>I’m starting out with that beloved classic, least squares regression.</p>
 </div>
 <div id="making-good-choices" class="section level2">
@@ -57,7 +57,8 @@ How can we make Jamie Lee Curtis proud, statistically speaking?
 <p>We differentiate with respect to <span class="math inline">\(\textbf{w}\)</span> and set the result equal to zero:</p>
 <p><span class="math display">\[\begin{align*}
     0 &amp;= \frac{\partial}{\partial \textbf{w}}(\textbf{y}\textbf{y}^\top - 2\textbf{w}^\top\textbf{X}\textbf{y}^\top+\textbf{w}^\top\textbf{X}\textbf{X}^\top\textbf{w}) \\
-    &amp;= -2\textbf{X}\textbf{y}^\top+2\textbf{X}\textbf{X}^\top\textbf{w}_{LS}
+    0 &amp;= -2\textbf{X}\textbf{y}^\top+2\textbf{X}\textbf{X}^\top\textbf{w}_{LS} \\
+    2\textbf{X}\textbf{y}^\top &amp;= 2\textbf{X}\textbf{X}^\top\textbf{w}_{LS}
 \end{align*}\]</span></p>
 <p>So <span class="math inline">\(\textbf{w}_{LS}=(\textbf{X}\textbf{X}^\top)^{-1}\textbf{X}\textbf{y}^\top\)</span>.</p>
 <p>■</p>

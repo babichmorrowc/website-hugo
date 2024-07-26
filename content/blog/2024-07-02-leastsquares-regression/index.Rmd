@@ -17,7 +17,7 @@ projects: []
 
 ## Inspiration for this post
 
-As evidenced by the depressing three year lag-time since my last blog post on this website, it is well past time to get back into gear and get posting once more. I am coming to the end of the first year of my PhD in Computational Statistics and Data Science, and i thought I would share some of what I learned in my courses here.
+As evidenced by the depressing three year lag-time since my last blog post on this website, it is well past time to get back into gear and get posting once more. I am coming to the end of the first year of my PhD in Computational Statistics and Data Science, and I thought I would share some of what I learned in my courses here. Huge thanks to Dr. Song Liu for pretty much all of the material presented here (mistakes are my own).
 
 I'm starting out with that beloved classic, least squares regression.
 
@@ -62,7 +62,8 @@ We differentiate with respect to $\textbf{w}$ and set the result equal to zero:
 
 \begin{align*}
     0 &= \frac{\partial}{\partial \textbf{w}}(\textbf{y}\textbf{y}^\top - 2\textbf{w}^\top\textbf{X}\textbf{y}^\top+\textbf{w}^\top\textbf{X}\textbf{X}^\top\textbf{w}) \\
-    &= -2\textbf{X}\textbf{y}^\top+2\textbf{X}\textbf{X}^\top\textbf{w}_{LS}
+    0 &= -2\textbf{X}\textbf{y}^\top+2\textbf{X}\textbf{X}^\top\textbf{w}_{LS} \\
+    2\textbf{X}\textbf{y}^\top &= 2\textbf{X}\textbf{X}^\top\textbf{w}_{LS}
 \end{align*}
 
 So $\textbf{w}_{LS}=(\textbf{X}\textbf{X}^\top)^{-1}\textbf{X}\textbf{y}^\top$.
