@@ -1,0 +1,544 @@
+---
+title: "brat and it's the same but it's a blog post so it's not"
+author: "Cecina Babich Morrow"
+date: "2024-08-17"
+categories: ["R"]
+tags: ["R"]
+subtitle: 'How brat is this color?'
+summary: 'An attempt to answer the pressing question, how brat is this color?'
+featured: no
+image:
+  placement: 1
+  caption: '[© 2024 Charli xcx](https://www.bratgenerator.com/)'
+  focal_point: ''
+  preview_only: false
+projects: []
+output:
+  html_document:
+    code_folding: show
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+## Inspiration for this post
+
+<div style="text-align: center;">
+  <figure>
+    <img class="special-img-class" style="width:40%" src="/img/charli_xcx.jpeg" />
+    <figcaption>The indomitable Charli xcx</figcaption>
+  </figure>
+</div>
+
+In this case, my muse for this post is probably pretty clear. I am doing my best to have a brat summer, as are we all. But of course, the question that comes to mind is...how brat is my summer, really?
+
+While most aspects of brat are unquantifiable, that iconic green seemed like a potential place to start. I had the idea of entering the hex code for a color and spitting out a number telling you how close your color was to <span style="color: #9ACC3F; font-weight: bold;">brat color</span>. The journey turned out to be a bit more complicated than that.
+
+## What color is brat?
+
+Of course the first question was what color brat is, exactly. I used [Digital Colour Meter](https://support.apple.com/en-gb/guide/digital-color-meter/welcome/mac) to determine the color on the essential https://www.bratgenerator.com/ (making sure it was in green mode, since black and white just isn't as interesting).
+
+<div style="text-align: center;">
+  <figure>
+    <img class="special-img-class" style="width:80%" src="/img/brat_color_dropper.png" />
+    <figcaption>Important scientific work.</figcaption>
+  </figure>
+</div>
+
+Based on this investigative reporting, I came up with the hex code <span style="color: #9ACC3F; font-weight: bold;">#9ACC3F</span>. However, I'm nothing if not thorough, so I wanted to check my work. I did the same to the album cover color on Spotify, this time coming up with <span style="color: #99CB3F; font-weight: bold;">#99CB3F</span>. Aggravating.
+
+```{r echo = FALSE}
+library(ggplot2)
+
+# Create a data frame with two categories
+data <- data.frame(
+  category = c("Meme Generator", "Spotify"),
+  value = c(1, 1)
+)
+
+# Create the plot
+ggplot(data, aes(x = category, y = value, fill = category)) +
+  geom_bar(stat = "identity", width = 0.8) +
+  geom_text(aes(label = category),
+            vjust = 13,
+            color = "black",
+            size = 5,
+            family = "Arial Narrow") +
+  scale_fill_manual(values = c("#9ACC3F", "#99CB3F")) + # Use your hex codes here
+  theme_minimal() +
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    panel.grid = element_blank(),
+    text = element_text(family = "Arial Narrow") # Set the font for the entire plot
+  ) +
+  labs(title = "Color comparison") +
+  guides(fill = "none")
+```
+
+At the end of the day, my untrained eye can't really distinguish these two, even after the brain-rotting number of hours I've spent staring at this album. I'm going with the meme generator hex code for this.
+
+## Color distance
+
+I assumed I could do a quick distance calculation in color space to determine the distance of any color to <span style="color: #9ACC3F; font-weight: bold;">brat color</span>.
+
+### RGB
+
+RGB space seemed like the ideal way to do this. The RGB color model essentially adds together the red, green, and blue components by superimposing to create a color or image. Each of the three colors can be anywhere between fully on and fully off. When they're all fully on, we get white; all fully off gives black.
+
+<div style="text-align: center;">
+  <figure>
+    <img class="special-img-class" style="width:40%" src="/img/RGB_combination_on_wall.png" />
+    <figcaption>Demonstration of additive color mixing. From <a href="https://commons.wikimedia.org/w/index.php?curid=118929579">Wikipedia</a>: By DemonDays64 - Own work made in Blender with Cycles; CC BY 4.0.</figcaption>
+  </figure>
+</div>
+
+This seemed like a fabulous way to generate a space on which to measure color distance. I could simply define a cube with three axes representing red, green, and blue, and then calculate the Euclidean distance between points in that space.
+
+```{r message = FALSE, echo = FALSE}
+# Show an RGB cube
+library(plotly)
+RGB <- expand.grid(R = seq(0, 1, length.out = 10),
+                   G = seq(0, 1, length.out = 10),
+                   B = seq(0, 1, length.out = 10))
+colors <- rgb(RGB$R, RGB$G, RGB$B)
+cube <- plot_ly(x = RGB$R, y = RGB$G, z = RGB$B, 
+                type = 'scatter3d', mode = 'markers', 
+                marker = list(color = colors, size = 3)) %>%
+  layout(scene = list(
+    xaxis = list(title = 'Red'),
+    yaxis = list(title = 'Green'),
+    zaxis = list(title = 'Blue'),
+    title = 'RGB Color Cube'
+  ))
+cube
+```
+
+> For more delightful RGB fun facts, there is a trusty [Wikipedia article](https://en.wikipedia.org/wiki/RGB_color_model) where you can learn about everything from the human eye to the first permanent color photograph.
+
+Let's write an R function that can take two colors and calculate the distance between them in this RGB "cube". We'll assume we want to do everything in hex codes (we can extend this later if we want). I like the idea of returning the percentage of brat-ness, so we'll convert the Euclidean distance into the percentage of the maximum distance in a unit cube ($\sqrt 3$).
+
+```{r}
+color_distance <- function(ref_color = "#9ACC3F",
+                           new_color,
+                           color_space = "rgb") {
+  # Convert hex to rgb
+  # Using row vectors to work well with dist in the next step
+  # Dividing by 255 to get a unit cube
+  ref_rgb <- t(col2rgb(ref_color)) / 255
+  new_rgb <- t(col2rgb(new_color)) / 255
+  
+  # Calculate euclidean distance between colors
+  dist <- as.numeric(dist(rbind(new_rgb, ref_rgb)))
+  
+  # Calculate percent of sqrt 2
+  perc_dist <- 1 - dist / sqrt(3)
+  return(perc_dist)
+}
+```
+
+Let's test it out:
+
+```{r}
+brat_hex <- "#9ACC3F"
+bi_hex <- "#D60270"
+midwest_hex <- "#4CA6AE"
+# How brat is the brat color?
+brat_dist <- color_distance(new_color = brat_hex)
+# How brat is #D60270?
+bi_dist <- color_distance(new_color = bi_hex)
+# How brat is #4CA6AE?
+midwestprincess_dist <- color_distance(new_color = midwest_hex)
+```
+
+So according to Euclidean distance in the unit RGB cube, <span style="color: #9ACC3F; font-weight: bold;">`r paste0("the brat color is ", brat_dist * 100, "% brat")`</span>, <span style="color: #D60270; font-weight: bold;">`r paste0("this color lifted from the bisexual pride flag is ", round(bi_dist * 100, 2), "% brat")`</span>, and <span style="color: #4CA6AE; font-weight: bold;">`r paste0("this color lifted from The Rise and Fall of a Midwest Princess album cover is ", round(midwestprincess_dist * 100, 2), "% brat")`</span>.
+
+<div style="text-align: center;">
+  <figure>
+    <img class="special-img-class" style="width:50%" src="/img/midwestprincess_color_dropper.png" />
+    <figcaption>More important scientific work.</figcaption>
+  </figure>
+</div>
+
+We can visualize the relative positions of the colors in our cube like so:
+
+```{r echo = FALSE}
+brat_rgb <- col2rgb(brat_hex) / 255
+bi_rgb <- col2rgb(bi_hex) / 255
+midwest_rgb <- col2rgb(midwest_hex) / 255
+
+cube %>%
+  add_trace(x = brat_rgb[1],
+            y = brat_rgb[2],
+            z = brat_rgb[3],
+            type = 'scatter3d', mode = 'markers+text',
+            marker = list(color = rgb(brat_rgb[1],
+                                      brat_rgb[2],
+                                      brat_rgb[3]),
+                          size = 13),
+            text = 'brat', textposition = 'top right') %>% 
+  add_trace(x = bi_rgb[1],
+            y = bi_rgb[2],
+            z = bi_rgb[3],
+            type = 'scatter3d', mode = 'markers+text',
+            marker = list(color = rgb(bi_rgb[1],
+                                      bi_rgb[2],
+                                      bi_rgb[3]),
+                          size = 13),
+            text = 'bisexuality', textposition = 'top right') %>% 
+  add_trace(x = midwest_rgb[1],
+            y = midwest_rgb[2],
+            z = midwest_rgb[3],
+            type = 'scatter3d', mode = 'markers+text',
+            marker = list(color = rgb(midwest_rgb[1],
+                                      midwest_rgb[2],
+                                      midwest_rgb[3]),
+                          size = 13),
+            text = 'midwest princess', textposition = 'top right')
+```
+
+### HSV
+
+What if we aren't feeling particularly cubic? An alternative to the RGB cube representation is instead depicting colors located in a cylinder. This can be done in a couple different ways: HSL (hue, saturation, lightness), HSV (hue, saturation, value), or HSI (hue, saturation, intensity). [This Wikipedia page](https://en.wikipedia.org/wiki/HSL_and_HSV) has a great explanation of each, so I won't go into the distinctions too much. Instead, I've decided to go with HSV purely because I think the cylinder looks coolest (please debate me on this).
+
+HSV situates the hue of a color around the circular dimension of the cylinder, radiating from red to green to blue back to red. As you move from the center of the cylinder outwards, the colors become more saturated, and as you move from the bottom of the cylinder upwards, the colors become lighter.
+
+```{r echo = FALSE}
+library(colorspace)
+
+# Generate all combinations of H, S, and V values
+H <- seq(0, 360, length.out = 50)  # Hue: 0 to 360 degrees
+S <- seq(0, 1, length.out = 10)    # Saturation: 0 to 1
+V <- seq(0, 1, length.out = 10)    # Value (brightness): 0 to 1
+
+# Create a grid of HSV values
+HSV <- expand.grid(H = H, S = S, V = V)
+
+# Convert HSV to RGB for color mapping
+RGB <- hex(HSV(H = HSV$H, S = HSV$S, V = HSV$V))
+
+# Calculate the cylindrical coordinates for plotting
+x <- HSV$S * cos(HSV$H * pi / 180)  # X-coordinate (Saturation * cos(Hue))
+y <- HSV$S * sin(HSV$H * pi / 180)  # Y-coordinate (Saturation * sin(Hue))
+z <- HSV$V                          # Z-coordinate (Value)
+
+# Plot the HSV cylinder with plotly
+cylinder <- plot_ly(x = x, y = y, z = z, 
+                type = 'scatter3d', mode = 'markers', 
+                marker = list(color = RGB, size = 3)) %>%
+  layout(scene = list(
+    xaxis = list(title = 'Saturation (cos(Hue))'),
+    yaxis = list(title = 'Saturation (sin(Hue))'),
+    zaxis = list(title = 'Lightness'),
+    aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1),
+    title = 'HSV Color Cylinder'
+  ))
+cylinder
+```
+
+
+As a (non-)expert, I think a crucial part of the brat color appeal is the level of saturation, so I was interested in seeing if a color schema that explicitly accounts for saturation would give some different brat levels. Let's expand our function:
+
+```{r}
+hsv2cyl_xyz <- function(hsv_vec) {
+  # Given a 3x1 matrix, e.g. one returned by rgb2hsv
+  # Assuming the 1st value is hue, 2nd saturation, 3rd value
+  xyz_coord <- c(hsv_vec[2] * cos(hsv_vec[1] * 2 * pi),
+                 hsv_vec[2] * sin(hsv_vec[1] * 2 * pi),
+                 hsv_vec[3])
+  return(xyz_coord)
+}
+
+color_distance <- function(ref_color = "#9ACC3F",
+                           new_color,
+                           color_space = "rgb") {
+  
+  # Convert hex to rgb
+  # Dividing by 255 to get a unit cube
+  ref_rgb <- col2rgb(ref_color) / 255
+  new_rgb <- col2rgb(new_color) / 255
+  
+  if(color_space == "rgb") {
+    # Calculate euclidean distance between colors
+    dist <- as.numeric(dist(rbind(t(new_rgb), t(ref_rgb))))
+    
+    # Calculate percent of sqrt 3
+    perc_dist <- 1 - dist / sqrt(3)
+  } else if(color_space == "hsv") {
+    # Convert hex to hsv
+    ref_hsv <- rgb2hsv(ref_rgb, maxColorValue = 1)
+    new_hsv <- rgb2hsv(new_rgb, maxColorValue = 1)
+    
+    # Convert HSV to xyz coordinates in the cylinder
+    ref_xyz <- hsv2cyl_xyz(ref_hsv)
+    new_xyz <- hsv2cyl_xyz(new_hsv)
+    
+    # Calculate euclidean distance between colors
+    dist <- as.numeric(dist(rbind(ref_xyz, new_xyz)))
+    
+    # Calculate percent of sqrt 5
+    perc_dist <- 1 - dist / sqrt(5)
+  }
+  
+  return(perc_dist)
+}
+```
+
+So let's calculate the brat percentages using HSV instead:
+
+```{r}
+# How brat is the brat color?
+brat_dist_hsv <- color_distance(new_color = brat_hex, color_space = "hsv")
+# How brat is #D60270?
+bi_dist_hsv <- color_distance(new_color = bi_hex, color_space = "hsv")
+# How brat is #4CA6AE?
+midwestprincess_dist_hsv <- color_distance(new_color = midwest_hex, color_space = "hsv")
+```
+
+In our HSV cylinder, <span style="color: #9ACC3F; font-weight: bold;">`r paste0("the brat color is ", brat_dist_hsv * 100, "% brat")`</span>, <span style="color: #D60270; font-weight: bold;">`r paste0("the bi flag color is ", round(bi_dist_hsv * 100, 2), "% brat")`</span> (`r round((bi_dist - bi_dist_hsv) * 100, 2)` percentage points lower than in RGB space), and <span style="color: #4CA6AE; font-weight: bold;">`r paste0("the Midwest Princess color is ", round(midwestprincess_dist_hsv * 100, 2), "% brat")`</span> (`r round((midwestprincess_dist - midwestprincess_dist_hsv) * 100, 2)` percentage points lower).
+
+Let's see the relative positions on our cylinder:
+
+```{r echo=FALSE}
+brat_hsv <- rgb2hsv(brat_rgb, maxColorValue = 1)
+bi_hsv <- rgb2hsv(bi_rgb, maxColorValue = 1)
+midwest_hsv <- rgb2hsv(midwest_rgb, maxColorValue = 1)
+
+brat_xyz <- hsv2cyl_xyz(brat_hsv)
+bi_xyz <- hsv2cyl_xyz(bi_hsv)
+midwest_xyz <- hsv2cyl_xyz(midwest_hsv)
+
+cylinder %>%
+  add_trace(x = brat_xyz[1],
+            y = brat_xyz[2],
+            z = brat_xyz[3],
+            type = 'scatter3d', mode = 'markers+text',
+            marker = list(color = rgb(brat_rgb[1],
+                                      brat_rgb[2],
+                                      brat_rgb[3]),
+                          size = 13),
+            text = 'brat', textposition = 'top right') %>% 
+  add_trace(x = bi_xyz[1],
+            y = bi_xyz[2],
+            z = bi_xyz[3],
+            type = 'scatter3d', mode = 'markers+text',
+            marker = list(color = rgb(bi_rgb[1],
+                                      bi_rgb[2],
+                                      bi_rgb[3]),
+                          size = 13),
+            text = 'bisexuality', textposition = 'top right') %>% 
+  add_trace(x = midwest_xyz[1],
+            y = midwest_xyz[2],
+            z = midwest_xyz[3],
+            type = 'scatter3d', mode = 'markers+text',
+            marker = list(color = rgb(midwest_rgb[1],
+                                      midwest_rgb[2],
+                                      midwest_rgb[3]),
+                          size = 13),
+            text = 'midwest princess', textposition = 'top right')
+```
+
+### Perceptual uniformity
+
+As fun as the cube and cylinder were to create, both RGB and HSV have a big downside: they lack ✨ perceptual uniformity ✨.  What this means is that moving an equal Euclidean distance in the RGB cube or the HSV cylinder doesn't translate to a linear change in the hue according to the human eye. [This article](https://programmingdesignsystems.com/color/perceptually-uniform-color-spaces/) has some great visualizations of the problem. Since we're trying to measure distance from brat according to the human eye, we need a new approach.
+
+Apparently fixing this issue is an actual nightmare, spawning a dizzying array of different color spaces and distance metrics. Some (but probably not all) of these are outlined in the Wikipedia [color distance article](https://en.wikipedia.org/wiki/Color_difference). I'll do my best to talk through one such solution here. 
+
+### CIELAB
+
+The International Commission on Illumination (CIE) developed a new color space called CIELAB. CIELAB uses three values: perceptual lightness $L^*$, as well as $a^*$ and $b^*$ for the red - green and blue - yellow axes.
+
+> [CIE](https://cie.co.at/)'s mission statement is "Advancing knowledge and providing standardization to improve the lighted environment". I for one am comforted that people are dedicated to this.
+
+We can see this funky-looking space here:
+
+```{r echo = FALSE}
+# Generate a grid of L, a, and b values
+L <- seq(0, 100, length.out = 20)  # Luminance: 0 to 100
+a <- seq(-100, 100, length.out = 20)  # a*: Green-Red component
+b <- seq(-100, 100, length.out = 20)  # b*: Blue-Yellow component
+# Create a grid of LAB values
+LAB <- expand.grid(L = L, a = a, b = b)
+# Convert LAB to RGB for color mapping
+RGB <- hex(LAB(L = LAB$L, A = LAB$a, B = LAB$b))
+# Filter out values where the RGB conversion is not valid (e.g., out of sRGB gamut)
+valid_colors <- !is.na(RGB)
+cielab_shape <- plot_ly(x = LAB$a[valid_colors], y = LAB$b[valid_colors], z = LAB$L[valid_colors],
+        type = 'scatter3d', mode = 'markers',
+        marker = list(color = RGB[valid_colors], size = 3)) %>%
+  layout(scene = list(
+    xaxis = list(title = 'a* (Green-Red)'),
+    yaxis = list(title = 'b* (Blue-Yellow)'),
+    zaxis = list(title = 'L* (Luminance)'),
+    aspectmode = "manual", aspectratio = list(x = 1, y = 1, z = 1),
+    title = 'CIELAB Color Space'
+  ))
+cielab_shape
+```
+
+Spoiler alert, CIELAB is still not perceptually uniform. Best of luck to CIE in their ongoing quest in what is apparently a very difficult quest. For the purposes of brat, we soldier on with what has already been created.
+
+### $\Delta E^*$
+
+In addition to CIELAB, CIE also created a distance metric called $\Delta E^*$, which attempts to measure the difference between colors according to human perception. The formula has been tweaked several times, yielding a 1976 version, a 1984 version, a 1994 version, and a 2000 version. We'll go with the most recent. I won't go through the math, but suffice it to say there are at least 11 lines of equations (see this [Delta E 101 article](https://zschuessler.github.io/DeltaE/learn/)). Fortunately, the [`farver` R package](https://github.com/thomasp85/farver) has done the delightful work of coding up these equations, so we can go ahead and just borrow their `compare_colour` function here.
+
+$\Delta E^*$ values range from 0 to 100, with the following interpretations (from [this post](https://zschuessler.github.io/DeltaE/learn/)):
+
+| Delta E | Perception                                    |
+|---------|-----------------------------------------------|
+| <= 1.0  | Not perceptible by human eyes.                |
+| 1 - 2   | Perceptible through close observation.        |
+| 2 - 10  | Perceptible at a glance.                      |
+| 11 - 49 | Colors are more similar than opposite.        |
+| 100     | Colors are exact opposite.                    |
+
+We'll find the $\Delta E^*$ between our three colors and the original brat color (then we can find the brat percentage by subtracting from 100):
+
+```{r}
+library(farver)
+# How brat is the brat color?
+brat_dist_de <- compare_colour(from = t(brat_rgb) * 255,
+                               to = t(brat_rgb) * 255,
+                               from_space = "rgb",
+                               method = "cie2000")
+# How brat is #D60270?
+bi_dist_de <- compare_colour(from = t(brat_rgb) * 255,
+                               to = t(bi_rgb) * 255,
+                               from_space = "rgb",
+                               method = "cie2000")
+# How brat is #4CA6AE?
+midwestprincess_dist_de <- compare_colour(from = t(brat_rgb) * 255,
+                               to = t(midwest_rgb) * 255,
+                               from_space = "rgb",
+                               method = "cie2000")
+```
+
+Using $\Delta E^*$, <span style="color: #9ACC3F; font-weight: bold;">`r paste0("the brat color is ", 100 - brat_dist_de, "% brat")`</span>, <span style="color: #D60270; font-weight: bold;">`r paste0("this color lifted from the bisexual pride flag is ", round(100 - bi_dist_de, 2), "% brat")`</span>, and <span style="color: #4CA6AE; font-weight: bold;">`r paste0("this color lifted from The Rise and Fall of a Midwest Princess album cover is ", round(100 - midwestprincess_dist_de, 2), "% brat")`</span>. We find that the bi pride color is more opposite brat than similar, while the Midwest Princess color is more similar than opposite.
+
+We can visualize the relative positions of these colors in CIELAB space now:
+
+```{r echo = FALSE}
+brat_lab <- convert_colour(t(brat_rgb * 255),
+                           from = "rgb",
+                           to = "lab")
+bi_lab <- convert_colour(t(bi_rgb * 255),
+                         from = "rgb",
+                         to = "lab")
+midwest_lab <- convert_colour(t(midwest_rgb * 255),
+                              from = "rgb",
+                              to = "lab")
+
+cielab_shape %>%
+  add_trace(x = brat_lab[2],
+            y = brat_lab[3],
+            z = brat_lab[1],
+            type = 'scatter3d', mode = 'markers+text',
+            marker = list(color = rgb(brat_rgb[1],
+                                      brat_rgb[2],
+                                      brat_rgb[3]),
+                          size = 13),
+            text = 'brat', textposition = 'top right') %>% 
+  add_trace(x = bi_lab[2],
+            y = bi_lab[3],
+            z = bi_lab[1],
+            type = 'scatter3d', mode = 'markers+text',
+            marker = list(color = rgb(bi_rgb[1],
+                                      bi_rgb[2],
+                                      bi_rgb[3]),
+                          size = 13),
+            text = 'bisexuality', textposition = 'top right') %>% 
+  add_trace(x = midwest_lab[2],
+            y = midwest_lab[3],
+            z = midwest_lab[1],
+            type = 'scatter3d', mode = 'markers+text',
+            marker = list(color = rgb(midwest_rgb[1],
+                                      midwest_rgb[2],
+                                      midwest_rgb[3]),
+                          size = 13),
+            text = 'midwest princess', textposition = 'top right')
+```
+
+## What have we accomplished?
+
+To be honest, it's unclear. I have had a wonderful time, and in the end, is that not what brat summer is all about?
+
+At the very least, we now have the ability to determine relative brat-ness of different colors in a variety of spaces:
+
+```{r echo = FALSE, message = FALSE}
+library(DT)
+library(dplyr)
+
+pantone_hex <- "#F5C09E"
+hex_codes <- c(brat_hex, bi_hex, midwest_hex, pantone_hex)
+
+brat_table <- data.frame(colors = c("brat",
+                                    "bisexual pink",
+                                    "midwest princess teal",
+                                    "pantone color of the year peach"),
+                         hex = hex_codes) %>% 
+  rowwise() %>% 
+  mutate(rgb_bratness = color_distance(new_color = hex, color_space = "rgb") * 100,
+         hsv_bratness = color_distance(new_color = hex, color_space = "hsv") * 100,
+         rgb = list(t(col2rgb(hex)))) %>% 
+  mutate(deltaE_sim = compare_colour(from = t(brat_rgb) * 255,
+                                          to = rgb,
+                                          from_space = "rgb",
+                                          method = "cie2000")) %>% 
+  mutate(deltaE_bratness = as.numeric(100 - deltaE_sim))
+
+datatable(
+  brat_table %>% 
+    select(colors,
+           rgb_bratness,
+           hsv_bratness,
+           deltaE_bratness) %>% 
+    mutate_if(is.numeric, round, 2),
+    # mutate_if(is.numeric, ~ paste0(round(.x, 2), "%")),
+  rownames = FALSE,
+  colnames = c("Color",
+               "RGB brat-ness",
+               "HSV brat-ness",
+               "Delta E brat-ness"),
+  options = list(
+    dom = 't',       # 't' stands for table only (no search box, no pagination)
+    paging = FALSE,  # Disables pagination
+    searching = FALSE # Disables the search box
+  )
+) %>%
+  formatStyle(
+    'colors', # The column to apply the style to
+    color = styleEqual(
+      brat_table$colors, 
+      brat_table$hex # Using the hex column to set text color
+    )
+  ) %>%
+  formatStyle(
+    columns = c('rgb_bratness', 'hsv_bratness', 'deltaE_bratness'),
+    backgroundColor = styleInterval(
+      cuts = seq(0, 100, length.out = 99), 
+      values = colorRampPalette(c("white", "#9ACC3F"))(100)
+    )
+  )
+```
+
+Beyond this vital information, I have delved into a tiny fraction of the insanely complex world of color, while listening to the album of the summer an unconscionable number of times, so I'm counting this as a win.
+
+## What's next?
+
+Now that I have descended down this colorful rabbithole, my dream is to make a Shiny app that can tell you how brat a color is given its hex code, with the option of a variety of color spaces/distance metrics. Then, in the ultimate dream, I wish to be able to take an image and tell you how brat the entire photo is based on color (the brat-ness of the image content seems like your business to determine). These both seem like worthy endeavors in the sport of Productive Procrastination, so stay tuned. My father informed me this morning that brat summer is over, so I may have missed the boat on these, but I have been adamantly asserting since July that this album is Not a Phase But Rather Who I am Now, so might as well put my coding skills where my mouth is. If you are interested in this, fantastic. If not, in the words of Charli,
+
+<figure>
+  <img class="special-img-class" style="width:50%" src="/img/360_lyrics.png" />
+</figure>
+
+## Resources
+
++ The all-important [brat generator](https://www.bratgenerator.com/)
++ Wikipedia's [RGB color model article](https://en.wikipedia.org/wiki/RGB_color_model)
++ Wikipedia's [HSL and HSV article](https://en.wikipedia.org/wiki/HSL_and_HSV)
++ Wikipedia's [Color distance article](https://en.wikipedia.org/wiki/Color_difference)
++ Programming Design System's [Perceptually uniform color spaces](https://programmingdesignsystems.com/color/perceptually-uniform-color-spaces/)
++ Steve Hanov's article [Fun with Colour Difference](http://stevehanov.ca/blog/index.php?id=116)
++ Zachary Schuessler's article [Delta E 101](https://zschuessler.github.io/DeltaE/learn/)
+
