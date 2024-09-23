@@ -37,21 +37,21 @@ using a feature transform
 If `\(\phi(\textbf{X})\)` is symmetric and invertible, then we can simplify
 further:
 
-::: {.theorem name="Least squares with a feature transform"}
-If `\(\phi(\textbf{X})\)` is symmetric and invertible, then `\(\textbf{w}_{LS}=[\phi(\textbf{X})]^{-1}\textbf{y}^\top\)`
-:::
+**Theorem 1 (Least squares with a feature transform):** If `\(\phi(\textbf{X})\)` is symmetric and invertible, then `\(\textbf{w}_{LS}=[\phi(\textbf{X})]^{-1}\textbf{y}^\top\)`.
 
-::: {proof}
+**Proof:**
+
+$$
 `\begin{align*}
-  \textbf{w}\_{LS} &= \[\phi(\textbf{X})\phi(\textbf{X})^\top\]^{-1}\phi(\textbf{X})\textbf{y}^\top \\
-  &= \[\phi(\textbf{X})^\top\]^{-1}\[\phi(\textbf{X})\]^{-1}\phi(\textbf{X})\textbf{y}^\top
+  \textbf{w}_{LS} &= [\phi(\textbf{X})\phi(\textbf{X})^\top]^{-1}\phi(\textbf{X})\textbf{y}^\top \\
+  &= [\phi(\textbf{X})^\top]^{-1}[\phi(\textbf{X})]^{-1}\phi(\textbf{X})\textbf{y}^\top
   \\
-  &= \[\phi(\textbf{X})^\top\]^{-1}\textbf{y}^\top \\
-  &= \[\phi(\textbf{X})\]^{-1}\textbf{y}^\top
+  &= [\phi(\textbf{X})^\top]^{-1}\textbf{y}^\top \\
+  &= [\phi(\textbf{X})]^{-1}\textbf{y}^\top
 \end{align*}`
+$$
 
 ■
-:::
 
 ### R implementation
 
