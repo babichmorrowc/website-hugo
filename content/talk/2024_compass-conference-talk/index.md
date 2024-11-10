@@ -2,8 +2,8 @@
 title: "[Talk] Bayesian Decision Analysis: a crash course"
 date: 2024-10-22
 author: "Cecina Babich Morrow"
-summary: "Uncertainty and sensitivity analysis of BDA applied to an idealised example of heat stress mitigation."
-subtitle: "Examining the use of BDA in an idealised heat stress adaptation decision."
+summary: "Lightning talk introducing BDA via a toy example."
+subtitle: "A 3 minute introduction to how BDA can be applied to an idealised heat stress example."
 
 # Name of event and optional event URL.
 event: "2024 Compass Conference"
