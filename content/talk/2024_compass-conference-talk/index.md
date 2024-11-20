@@ -48,5 +48,13 @@ image:
   
 ---
 
+
+<img src="/img/compass_conf_2024_cecina.jpg" alt="drawing" width="200" align="right"/>
 Should you have ever wanted a crash course in decision-making from someone notoriously indecisive, now is your chance. Bayesian Decision Analysis (BDA) is a powerful framework for making decisions under a state of uncertainity. In this lightning talk, we will explore how we can apply this tool to navigate our uncertain world while keeping that pesky indecision at bay.
+ 
+ 
+ 
+ 
+ 
+ 
 
