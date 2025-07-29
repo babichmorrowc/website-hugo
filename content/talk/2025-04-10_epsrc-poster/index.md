@@ -1,13 +1,13 @@
 ---
 title: "[Poster] Sensitivity of Bayesian Decision Analysis: A tool for robust climate adaptation decision-making"
-date: 2024-10-22
+date: 2025-04-10
 author: "Cecina Babich Morrow, Laura Dawkins, Dan Bernie, Dennis Prangle"
 summary: "Uncertainty and sensitivity analysis of BDA applied to an idealised example of heat stress mitigation."
-subtitle: "Examining the use of BDA in an idealised heat stress adaptation decision."
+subtitle: "Poster presentation at an EPSRC visit to University of Bristol."
 
 # Name of event and optional event URL.
-event: "2024 Compass Conference"
-event_url: "https://www.bristol.ac.uk/cdt/compass/compass-annual-conference/"
+event: "University of Bristol EPSRC Showcase"
+# event_url: "https://www.bristol.ac.uk/golding/turing-institute/events-and-opportunities/gw4-ai-data-science-events/"
 
 # Location of event.
 location: "Bristol, U.K."
