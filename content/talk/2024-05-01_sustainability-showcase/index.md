@@ -6,7 +6,7 @@ summary: "Sensitivity of BDA in an idealised example of heat-stress."
 subtitle: "Talk about my mini-project results at an event highlighting applications of mathematics to sustainability challenges."
 
 # Name of event and optional event URL.
-event: "Met Office PhD Studentship Event"
+event: "2024 University of Bristol Maths Sustainability Showcase"
 event_url: "https://www.bristol.ac.uk/maths/events/2024/maths-sustainability-showcase.html"
 
 # Location of event.
