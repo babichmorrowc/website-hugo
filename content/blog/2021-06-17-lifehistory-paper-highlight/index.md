@@ -2,6 +2,8 @@
 title: Exciting publication news!
 author: "Cecina Babich Morrow"
 date: '2021-06-17'
+aliases:
+  - /post/lifehistory-paper-highlight
 slug: lifehistory-paper-highlight
 categories: ["hypervolume", "life history"]
 tags: ["hypervolume", "life history"]

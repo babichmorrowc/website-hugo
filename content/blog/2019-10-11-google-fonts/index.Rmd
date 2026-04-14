@@ -1,6 +1,8 @@
 ---
 title: "Putting Google Fonts in R graphs"
 author: "Cecina Babich Morrow"
+aliases:
+  - /post/2019-10-11-google-fonts
 date: 2019-10-11T21:13:14-05:00
 categories: ["R", "Google"]
 tags: ["R", "Google"]

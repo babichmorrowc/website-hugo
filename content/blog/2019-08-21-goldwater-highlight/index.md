@@ -2,6 +2,8 @@
 title: Goldwater Highlight
 author: "Cecina Babich Morrow"
 date: '2019-08-21'
+aliases:
+  - /post/2019-08-21-goldwater-highlight
 slug: goldwater-highlight
 categories: ["Career"]
 tags: ["career"]

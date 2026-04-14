@@ -2,6 +2,8 @@
 title: "#HackTheSolarSystem"
 author: "Cecina Babich Morrow"
 date: 2019-02-14T21:13:14-05:00
+aliases:
+  - /post/2019-02-14-hackathon
 categories: ["hackathon"]
 tags: ["hackathon", "meteorites", "earth science"]
 subtitle: My first hackathon.

@@ -3,6 +3,8 @@ title: Publishing to RStudio Connect with Google credentials
 author: "Cecina Babich Morrow"
 date: '2020-11-30'
 slug: google-account-creds
+aliases:
+  - /post/google-account-creds
 categories: ["R", "Google"]
 tags: ["R", "Google"]
 subtitle: 'How to integrate R and Google Drive non-interactively.'

@@ -2,6 +2,8 @@
 title: "Creating this website"
 author: "Cecina Babich Morrow"
 date: 2018-12-07T21:13:14-05:00
+aliases:
+  - /post/2018-12-7-create-website
 categories: ["R", "GitHub", "website"]
 tags: ["R", "GitHub", "website"]
 subtitle: My saga of creating this website.

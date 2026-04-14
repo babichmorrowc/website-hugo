@@ -2,6 +2,8 @@
 title: "Adding Google Slides to website"
 author: "Cecina Babich Morrow"
 date: 2018-12-12T21:13:14-05:00
+aliases:
+  - /post/2018-12-12-add-google-doc
 categories: ["Google", "website"]
 tags: ["Google", "website"]
 subtitle: Embedding Google Slides on a Hugo site.

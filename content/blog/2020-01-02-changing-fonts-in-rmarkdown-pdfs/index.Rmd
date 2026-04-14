@@ -2,6 +2,8 @@
 title: Changing fonts in RMarkdown PDFs
 author: "Cecina Babich Morrow"
 date: 2020-01-02T11:13:14-05:00
+aliases:
+  - /post/2020-01-02-changing-fonts-in-rmarkdown-pdfs
 categories: ["R"]
 tags: ["R"]
 subtitle: 'Changing the font of RMarkdown PDF body text.'
