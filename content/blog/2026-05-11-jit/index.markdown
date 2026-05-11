@@ -15,6 +15,7 @@ projects: []
 output:
   html_document:
     code_folding: show
+    highlight: pygments
 ---
 
 # Inspiration for this post
@@ -50,7 +51,8 @@ The tremendously slow code I was grappling with came from a function that calcul
 
 My original function read as follows:
 
-```{python eval=FALSE}
+
+``` python
 # Function to find decision in a single cell
 def decision_single_cell(ind,
                         index,
@@ -121,7 +123,8 @@ The function consists of quite a few loops, which is part of why I hoped Numba w
 
 After a lot of tinkering, here is the new function I wrote to use JIT for this function:
 
-```{python eval=FALSE}
+
+``` python
 # Jit version of function to find decision in a single cell
 @jit(nopython=True)
 def decision_single_cell_jit(ind,
