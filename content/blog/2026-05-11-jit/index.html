@@ -1,0 +1,192 @@
+---
+title: "Just-In-Time: A quick guide using jit with Python"
+author: "Cecina Babich Morrow"
+date: "2026-05-11"
+categories: ["Python"]
+tags: ["Python"]
+subtitle: 'Speeding up your code in a single line (give or take).'
+summary: 'Using jit with Python.'
+image:
+  placement: 1
+  caption: ''
+  focal_point: ''
+  preview_only: false
+projects: []
+draft: true
+---
+
+
+
+<div id="inspiration-for-this-post" class="section level1">
+<h1>Inspiration for this post</h1>
+<p>In June of 2024, at an annual retreat for my PhD program (<a href="https://compass.blogs.bristol.ac.uk/2024/08/21/compass-away-day-2024/">Compass Away Day</a>), <a href="https://compass.blogs.bristol.ac.uk/students/ed-davis/">Ed Davis</a> gave a talk about a magical way to speed up your Python code in a single line. i blissfully forgot about this until the fall, when I was facing a daunting 3+ <em>days</em> of run-time for my code. I heard Ed’s voice in my head (probably not a good sign of my sanity in the PhD thus far) and latched onto it as my hope for salvation.</p>
+</div>
+<div id="jit" class="section level1">
+<h1>JIT</h1>
+<p>The magic solution? ✨JIT✨</p>
+<p>JIT stands for “just-in-time”, referring to compiling computer code while the program is executed. It sits in between ahead-of-time (AOT) compilation and interpretation.</p>
+<p>AOT compilation refers to when a programming language is compiled into a (typically lower-level) language before the program is executed. For example, when coding in C++, you need to compile the human-readable C++ code into machine code, which can then be executed to run your program. On the other end of the spectrum, interpreted languages such as Python and R have an interpreter that reads the code line by line, converts it to machine code, and executes it then and there.</p>
+<p>JIT aims to be the best of both worlds, by combining the speed of compiled code with the ease of writing interpreted code. JIT compilation occurs after the program has started (as opposed to AOT) and compiles the code when it is about to be executed. Then the code is cached and can be reused later without needing to be compiled yet again.</p>
+</div>
+<div id="numba" class="section level1">
+<h1>Numba</h1>
+<p><a href="https://numba.pydata.org/">Numba</a> is a JIT compiler for Python. It has excellent documentation: I suggest starting with their <a href="https://numba.readthedocs.io/en/stable/user/5minguide.html">5 minute guide to Numba</a>. If you, like me, are facing the prospect of horrifying run-times on your Pyton code, this is an excellent place to start.</p>
+<div id="when-might-numba-help" class="section level2">
+<h2>When might Numba help?</h2>
+<p>Although certainly magical, Numba cannot fix every issue with slow code you might be facing. As you might have gathered from the name<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, Numba is designed for code that uses NumPy arrays in particular. If your code consists of mathematically heavy operations that are (or could be) expressed using NumPy arrays, and/or contains a lot of loops, Numba can be incredibly helpful. If you are using a lot of Pandas, however, Numba may not be able to save you since it can’t deal with Pandas.</p>
+</div>
+</div>
+<div id="my-use-case" class="section level1">
+<h1>My use case</h1>
+<p>The tremendously slow code I was grappling with came from a function that calculated the Bayes optimal decision for a climate adaptation decision-making example. I was applying this function in every cell across the UK, and that loop was what was causing the slow-down. All the code for the following example can be found in <a href="https://github.com/babichmorrowc/bda_risk_dec_sensitivity">this repository</a>, which contains the code for my <a href="https://www.sciencedirect.com/science/article/pii/S2212096325000658">2025 paper</a> about climate adaptation decision robustness.</p>
+<div id="before-numba" class="section level2">
+<h2>Before Numba</h2>
+<p>My original function read as follows:</p>
+<pre class="python"><code># Function to find decision in a single cell
+def decision_single_cell(ind,
+                        index,
+                        EAI,
+                        Exp,
+                        nd,
+                        decision_inputs,
+                        cost_per_day,
+                        cweights):
+    # state of nature (risk)
+    xi = EAI[ind[0][index],ind[1][index],:]
+     # If EAI in a region is &lt; 0, we will set it to 0
+    xi[np.where(xi &lt; 0)] = 0
+    # no. of people/jobs in each location
+    ppl = Exp[ind[0][index],ind[1][index]]
+    # If exposure in a region is 0, the decision should always be &quot;do nothing&quot;
+    if ppl &lt;= 0:
+        opd = 1
+        exp_util = np.full(nd, np.nan)
+        util_scores = np.full([nd, 1000], np.nan)
+        cost = np.full([nd, 1000], np.nan)
+    # If there is exposure, find the Bayes optimal decision
+    else:
+        # calculate cost of each decision option for each of the 1000 GAM samples of risk
+        cost = np.empty([nd,1000])
+        for j in range(nd): # loop over number of decisions
+            for k in range(1000): # loop over GAM samples
+                EAI_k = (10**xi[k] - 1)
+                # cost outcome for decision j and sample k
+                cost[j,k] = decision_inputs[j, 0]*ppl + cost_per_day*(1-decision_inputs[j, 1])*EAI_k
+
+        # Meeting objectives scores
+        meet_obs = decision_inputs[:,2]/10
+
+        # Calculate the utility of each decision attribute (cost and meeting objectives), i.e. the value of different
+        # values of each to the decision maker - here assuming a linear
+        # utility but this could be elicited from the decision maker (i.e. how risk averse they are)
+        util_cost = 1 + (-1 /cost.max()) * cost
+        util_meet_obs = meet_obs
+
+        # calculate the overall utility (value) of each decision option for each sample of risk
+        util_scores = np.empty([nd, 1000])
+        for j in range(nd):
+            util_scores[j,:] = cweights[0] * util_cost[j,:] + cweights[1] * util_meet_obs[j]
+        # find expected (mean) utility
+        exp_util = np.empty(nd)
+        for j in range(nd):
+            exp_util[j] = np.mean(util_scores[j,:])
+        #find which decision optimises the expected utility
+        opd = np.where(exp_util == max(exp_util))[0] + 1 #(add one because python indexing starts at 0)
+
+    # Return: optimal decision, expected utility, utility scores, cost
+    return opd, exp_util, util_scores, cost</code></pre>
+<p>The exact details aren’t crucial to review, but a couple of things to note:</p>
+<ul>
+<li>I start by getting the risk (<code>xi</code>) and exposure (<code>ppl</code>) in the given location</li>
+<li>If there is no exposure, the optimal ecision is automatically decision #1</li>
+<li>If there is exposure:
+<ul>
+<li>For each of the 3 possible decisions we were weighing, loop over 1000 GAM samples representing the distribution of risk, and calculate the cost for that particular decision and risk sample</li>
+<li>Calculate the expected utility for each decision by averaging over the risk samples</li>
+<li>Find the decision with the maximum expected utility</li>
+</ul></li>
+</ul>
+<p>The function consists of quite a few loops, which is part of why I hoped Numba would speed things along. My first attempt included just sticking the <code>@jit</code> decorator in front of my original function as is and hoping for the best. Unfortunately, this ended me up with the error <code>Compilation is falling back to object mode WITH looplifting enabled because Function "decision_single_cell_jit" failed type inference due to: No implementation of function Function(&lt;function full at 0x79cb6a545790&gt;) found for signature</code>. Not particularly helpful.</p>
+</div>
+<div id="after-numba" class="section level2">
+<h2>After Numba</h2>
+<p>After a lot of tinkering, here is the new function I wrote to use JIT for this function:</p>
+<pre class="python"><code># Jit version of function to find decision in a single cell
+@jit(nopython=True)
+def decision_single_cell_jit(ind,
+         index,
+         EAI,
+         Exp,
+         nd,
+         decision_inputs,
+         cost_per_day,
+         cweights):
+    # state of nature (risk)
+    xi = EAI[ind[0][index],ind[1][index],:]
+     # If EAI in a region is &lt; 0, we will set it to 0
+    xi[np.where(xi &lt; 0)] = 0
+    # no. of people/jobs in each location
+    ppl = Exp[ind[0][index],ind[1][index]]
+    # Initialize the optimal decision as an array with a single element
+    opd = np.empty(1, dtype=np.int64)
+    # If exposure in a region is 0, the decision should always be &quot;do nothing&quot;
+    if ppl &lt;= 0:
+        opd[0] = 1
+        exp_util = np.full(nd, np.nan)
+        util_scores = np.full((nd, 1000), np.nan)
+        cost = np.full((nd, 1000), np.nan)
+    # If there is exposure, find the Bayes optimal decision
+    else:
+        # calculate cost of each decision option for each of the 1000 GAM samples of risk
+        cost = np.empty((nd,1000))
+        for j in range(nd): # loop over number of decisions [do this in parallel?]
+            for k in range(1000): # loop over GAM samples
+                EAI_k = (10**xi[k] - 1)
+                # cost outcome for decision j and sample k
+                # QUESTION: Check that I&#39;m converting from EAI to risk properly
+                cost[j,k] = decision_inputs[j, 0]*ppl + cost_per_day*(1-decision_inputs[j, 1])*EAI_k
+                # Meeting objectives scores
+        
+        meet_obs = decision_inputs[:,2]/10
+
+        # Calculate the utility of each decision attribute (cost and meeting objectives), i.e. the value of different
+        # values of each to the decision maker - here assuming a linear
+        # utility but this could be elicited from the decision maker (i.e. how risk averse they are)
+        util_cost = 1 + (-1 /cost.max()) * cost
+        util_meet_obs = meet_obs
+
+        # calculate the overall utility (value) of each decision option for each sample of risk
+        util_scores = np.empty((nd, 1000))
+        for j in range(nd):
+            util_scores[j,:] = cweights[0] * util_cost[j,:] + cweights[1] * util_meet_obs[j]
+        # find expected (mean) utility
+        exp_util = np.empty(nd)
+        for j in range(nd):
+            exp_util[j] = np.mean(util_scores[j,:])
+        #find which decision optimises the expected utility
+        opd = np.where(exp_util == max(exp_util))[0] + 1 #(add one because python indexing starts at 0)
+
+    # Return: optimal decision, expected utility, utility scores, cost
+    return opd, exp_util, util_scores, cost</code></pre>
+<p>Let’s go through the modifications I needed to make:</p>
+<div id="numba-decorator" class="section level3">
+<h3>Numba decorator</h3>
+<p>In order to get Numba to compile a particular function using JIT compilation, you need to add a decorator to mark that function for optimization. In this case, I added the line <code>@jit(nopython=True)</code> before the line defining my function. I am just using the most basic decorator in this case (<code>nopython=True</code> is the default), but you can read about more specialized options here: <a href="https://numba.readthedocs.io/en/stable/user/jit.html" class="uri">https://numba.readthedocs.io/en/stable/user/jit.html</a>.</p>
+</div>
+<div id="numpy-ify" class="section level3">
+<h3>NumPy-ify</h3>
+<p>The remaining modifications I needed to make pertain to using NumPy as much as possible.</p>
+<ul>
+<li>Make sure arguments were arrays: You can’t tell from the code above, but originally the argument <code>cweights</code> was a list. I needed to ensure that <code>cweights</code> was a NumPy array instead</li>
+<li><code>opd = np.empty(1, dtype=np.int64)</code>: Initialize the optimal decision as a NumPy array with a single element. This lets Numba know that I will always be returning an object of the same type (array with one element).</li>
+<li>Tuples instead of lists: when setting <code>util_scores</code> and <code>cost</code>, instead of writing something like <code>np.full([nd,1000], np.nan)</code>, I needed to switch to <code>np.full((nd, 1000), np.nan)</code>. Lists like <code>[nd,1000]</code> are mutable, whereas tuples are not. When Numba is doing the compilation, it needs to know the exact dimensions of my arrays at compile time.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>In fact, the name “Numba” is a combination of “NumPy” + “mamba”. Mambas are some of the fastest snakes in the world, topping out at over 9 miles per hour. Pythons, on the other hand, can only move at about 1 mph. No wonder we might need Numba.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
